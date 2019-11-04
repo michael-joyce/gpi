@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta xmlns="http://exist-db.org/xquery/repo">
+    <description>GPI</description>
+    <author/>
+    <website/>
+    <status>alpha</status>
+    <license>GNU-LGPL</license>
+    <copyright>true</copyright>
+    <type>application</type>
+    <target>gpi</target>
+    <prepare>pre-install.xql</prepare>
+    <finish/>
+<deployed>2019-11-04T13:48:10.071-08:00</deployed>
+</meta>
