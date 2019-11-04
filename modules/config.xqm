@@ -25,8 +25,12 @@ declare variable $config:app-root :=
                 substring($rawPath, 15)
         else
             $rawPath
+    let $path := substring-before($modulePath, "/modules")
     return
-        substring-before($modulePath, "/modules")
+        if(starts-with($path, '/Users')) then
+            'file:/' || $path
+        else
+            $path
 ;
 
 declare variable $config:data-root := $config:app-root || "/data";

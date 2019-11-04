@@ -1,0 +1,22 @@
+{
+  "directory": "resources",
+  "name": "gpi",
+  "authors": [
+    "Michael Joyce <mjoyce@sfu.ca>"
+  ],
+  "main": "",
+  "license": "GPL3",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "jquery#^1.12.4",
+    "bootstrap": "bootstrap#^3.3.7"
+  }
+}

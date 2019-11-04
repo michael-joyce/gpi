@@ -1,0 +1,7 @@
+/build
+/resources/lib
+/*.xpr
+/docs/build
+*.map
+.idea
+.ant-targets-build.xml
