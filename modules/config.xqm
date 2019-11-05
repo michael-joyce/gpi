@@ -33,7 +33,7 @@ declare variable $config:app-root :=
             $path
 ;
 
-declare variable $config:data-root := $config:app-root || "/data";
+declare variable $config:data-root := '/db/apps/gpi-data/data';
 
 declare variable $config:repo-descriptor := doc(concat($config:app-root, "/repo.xml"))/repo:meta;
 
