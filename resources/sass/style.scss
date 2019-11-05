@@ -6,6 +6,28 @@
 $footer_height: 60px;
 $footer_bg: #f5f5f5;
 
+// error rendering
+$error_bg: #fefedd;
+$error_outline: 1px solid #f00;
+$error_padding: 3px;
+
+// line counters
+$lc_width: 4em;
+
+$lc_offset: 1em;
+// hidden line counter colour, same as the background.
+$lc_hidden_fg: #fff;
+
+//line counter colour, a lightish foreground.
+$lc_shown_fg: #808080;
+
+// gendered reference colours
+$gender_m_fg: #0000ff;
+$gender_f_fg: #ff0000;
+$gender_n_fg: #008000;
+$gender_y_fg: #b8860b;
+
+// -----------------------------------------------------
 // Generic bootstrappy stuff.
 html {
     position: relative;
@@ -27,6 +49,22 @@ body {
     background-color: $footer_bg;
 }
 
+// -----------------------------------------------------
+// transformation errors
+.tx-error {
+    background-color: $error_bg;
+    outline: $error_outline;
+    display: inline-block;
+    padding: $error_padding;
+
+    .node-name {
+        font-weight: bold;
+        display: inline-block;
+        padding: $error_padding;
+    }
+}
+
+// -----------------------------------------------------
 // Poem display
 .poem {
     counter-reset: line-counter;
@@ -42,18 +80,17 @@ body {
 
     li::before {
         content: counter(line-counter) '.';
-        color: white;
-        width: 4em;
-        padding-right: 1em;
+        color: $lc_hidden_fg;
+        width: $lc_width;
+        padding-right: $lc_offset;
         text-align: right;
         display: inline-block;
     }
 
     li:nth-child(5n)::before {
-        color: grey;
+        color: $lc_shown_fg;
     }
 }
-
 
 span.target {
     text-decoration: underline;
@@ -63,14 +100,36 @@ span.target {
     font-weight: bolder;
 }
 
-[data-gender='m'] {
-    color: blue;
-}
+a.reference {
 
-[data-gender='f'] {
-    color: red;
+    text-decoration: underline;
+
+    &[data-gender='m'] {
+        color: $gender_m_fg;
+    }
+
+    &[data-gender='f'] {
+        color: $gender_f_fg;
+    }
+
+    &[data-gender='n'] {
+        color: $gender_n_fg
+    }
+
+    &[data-gender='y'] {
+        color: $gender_y_fg;
+    }
 }
 
 p.signed {
     margin-left: 4em;
+}
+
+// -----------------------------------------------------
+// reference display
+ul.references {
+    padding-left: 1em;
+    li {
+        font-style: italic;
+    }
 }
