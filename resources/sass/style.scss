@@ -11,17 +11,17 @@ $error_bg: #fefedd;
 $error_outline: 1px solid #f00;
 $error_padding: 3px;
 
+// typography
+$p_margin: 10px;
+
 // line counters
 $lc_width: 4em;
 
 $lc_offset: 1em;
-// hidden line counter colour, same as the background.
-$lc_hidden_fg: #fff;
-
-//line counter colour, a lightish foreground.
-$lc_shown_fg: #808080;
+$lc_fg: #ccc;
 
 // gendered reference colours
+$gender_u_fg: #800080;
 $gender_m_fg: #0000ff;
 $gender_f_fg: #ff0000;
 $gender_n_fg: #008000;
@@ -69,6 +69,18 @@ body {
 .poem {
     counter-reset: line-counter;
 
+    blockquote {
+        font-size: inherit;
+
+        p {
+            margin: $p_margin 0 0 0;
+        }
+
+        footer {
+            font-size: inherit;
+        }
+    }
+
     ol {
         list-style-type: none;
         padding-left: 0;
@@ -80,20 +92,17 @@ body {
 
     li::before {
         content: counter(line-counter) '.';
-        color: $lc_hidden_fg;
+        color: $lc_fg;
         width: $lc_width;
         padding-right: $lc_offset;
         text-align: right;
         display: inline-block;
     }
-
-    li:nth-child(5n)::before {
-        color: $lc_shown_fg;
-    }
 }
 
 span.target {
-    text-decoration: underline;
+    color: $gender_u_fg;
+    cursor: pointer;
 }
 
 .referenced {
@@ -102,7 +111,11 @@ span.target {
 
 a.reference {
 
-    text-decoration: underline;
+    &:hover {
+        text-decoration: none;
+    }
+    
+    color: $gender_u_fg;
 
     &[data-gender='m'] {
         color: $gender_m_fg;

@@ -50,6 +50,21 @@ declare function tx:listObject($node as node(), $poem as node()) as node() {
     <dl>{tx:render($node/node(), $poem)}</dl>
 };
 
+declare function tx:epigraph($node as node(), $poem as node()) as node() {
+    <blockquote class='epigraph'>{tx:render($node/node(), $poem)}</blockquote>
+};
+
+declare function tx:cit($node as node(), $poem as node()) as node()* {
+    tx:render($node/node()[local-name(.) != 'bibl'], $poem),
+    if(exists($node/tei:bibl)) then 
+        <footer>{tx:render($node/tei:bibl/node(), $poem)}</footer> 
+    else ()     
+};
+
+declare function tx:quote($node as node(), $poem as node()) as node() {
+    <p>{tx:render($node/node()[local-name(.) != 'bibl'], $poem)}</p>
+};
+
 declare function tx:object($node as node(), $poem as node()) as node() {
     <div id="{$node/@xml:id}">
         <dt>{tx:render($node//tei:objectName, $poem)}</dt>

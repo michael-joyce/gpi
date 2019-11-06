@@ -35,6 +35,15 @@ body {
 .poem {
   counter-reset: line-counter;
 }
+.poem blockquote {
+  font-size: inherit;
+}
+.poem blockquote p {
+  margin: 10px 0 0 0;
+}
+.poem blockquote footer {
+  font-size: inherit;
+}
 .poem ol {
   list-style-type: none;
   padding-left: 0;
@@ -44,18 +53,16 @@ body {
 }
 .poem li::before {
   content: counter(line-counter) ".";
-  color: #fff;
+  color: #ccc;
   width: 4em;
   padding-right: 1em;
   text-align: right;
   display: inline-block;
 }
-.poem li:nth-child(5n)::before {
-  color: #808080;
-}
 
 span.target {
-  text-decoration: underline;
+  color: #800080;
+  cursor: pointer;
 }
 
 .referenced {
@@ -63,7 +70,10 @@ span.target {
 }
 
 a.reference {
-  text-decoration: underline;
+  color: #800080;
+}
+a.reference:hover {
+  text-decoration: none;
 }
 a.reference[data-gender=m] {
   color: #0000ff;

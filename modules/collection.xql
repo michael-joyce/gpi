@@ -30,7 +30,7 @@ declare function collection:object($reference as xs:string) as node() {
                   <objectIdentifier>
                      <objectName>Error</objectName>
                   </objectIdentifier>
-                  <p>The requested object ({$reference} / {$id}) could not be found.</p>
+                  <p>The requested object ({$reference}) could not be found.</p>
                </object>
 };
 
