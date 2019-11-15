@@ -39,6 +39,10 @@ declare variable $config:repo-descriptor := doc(concat($config:app-root, "/repo.
 
 declare variable $config:expath-descriptor := doc(concat($config:app-root, "/expath-pkg.xml"))/expath:package;
 
+declare variable $config:object-page-size := 15;
+
+declare variable $config:pager-span := 3;
+
 (:~
  : Resolve the given path using the current application context.
  : If the app resides in the file system,

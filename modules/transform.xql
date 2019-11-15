@@ -125,12 +125,36 @@ declare function tx:render($nodes as node()*, $poem as node()) as node()* {
                 </span>
 };
 
+declare function tx:render($nodes as node()*) as node()* {
+    tx:render($nodes, <tei:div/>)
+};
+
 declare function tx:poem($node as node()) as node()* {
     tx:render($node, $node)
 };
 
-declare function tx:references($poem as node()) as node()* {
+declare function tx:poem-references($poem as node()) as node()* {
     let $references := distinct-values($poem//tei:ref/@corresp/string())
     let $list := collection:listObjects($references)
     return tx:render($list, $poem)
+};
+
+declare function tx:browse($poems as node()*) as node()* {
+    <ol> {
+        for $poem in $poems
+        return 
+            <li>
+                <a href="view.html?id={$poem/@xml:id}"> { 
+                    if(exists($poem//tei:head/tei:title)) then 
+                        tx:render($poem//tei:head/tei:title/node()) 
+                    else 
+                        tx:render($poem//tei:head/node())
+                } </a>
+            </li>
+    } </ol>
+};
+
+declare function tx:objects($objects as node()*) as node()* {
+    for $object in $objects
+    return tx:render($object, <tei:div/>)
 };
