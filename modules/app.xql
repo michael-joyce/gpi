@@ -22,8 +22,8 @@ declare function app:load-object($node as node(), $model as map(*), $id as xs:st
     let $poem := collection:object($id)
     
     return map {
-        'poem-id' := $id,
-        'poem' := $poem
+        'object-id' := $id,
+        'object' := $poem
     }
 };
 
@@ -38,12 +38,21 @@ declare function app:render-poem-references($node as node(), $model as map(*)) a
 };
 
 declare function app:render-object($node as node(), $model as map(*)) as node()* {
-    ()
+    let $object := $model('object')
+    return tx:render($object, <tei:div/>)
 };
 
-declare function app:render-object-references($node as node(), $model as map(*)) as node()* {
-    ()
-};
+declare function app:render-object-references($node as node(), $model as map(*), $id as xs:string) as node()* {
+    let $references := collection:get-poems()//tei:l[tei:seg[@ana = '#' || $id]]
+    return 
+        if(count($references) eq 0) then
+            <p>No references found.</p>
+        else
+            <ul>{
+                for $reference in $references
+                return tx:render($reference, <tei:div/>)
+            }</ul>
+};  
 
 declare 
     %templates:default("page", 1)
