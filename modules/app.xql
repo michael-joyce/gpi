@@ -6,8 +6,43 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
 import module namespace config="http://dhil.lib.sfu.ca/exist/gpi/config" at "config.xqm";
 import module namespace collection="http://dhil.lib.sfu.ca/exist/gpi/collection" at "collection.xql";
 import module namespace tx='http://dhil.lib.sfu.ca/exist/gpi/transform' at 'transform.xql';
+import module namespace console="http://exist-db.org/xquery/console";
 
 declare namespace tei = 'http://www.tei-c.org/ns/1.0';
+
+declare function app:load-poems($node as node(), $model as map(*)) {
+    let $poems := collection:get-poems()
+    return map {
+        'poems' := $poems,
+        'total' := count($poems)
+    }
+};
+
+declare function app:load-objects($node as node(), $model as map(*)) {
+    let $objects := collection:get-objects()
+    return map {
+        'objects' := $objects,
+        'total' := count($objects)
+    }
+};
+
+declare 
+    %templates:default("page", 1)
+function app:browse-poems($node as node(), $model as map(*), $page as xs:integer) as node()* {
+    let $start := $config:poem-page-size * ($page - 1) + 1
+    let $end := $start + $config:poem-page-size
+
+    return tx:browse-poems($model('poems')[$start le position() and position() lt $end])
+};
+
+declare 
+    %templates:default("page", 1)
+function app:browse-objects($node as node(), $model as map(*), $page as xs:integer) as node()* {
+    let $start := $config:object-page-size * ($page - 1) + 1
+    let $end := $start + $config:poem-page-size
+    
+    return tx:browse-objects($model('objects')[$start le position() and position() lt $end])
+};
 
 declare function app:load-poem($node as node(), $model as map(*), $id as xs:string) {
     let $poem := collection:poem($id)
@@ -19,11 +54,10 @@ declare function app:load-poem($node as node(), $model as map(*), $id as xs:stri
 };
 
 declare function app:load-object($node as node(), $model as map(*), $id as xs:string) {
-    let $poem := collection:object($id)
-    
+    let $object := collection:object($id)
     return map {
         'object-id' := $id,
-        'object' := $poem
+        'object' := $object
     }
 };
 
@@ -32,45 +66,24 @@ declare function app:render-poem($node as node(), $model as map(*)) as node()* {
     return tx:poem($poem)
 };
 
+declare function app:render-object($node as node(), $model as map(*), $id as xs:string) {
+    let $object := $model('object')
+    return tx:render($object)
+};
+
 declare function app:render-poem-references($node as node(), $model as map(*)) as node()* {
     let $poem := $model('poem')
     return tx:poem-references($poem)
 };
 
-declare function app:render-object($node as node(), $model as map(*)) as node()* {
-    let $object := $model('object')
-    return tx:render($object, <tei:div/>)
-};
-
-declare function app:render-object-references($node as node(), $model as map(*), $id as xs:string) as node()* {
-    let $references := collection:get-poems()//tei:l[tei:seg[@ana = '#' || $id]]
-    return 
-        if(count($references) eq 0) then
-            <p>No references found.</p>
-        else
-            <ul>{
-                for $reference in $references
-                return tx:render($reference, <tei:div/>)
-            }</ul>
-};  
-
-declare 
-    %templates:default("page", 1)
-function app:browse-poems($node as node(), $model as map(*), $page as xs:integer) as node()* {
-    let $poems := collection:get-poems()
-    return tx:browse($poems)
+declare function app:render-object-references($node as node(), $model as map(*)) as node()* {
+    ()
 };
 
 declare 
     %templates:default("page", 1)
-function app:browse-objects($node as node(), $model as map(*), $page as xs:integer) as node()* {
-    let $objects := collection:get-objects($page)
-    return (tx:objects($objects), app:paginate($node, $model, $page, collection:count-objects()))
-};
-
-declare 
-    %templates:default("page", 1)
-function app:paginate($node as node(), $model as map(*), $page as xs:integer, $total as xs:integer) {
+function app:paginate($node as node(), $model as map(*), $page as xs:integer) {
+    let $total := $model('total')
     let $span := $config:pager-span
     let $pages := 1 + $total idiv $config:object-page-size
     let $start := max((1, $page - $span))

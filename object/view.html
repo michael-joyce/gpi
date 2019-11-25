@@ -3,12 +3,14 @@
     data-template-with="templates/subpage.html" data-template-at="content">
 
     <div data-template="app:load-object">
-        <div class='row'>
-            <div class='col-sm-8'>
-                <div data-template='app:render-object'></div>
-                <div data-template='app:render-object-references'></div>
+        <div class="row">
+            <div class="col-sm-8">
+                <div data-template="app:load-object">
+                    <div data-template="app:render-object"/>
+                    <div data-template="app:render-object-references"/>
+                </div>
             </div>
         </div>
     </div>
-    <script src="../resources/js/poem.js"></script>
+    <script src="../resources/js/poem.js"/>
 </div>

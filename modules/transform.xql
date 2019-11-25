@@ -139,7 +139,7 @@ declare function tx:poem-references($poem as node()) as node()* {
     return tx:render($list, $poem)
 };
 
-declare function tx:browse($poems as node()*) as node()* {
+declare function tx:browse-poems($poems as node()*) as node()* {
     <ol> {
         for $poem in $poems
         return 
@@ -154,7 +154,23 @@ declare function tx:browse($poems as node()*) as node()* {
     } </ol>
 };
 
-declare function tx:objects($objects as node()*) as node()* {
-    for $object in $objects
-    return tx:render($object, <tei:div/>)
+declare function tx:browse-objects($objects as node()*) as node()* {
+    let $null := <tei:div/>
+    
+    return
+        <dl> {
+            for $object in $objects
+            return 
+            <div>
+                    <dt>
+                        <a href='view.html?id={$object/@xml:id}'>
+                            { tx:render($object/tei:objectIdentifier/node()) }
+                        </a>
+                    </dt>
+                    { 
+                        for $node in $object/node()[local-name(.) != 'objectIdentifier']/node()
+                        return <dd>{tx:render($node)}</dd>
+                    }
+                </div>
+        } </dl>
 };

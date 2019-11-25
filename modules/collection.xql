@@ -11,22 +11,13 @@ declare function collection:get-poems() as node()* {
     return $collection//tei:div[@type='poem']
 };
 
-declare function collection:get-objects($page as xs:integer) as node()* {
+declare function collection:get-objects() as node()* {
     let $size := $config:object-page-size
     
-    let $objects := 
-        for $object at $position in doc($config:data-root || '/dictionary.xml')//tei:object
+    return 
+        for $object in doc($config:data-root || '/dictionary.xml')//tei:object
         order by $object/tei:objectIdentifier/tei:objectName
         return $object
-        
-    return 
-        for $object at $position in $objects
-        where ($page - 1) * $size lt $position and $position lt ($page) * $size
-        return $object
-};
-
-declare function collection:count-objects() as xs:integer {
-    count(doc($config:data-root || '/dictionary.xml')//tei:object)
 };
 
 declare function collection:poem($id as xs:string) as node() {
@@ -64,4 +55,8 @@ declare function collection:listObjects($references as xs:string*) as node() {
             order by $object//tei:objectName
             return $object
     } </listObject>  
+};
+
+declare function collection:references($id) {
+()
 };
