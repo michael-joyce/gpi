@@ -14,6 +14,7 @@ declare function app:load-poems($node as node(), $model as map(*)) {
     let $poems := collection:get-poems()
     return map {
         'poems' := $poems,
+        'page-size' := $config:poem-page-size,
         'total' := count($poems)
     }
 };
@@ -22,6 +23,7 @@ declare function app:load-objects($node as node(), $model as map(*)) {
     let $objects := collection:get-objects()
     return map {
         'objects' := $objects,
+        'page-size' := $config:object-page-size,
         'total' := count($objects)
     }
 };
@@ -84,14 +86,18 @@ declare
     %templates:default("page", 1)
 function app:paginate($node as node(), $model as map(*), $page as xs:integer) {
     let $total := $model('total')
+    let $page-size := $model('page-size')
     let $span := $config:pager-span
-    let $pages := 1 + $total idiv $config:object-page-size
+    let $pages := 1 + $total idiv $page-size
     let $start := max((1, $page - $span))
     let $end := min(($pages, $page + $span))
     let $next := min(($pages, $page + 1))
     let $prev := max((1, $page - 1))
 
     return
+      if($pages eq 1) then 
+        () 
+      else
         <nav>
             <ul class='pagination'>
                 <li><a href="?page=1">⇐</a></li>

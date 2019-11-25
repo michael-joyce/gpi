@@ -14,8 +14,16 @@ declare function tx:div($node as node(), $poem as node()) as node() {
     } </div>
 };
 
-declare function tx:head($node as node(), $poem as node()) as node() {
-    <h2>{tx:render($node/node(), $poem)}</h2>
+declare function tx:head($node as node(), $poem as node()) as node()* {
+    tx:render($node/node(), $poem)
+};
+
+declare function tx:title($node as node(), $poem as node()) as node() {
+    <h1>{tx:render($node/node(), $poem)}</h1>
+};
+
+declare function tx:bibl($node as node(), $poem as node()) as node() {
+  <cite>{tx:render($node/node(), $poem)}</cite>
 };
 
 declare function tx:lg($node as node(), $poem as node()) as node() {
@@ -140,7 +148,7 @@ declare function tx:poem-references($poem as node()) as node()* {
 };
 
 declare function tx:browse-poems($poems as node()*) as node()* {
-    <ol> {
+    <ul> {
         for $poem in $poems
         return 
             <li>
@@ -151,7 +159,7 @@ declare function tx:browse-poems($poems as node()*) as node()* {
                         tx:render($poem//tei:head/node())
                 } </a>
             </li>
-    } </ol>
+    } </ul>
 };
 
 declare function tx:browse-objects($objects as node()*) as node()* {

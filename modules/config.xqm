@@ -41,7 +41,7 @@ declare variable $config:expath-descriptor := doc(concat($config:app-root, "/exp
 
 declare variable $config:object-page-size := 15;
 
-declare variable $config:poem-page-size := 25;
+declare variable $config:poem-page-size := 20;
 
 declare variable $config:pager-span := 3;
 
