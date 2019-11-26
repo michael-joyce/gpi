@@ -4,8 +4,25 @@
     <property name="project.version" value="${package(version)}"/>
     <property name="project.app" value="gpi"/>
     <property name="build.dir" value="build"/>
-    <target name="xar">
+    
+    <fileset id="console-usages" dir="." includes="**/*.xql">
+        <contains text="console"/>
+    </fileset>
+    <fail status="1" message="One or more usages of console detected in ${toString:console-usages}.">
+        <condition>
+            <resourcecount when="greater" count="0" refid="console-usages" />
+        </condition>
+    </fail>
+        
+    <target depends="bower" name="xar">
         <mkdir dir="${build.dir}"/>
         <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir}/*"/>
     </target>
+    
+    <target name="bower">
+        <exec executable="bower">
+            <arg value="install" />
+        </exec>
+    </target>
+    
 </project>

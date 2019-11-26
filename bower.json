@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "jquery": "jquery#^1.12.4",
-    "bootstrap": "bootstrap#^3.3.7"
+    "bootstrap": "bootstrap#^3.3.7",
+    "tablesorter": "jquery.tablesorter#^2.31.1"
   }
 }

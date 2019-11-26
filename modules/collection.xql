@@ -20,6 +20,28 @@ declare function collection:get-objects() as node()* {
         return $object
 };
 
+declare function collection:missing-objects() as node()* {
+  let $objectIds := doc($config:data-root || '/dictionary.xml')//tei:object/@xml:id/string()
+  let $poems := collection:get-poems()
+  
+  let $refs := 
+    for $ref in $poems//tei:ref
+    where 
+      (not($ref/@corresp)) or
+      (count(index-of($objectIds, substring-after($ref/@corresp/string(), '#'))) eq 0)
+      
+    return $ref
+    
+  let $segs := 
+    for $seg in $poems//tei:seg
+    where 
+      (not($seg/@ana)) or
+      (count(index-of($objectIds, substring-after($seg/@ana/string(), '#'))) eq 0)
+    return $seg
+  
+  return ($refs, $segs)
+};
+
 declare function collection:poem($id as xs:string) as node() {
     let $collection := collection($config:data-root)
     let $poem := $collection//tei:div[@xml:id=$id]

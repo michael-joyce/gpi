@@ -6,7 +6,6 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
 import module namespace config="http://dhil.lib.sfu.ca/exist/gpi/config" at "config.xqm";
 import module namespace collection="http://dhil.lib.sfu.ca/exist/gpi/collection" at "collection.xql";
 import module namespace tx='http://dhil.lib.sfu.ca/exist/gpi/transform' at 'transform.xql';
-import module namespace console="http://exist-db.org/xquery/console";
 
 declare namespace tei = 'http://www.tei-c.org/ns/1.0';
 
@@ -44,6 +43,56 @@ function app:browse-objects($node as node(), $model as map(*), $page as xs:integ
     let $end := $start + $config:poem-page-size
     
     return tx:browse-objects($model('objects')[$start le position() and position() lt $end])
+};
+
+declare 
+  %templates:wrap
+function app:load-missing-objects($node as node(), $model as map(*)) as map(*) {
+  let $missing := collection:missing-objects()
+  let $refs := 
+    for $object in $missing
+    where local-name($object) = 'ref'
+    return $object
+    
+  let $segs := 
+    for $object in $missing
+    where local-name($object) = 'seg'
+    return $object
+    
+    return map {
+      'refs' := $refs,
+      'segs' := $segs
+    }
+};
+
+declare
+  %templates:wrap
+function app:object-text($node as node(), $model as map(*)) as xs:string {
+  let $object := $model('object')
+  return $object//text()
+};
+
+declare
+  %templates:wrap
+function app:object-poem($node as node(), $model as map(*)) as xs:string {
+  let $object := $model('object')
+  let $poem := $object/ancestor::tei:div[@type='poem']
+  let $id := $poem/@xml:id
+  return $poem//tei:title/text()
+};
+
+declare
+  %templates:wrap
+function app:object-reference($node as node(), $model as map(*)) as xs:string* {
+  let $object := $model('object')
+  return
+    switch(local-name($object)) 
+      case 'ref'
+        return $object/@corresp/string()
+      case 'seg'
+        return $object/@ana/string()
+      default
+        return local-name($object)
 };
 
 declare function app:load-poem($node as node(), $model as map(*), $id as xs:string) {
