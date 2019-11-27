@@ -65,6 +65,14 @@ body {
 }
 
 // -----------------------------------------------------
+// Search results
+
+span.hi {
+    font-weight: bold;
+    color: darkred;
+}
+
+// -----------------------------------------------------
 // Poem display
 .poem {
     counter-reset: line-counter;

@@ -6,6 +6,7 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
 import module namespace config="http://dhil.lib.sfu.ca/exist/gpi/config" at "config.xqm";
 import module namespace collection="http://dhil.lib.sfu.ca/exist/gpi/collection" at "collection.xql";
 import module namespace tx='http://dhil.lib.sfu.ca/exist/gpi/transform' at 'transform.xql';
+import module namespace kwic="http://exist-db.org/xquery/kwic";
 
 declare namespace tei = 'http://www.tei-c.org/ns/1.0';
 
@@ -132,8 +133,45 @@ declare function app:render-object-references($node as node(), $model as map(*))
 };
 
 declare 
+  %templates:default('q', '')
+  %templates:default('page', 1)
+function app:load-poem-search($node as node(), $model as map(*), $q as xs:string, $page) as map(*) {
+  if($q = '') then
+    map {}
+  else
+    let $hits := collection:search-poems($q)
+    return
+      map {
+        'hits' := $hits,
+        'page-size' := $config:object-page-size,
+        'total' := count($hits),
+        'q' := $q,
+        'page' := $page
+      }
+};
+
+declare function app:search-hit($node as node(), $model as map(*)) as node()* {  
+  let $hit := $model('hit')
+  return
+    kwic:summarize($hit, <config width="40"/>)
+};
+
+declare 
+  %templates:wrap
+function app:search-term($node as node(), $model as map(*)) as xs:string* {
+  $model('q')
+};
+
+declare 
+  %templates:wrap
+function app:search-count($node as node(), $model as map(*)) as xs:integer* {
+  $model('total')
+};
+
+declare 
     %templates:default("page", 1)
-function app:paginate($node as node(), $model as map(*), $page as xs:integer) {
+    %templates:default("q", '')
+function app:paginate($node as node(), $model as map(*), $page as xs:integer, $q as xs:string) {
     let $total := $model('total')
     let $page-size := $model('page-size')
     let $span := $config:pager-span
@@ -143,26 +181,28 @@ function app:paginate($node as node(), $model as map(*), $page as xs:integer) {
     let $next := min(($pages, $page + 1))
     let $prev := max((1, $page - 1))
 
+    let $query-param := if($q) then "&amp;q=" || $q else ""
+
     return
       if($pages eq 1) then 
         () 
       else
         <nav>
             <ul class='pagination'>
-                <li><a href="?page=1">⇐</a></li>
-                <li><a href="?page={$prev}" id='prev-page'>←</a></li>
+                <li><a href="?page=1{$query-param}">⇐</a></li>
+                <li><a href="?page={$prev}{$query-param}" id='prev-page'>←</a></li>
     
                 {
                     for $pn in ($start to $end)
                     let $selected := if($page = $pn) then 'active' else ''
                     return 
                         <li class="{$selected}">
-                            <a href="?page={$pn}">{$pn}</a>
+                            <a href="?page={$pn}{$query-param}">{$pn}</a>
                         </li>
                 }
     
-                <li><a href="?page={$next}" id='next-page'>→</a></li>
-                <li><a href="?page={$pages}">⇒</a></li>
+                <li><a href="?page={$next}{$query-param}" id='next-page'>→</a></li>
+                <li><a href="?page={$pages}{$query-param}">⇒</a></li>
             </ul>
         </nav>
 };

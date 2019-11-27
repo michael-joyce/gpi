@@ -79,6 +79,15 @@ declare function collection:listObjects($references as xs:string*) as node() {
     } </listObject>  
 };
 
+declare function collection:search-poems($q as xs:string) as node()* {
+  if(empty($q) or $q = '') then 
+    ()
+  else
+    for $hit in collection:get-poems()[ft:query(., $q)]
+    order by ft:score($hit)
+    return $hit
+};
+
 declare function collection:references($id) {
 ()
 };

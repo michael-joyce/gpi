@@ -32,6 +32,11 @@ body {
   padding: 3px;
 }
 
+span.hi {
+  font-weight: bold;
+  color: darkred;
+}
+
 .poem {
   counter-reset: line-counter;
 }

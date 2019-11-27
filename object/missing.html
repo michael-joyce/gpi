@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml" data-template="templates:surround"
+    data-template-with="templates/subpage.html" data-template-at="content">
+
+    <div class="page-header">
+        <h1>Gendered Personification Index</h1>
+    </div>
+
+    <div data-template="app:load-missing-objects">
+
+        <div class="row">
+            <div class="col-sm-6">
+                <h3>Pronouns with missing references</h3>
+                <p>This table shows <code>&lt;ref&gt;</code> elements with <code>corresp</code>
+                    attributes that point to missing objects.</p>
+                <table class="table table-bordered table-condensed table-striped sortable">
+                    <thead>
+                        <tr>
+                            <th>Poem</th>
+                            <th>Text</th>
+                            <th>Reference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="templates:each?from=refs&amp;to=object">
+                            <td data-template="app:object-poem"/>
+                            <td data-template="app:object-text"/>
+                            <td data-template="app:object-reference"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <h3>Objects with missing references</h3>
+                <p>This table shows <code>&lt;seg&gt;</code> elements with <code>ana</code>
+                    attributes that point to missing objects.</p>
+                <table class="table table-bordered table-condensed table-striped sortable">
+                    <thead>
+                        <tr>
+                            <th>Poem</th>
+                            <th>Text</th>
+                            <th>Reference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="templates:each?from=segs&amp;to=object">
+                            <td data-template="app:object-poem"/>
+                            <td data-template="app:object-text"/>
+                            <td data-template="app:object-reference"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="../resources/lib/tablesorter/dist/js/jquery.tablesorter.min.js"/>
+    <script>
+        (function($){
+            $(function(){
+                $('table.sortable').tablesorter();
+            });
+        })(jQuery);
+    </script>
+
+</div>
