@@ -7,7 +7,7 @@ import module namespace assert="http://dhil.lib.sfu.ca/exist/xunit/assert" at "a
 
 import module namespace object="http://dhil.lib.sfu.ca/exist/gpi/object" at "../../modules/object.xql";
 
-declare namespace tei = 'http://www.tei-c.org/ns/1.0';
+declare default element namespace 'http://www.tei-c.org/ns/1.0';
 
 declare
     %xunit:test

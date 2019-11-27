@@ -13,6 +13,21 @@
             <resourcecount when="greater" count="0" refid="console-usages" />
         </condition>
     </fail>
+
+    <target name='precheck'>
+        <exec executable='git' outputproperty="pc.output">
+            <arg value="status"/>
+            <arg value="--porcelain"/>
+            <arg value="--untracked-files=no"/>
+        </exec>
+        <fail status="2" message="One or more modified files exists in ${pc.output}">
+            <condition>
+                <not>
+                    <equals arg1="${pc.output}" arg2="" />
+                </not>
+            </condition>
+        </fail>
+    </target>
         
     <target depends="bower" name="xar">
         <mkdir dir="${build.dir}"/>

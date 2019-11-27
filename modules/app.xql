@@ -6,6 +6,9 @@ import module namespace templates="http://exist-db.org/xquery/templates" ;
 import module namespace config="http://dhil.lib.sfu.ca/exist/gpi/config" at "config.xqm";
 import module namespace collection="http://dhil.lib.sfu.ca/exist/gpi/collection" at "collection.xql";
 import module namespace tx='http://dhil.lib.sfu.ca/exist/gpi/transform' at 'transform.xql';
+import module namespace poem='http://dhil.lib.sfu.ca/exist/gpi/poem' at 'poem.xql';
+import module namespace object='http://dhil.lib.sfu.ca/exist/gpi/object' at 'object.xql';
+
 import module namespace kwic="http://exist-db.org/xquery/kwic";
 
 declare namespace tei = 'http://www.tei-c.org/ns/1.0';
@@ -44,6 +47,11 @@ function app:browse-objects($node as node(), $model as map(*), $page as xs:integ
     let $end := $start + $config:poem-page-size
     
     return tx:browse-objects($model('objects')[$start le position() and position() lt $end])
+};
+
+declare
+function app:count-objects($node as node(), $model as map(*)) as xs:integer {
+  count($model('objects'))
 };
 
 declare 
@@ -128,8 +136,32 @@ declare function app:render-poem-references($node as node(), $model as map(*)) a
     return tx:poem-references($poem)
 };
 
-declare function app:render-object-references($node as node(), $model as map(*)) as node()* {
-    ()
+declare function app:load-object-references($node as node(), $model as map(*)) as map(*) {
+  let $object := $model('object')
+  let $poems := collection:references(object:id($object))
+  return map {
+    'poems' := $poems,
+    'count' := count($poems)
+  }
+};
+
+declare function app:poem-title($node as node(), $model as map(*)) as node()* {
+  let $poem := $model('poem')
+  return <a href="../poem/view.html?id={poem:id($poem)}">{tx:render(poem:title($poem)/node())}</a>
+};
+
+declare function app:count-object-references($node as node(), $model as map(*)) as xs:integer {
+  $model('count')
+};
+
+declare 
+  %templates:wrap
+function app:object-usage($node as node(), $model as map(*)) as node()* {
+  let $object := $model('object')
+  let $id := '#' || object:id($object)
+  let $poem := $model('poem')
+  let $lines := $poem//tei:l[ ( .//tei:seg[@ana=$id] | .//tei:ref[@corresp=$id])]
+  return tx:render($lines)
 };
 
 declare 
@@ -150,7 +182,39 @@ function app:load-poem-search($node as node(), $model as map(*), $q as xs:string
       }
 };
 
-declare function app:search-hit($node as node(), $model as map(*)) as node()* {  
+declare 
+function app:search-object-name($node as node(), $model as map(*)) as node()* {
+  let $hit := $model('hit')
+  let $title := object:name($hit)
+  return <a href="view.html?id={object:id($hit)}">{ tx:render($title/node()) }</a>
+};
+
+declare 
+  %templates:default('q', '')
+  %templates:default('page', 1)
+function app:load-object-search($node as node(), $model as map(*), $q as xs:string, $page) as map(*) {
+  if($q = '') then
+    map {}
+  else
+    let $hits := collection:search-objects($q)
+    return
+      map {
+        'hits' := $hits,
+        'page-size' := $config:object-page-size,
+        'total' := count($hits),
+        'q' := $q,
+        'page' := $page
+      }
+};
+
+declare 
+function app:search-object-title($node as node(), $model as map(*)) as node()* {
+  let $hit := $model('hit')
+  let $title := object:name($hit)
+  return <a href="view.html?id={poem:id($hit)}">{ tx:render($title/node()) }</a>
+};
+
+declare function app:search-summary($node as node(), $model as map(*)) as node()* {  
   let $hit := $model('hit')
   return
     kwic:summarize($hit, <config width="40"/>)
@@ -184,7 +248,7 @@ function app:paginate($node as node(), $model as map(*), $page as xs:integer, $q
     let $query-param := if($q) then "&amp;q=" || $q else ""
 
     return
-      if($pages eq 1) then 
+      if(empty($pages) or $pages le 1) then 
         () 
       else
         <nav>

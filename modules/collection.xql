@@ -3,6 +3,7 @@ xquery version "3.1";
 module namespace collection="http://dhil.lib.sfu.ca/exist/gpi/collection";
 
 import module namespace config="http://dhil.lib.sfu.ca/exist/gpi/config" at "config.xqm";
+import module namespace poem="http://dhil.lib.sfu.ca/exist/gpi/poem" at "poem.xql";
 
 declare namespace tei = "http://www.tei-c.org/ns/1.0";
 
@@ -12,12 +13,9 @@ declare function collection:get-poems() as node()* {
 };
 
 declare function collection:get-objects() as node()* {
-    let $size := $config:object-page-size
-    
-    return 
-        for $object in doc($config:data-root || '/dictionary.xml')//tei:object
-        order by $object/tei:objectIdentifier/tei:objectName
-        return $object
+  for $object in doc($config:data-root || '/dictionary.xml')//tei:object
+  order by $object/tei:objectIdentifier/tei:objectName
+  return $object
 };
 
 declare function collection:missing-objects() as node()* {
@@ -88,6 +86,19 @@ declare function collection:search-poems($q as xs:string) as node()* {
     return $hit
 };
 
-declare function collection:references($id) {
-()
+declare function collection:search-objects($q as xs:string) as node()* {
+  if(empty($q) or $q = '') then 
+    ()
+  else
+    for $hit in doc($config:data-root || '/dictionary.xml')//tei:object[ft:query(., $q)]
+    order by ft:score($hit)
+    return $hit
 };
+
+declare function collection:references($id) {
+  for $poem in collection:get-poems()
+  where $poem//tei:seg[contains(@ana, '#' || $id)]
+  order by poem:title($poem)//string()
+  return $poem
+};
+

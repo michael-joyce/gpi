@@ -15,7 +15,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <form>
+                <form action="search.html">
                     <div class="form-group">
                         <label class="sr-only" for="q">Search term</label>
                         <div class="input-group">
@@ -36,7 +36,8 @@
             <div class="col-sm-12">
                 
                 <div class="templates:each?from=hits&amp;to=hit">
-                    <div data-template="app:search-hit">
+                    <h3><a data-template='app:search-poem-title'></a></h3>
+                    <div data-template="app:search-summary">
                     </div>
                 </div>
                 

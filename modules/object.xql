@@ -2,7 +2,7 @@ xquery version "3.1";
 
 module namespace object="http://dhil.lib.sfu.ca/exist/gpi/object";
 
-declare namespace tei = 'http://www.tei-c.org/ns/1.0';
+declare default element namespace 'http://www.tei-c.org/ns/1.0';
 
 declare function object:root($node as node()) as node() {
   $node/ancestor-or-self::object
