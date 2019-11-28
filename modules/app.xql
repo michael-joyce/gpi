@@ -208,9 +208,9 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
 };
 
 declare 
-function app:search-object-title($node as node(), $model as map(*)) as node()* {
+function app:search-poem-title($node as node(), $model as map(*)) as node()* {
   let $hit := $model('hit')
-  let $title := object:name($hit)
+  let $title := poem:title($hit)
   return <a href="view.html?id={poem:id($hit)}">{ tx:render($title/node()) }</a>
 };
 
