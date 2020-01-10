@@ -13,6 +13,10 @@ import module namespace kwic="http://exist-db.org/xquery/kwic";
 
 declare namespace tei = 'http://www.tei-c.org/ns/1.0';
 
+(:~
+ : Load the complete list of poems into the model. They will be paginated and 
+ : displayed elsewhere.
+ :)
 declare function app:load-poems($node as node(), $model as map(*)) {
     let $poems := collection:get-poems()
     return map {
@@ -22,6 +26,10 @@ declare function app:load-poems($node as node(), $model as map(*)) {
     }
 };
 
+(:~
+ : Load the complete list of objects into the model. They will be paginated and 
+ : displayed elsewhere.
+ :)
 declare function app:load-objects($node as node(), $model as map(*)) {
     let $objects := collection:get-objects()
     return map {
@@ -31,6 +39,11 @@ declare function app:load-objects($node as node(), $model as map(*)) {
     }
 };
 
+(:~
+ : Display a one-page list of poems. The peoms come from the model (app:load-poems()) and 
+ : are pre-sorted.
+ : @todo redo this to use templates:each instead.
+ :)
 declare 
     %templates:default("page", 1)
 function app:browse-poems($node as node(), $model as map(*), $page as xs:integer) as node()* {
@@ -40,6 +53,11 @@ function app:browse-poems($node as node(), $model as map(*), $page as xs:integer
     return tx:browse-poems($model('poems')[$start le position() and position() lt $end])
 };
 
+(:~
+ : Display a one-page list of objects. The objects come from the model (app:load-poems()) and 
+ : are pre-sorted.
+ : @todo redo this to use templates:each instead.
+ :)
 declare 
     %templates:default("page", 1)
 function app:browse-objects($node as node(), $model as map(*), $page as xs:integer) as node()* {
@@ -49,11 +67,27 @@ function app:browse-objects($node as node(), $model as map(*), $page as xs:integ
     return tx:browse-objects($model('objects')[$start le position() and position() lt $end])
 };
 
+(:~
+ : Count the poems stored in the model and return the count.
+ :)
+declare
+function app:count-poems($node as node(), $model as map(*)) as xs:integer {
+  count($model('poems'))
+};
+
+(:~
+ : Count the objects stored in the model and return the count.
+ :)
 declare
 function app:count-objects($node as node(), $model as map(*)) as xs:integer {
   count($model('objects'))
 };
 
+(:~
+ : Fetch a list of tei:ref and tei:seg tags which do not have corresponding entries
+ : in the dictionary and store them in the model.
+ : @todo is this function poorly named? 
+ :)
 declare 
   %templates:wrap
 function app:load-missing-objects($node as node(), $model as map(*)) as map(*) {
@@ -74,6 +108,11 @@ function app:load-missing-objects($node as node(), $model as map(*)) as map(*) {
     }
 };
 
+(:~
+ : Fetch the text wrapped by a tei:seg or tei:ref which is stored in the 
+ : $model('object').
+ : @todo this one is really poorly named.
+ :)
 declare
   %templates:wrap
 function app:object-text($node as node(), $model as map(*)) as xs:string {
@@ -81,6 +120,11 @@ function app:object-text($node as node(), $model as map(*)) as xs:string {
   return $object//text()
 };
 
+(:~
+ : Find the poem which contains the tei:ref or tei:seg tag. The tag is stored in
+ : $model('object').
+ : @todo the bad naming continues. And it should use functions in the poem: namespace.
+ :)
 declare
   %templates:wrap
 function app:object-poem($node as node(), $model as map(*)) as xs:string {
@@ -90,6 +134,10 @@ function app:object-poem($node as node(), $model as map(*)) as xs:string {
   return $poem//tei:title/text()
 };
 
+(:~
+ : Get the referencing string from a tei:ref or tei:seg.
+ : @todo this is also a bad name.
+ :)
 declare
   %templates:wrap
 function app:object-reference($node as node(), $model as map(*)) as xs:string* {
@@ -104,6 +152,9 @@ function app:object-reference($node as node(), $model as map(*)) as xs:string* {
         return local-name($object)
 };
 
+(:~
+ : Load a poem from the collection and store it in the model.
+ :)
 declare function app:load-poem($node as node(), $model as map(*), $id as xs:string) {
     let $poem := collection:poem($id)
     
@@ -113,6 +164,9 @@ declare function app:load-poem($node as node(), $model as map(*), $id as xs:stri
     }
 };
 
+(:~
+ : Load a object from the collection and store it in the model.
+ :)
 declare function app:load-object($node as node(), $model as map(*), $id as xs:string) {
     let $object := collection:object($id)
     return map {
@@ -121,21 +175,35 @@ declare function app:load-object($node as node(), $model as map(*), $id as xs:st
     }
 };
 
+(:~
+ : Get the poem out of the model and transform it into HTML via the transform module.
+ :)
 declare function app:render-poem($node as node(), $model as map(*)) as node()* {
     let $poem := $model('poem')
     return tx:poem($poem)
 };
 
+(:~
+ : Get the object out of the model and transform it into HTML via the transform module.
+ :)
 declare function app:render-object($node as node(), $model as map(*), $id as xs:string) {
     let $object := $model('object')
     return tx:render($object)
 };
 
+(:~
+ : Render a list of tei:objects referenced in the tei:seg and tei:ref elements in the poem.
+ : @todo does it also work on tei:seg? Not sure.
+ :)
 declare function app:render-poem-references($node as node(), $model as map(*)) as node()* {
     let $poem := $model('poem')
     return tx:poem-references($poem)
 };
 
+(:~
+ : Fetch a sequence of poems which reference an object in $model('object') and store
+ : the list in the model.
+ :)
 declare function app:load-object-references($node as node(), $model as map(*)) as map(*) {
   let $object := $model('object')
   let $poems := collection:references(object:id($object))
@@ -145,15 +213,31 @@ declare function app:load-object-references($node as node(), $model as map(*)) a
   }
 };
 
+(:~
+ : Render a poem title inside a link to the poem.
+ :)
 declare function app:poem-title($node as node(), $model as map(*)) as node()* {
   let $poem := $model('poem')
-  return <a href="../poem/view.html?id={poem:id($poem)}">{tx:render(poem:title($poem)/node())}</a>
+  let $title := poem:title($poem)
+  
+  return 
+    if(empty($title)) then 
+        <a href="../poem/view.html?id={poem:id($poem)}"><i>Title Missing</i></a>
+    else 
+        <a href="../poem/view.html?id={poem:id($poem)}">{tx:render(poem:title($poem)/node())}</a>
 };
 
+(:~
+ : Return the count from $model('count') 
+ :)
 declare function app:count-object-references($node as node(), $model as map(*)) as xs:integer {
   $model('count')
 };
 
+(:~
+ : Find all the lines in $model('poem') which contain a tei:sig or tei:ref pointing at
+ : $model('object'). The lines are rendered by transform.xql into HTML.
+ :)
 declare 
   %templates:wrap
 function app:object-usage($node as node(), $model as map(*)) as node()* {
@@ -164,6 +248,9 @@ function app:object-usage($node as node(), $model as map(*)) as node()* {
   return tx:render($lines)
 };
 
+(:~
+ : Perform a search of the poems and store the results in the model.
+ :)
 declare 
   %templates:default('q', '')
   %templates:default('page', 1)
@@ -182,13 +269,9 @@ function app:load-poem-search($node as node(), $model as map(*), $q as xs:string
       }
 };
 
-declare 
-function app:search-object-name($node as node(), $model as map(*)) as node()* {
-  let $hit := $model('hit')
-  let $title := object:name($hit)
-  return <a href="view.html?id={object:id($hit)}">{ tx:render($title/node()) }</a>
-};
-
+(:~
+ : Perform a search of the objects and store the results in the model.
+ :)
 declare 
   %templates:default('q', '')
   %templates:default('page', 1)
@@ -207,6 +290,19 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
       }
 };
 
+(:~
+ : Render an object name in a link to the object. The object is in $model('hit').
+ :)
+declare 
+function app:search-object-name($node as node(), $model as map(*)) as node()* {
+  let $hit := $model('hit')
+  let $title := object:name($hit)
+  return <a href="view.html?id={object:id($hit)}">{ tx:render($title/node()) }</a>
+};
+
+(:~
+ : Render a poem title in a link to the poem. The poem is in $model('hit').
+ :)
 declare 
 function app:search-poem-title($node as node(), $model as map(*)) as node()* {
   let $hit := $model('hit')
@@ -214,24 +310,37 @@ function app:search-poem-title($node as node(), $model as map(*)) as node()* {
   return <a href="view.html?id={poem:id($hit)}">{ tx:render($title/node()) }</a>
 };
 
+(:~
+ : Summarize one search it, stored in $model('hit') as a KWIC thing and return it.
+ :)
 declare function app:search-summary($node as node(), $model as map(*)) as node()* {  
   let $hit := $model('hit')
   return
     kwic:summarize($hit, <config width="40"/>)
 };
 
+(:~
+ : Return the search term stored in the model as $model('q').
+ :)
 declare 
   %templates:wrap
 function app:search-term($node as node(), $model as map(*)) as xs:string* {
   $model('q')
 };
 
+(:~
+ : Return the total number of search results, stored in the model as $model('total').
+ :)
 declare 
   %templates:wrap
 function app:search-count($node as node(), $model as map(*)) as xs:integer* {
   $model('total')
 };
 
+(:~
+ : Create and return a pagination widget. Assumes that $model contains total and page-size 
+ : entries. 
+ :)
 declare 
     %templates:default("page", 1)
     %templates:default("q", '')
