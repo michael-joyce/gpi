@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:sch="http://purl.oclc.org/dsdl/schematron" xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>ODD Customization for the <title level="m">Gendered Personification Index</title></title>
+      </titleStmt>
+      <publicationStmt>
+        <p>Publication Information</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Information about the source</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <schemaSpec ident="gpi-schema" start="TEI">
+        <moduleRef key="analysis" include="interp interpGrp span"/>
+        <moduleRef key="core" include="author bibl cit date editor emph gap head l lg name note p quote ref resp respStmt rs title unclear"/>
+        <moduleRef key="header" include="fileDesc listPrefixDef prefixDef profileDesc publicationStmt sourceDesc teiHeader titleStmt"/>
+        <moduleRef key="linking" include="seg"/>
+        <moduleRef key="msdescription" include="objectDesc"/>
+        <moduleRef key="namesdates" include="listObject object objectIdentifier objectName persName person"/>
+        <moduleRef key="tei"/>
+        <moduleRef key="textstructure" include="TEI body div epigraph signed text"/>
+        
+        <elementSpec ident="ref" module="core" mode="change">
+          <attList>
+           <attDef ident="ana" mode="replace">
+             <valList mode="add" type="closed">
+               <valItem ident="#m">
+                 <desc>Male</desc>
+                 <gloss>Male pronoun</gloss>
+               </valItem>
+               <valItem ident="#f">
+                 <desc>Female</desc>
+                 <gloss>Female pronoun</gloss>
+               </valItem>
+               <valItem ident="#n">
+                 <desc>Neutral</desc>
+                 <gloss>Neutral pronoun</gloss>
+               </valItem>
+               <valItem ident="#y">
+                 <desc>First Person</desc>
+                 <gloss>First person pronoun</gloss>
+               </valItem>
+             </valList>
+           </attDef>
+          </attList>
+        </elementSpec>
+        
+        <!--Now for some constraints...-->
+        
+       <constraintSpec ident="schematron.globals" scheme="schematron">
+         <constraint>
+           <sch:pattern>
+             <sch:let name="thisDocUri" value="document-uri(/)"/>
+             <sch:let name="thisDocBaseUri" value="string-join(tokenize($thisDocUri,'/')[position() != last()],'/')"/>
+             <sch:let name="dictionaryDoc" value="concat($thisDocBaseUri,'/','dictionary.xml') => document()"/>
+           </sch:pattern>
+         </constraint>
+       </constraintSpec>
+        
+        <constraintSpec ident="allRefsShouldPointToDictionary" scheme="schematron">
+          <constraint>
+            <sch:pattern>
+              <sch:rule context="tei:seg[@ana]">
+                <sch:let name="ptr" value="substring-after(@ana,'#')"/>
+                <sch:assert test="$dictionaryDoc//tei:object[@xml:id=$ptr]">
+                  ERROR: <sch:value-of select="$ptr"/> cannot be found in the dictionary file. Check your spelling or add this id to the dictionary file.
+                </sch:assert>
+              </sch:rule>
+            </sch:pattern>
+          </constraint>
+        </constraintSpec>
+        
+        <constraintSpec ident="allCorrespsAndAnasShouldStartWithHash" scheme="schematron">
+          <constraint>
+            <sch:pattern>
+              <sch:rule context="tei:*[@ana or @corresp]">
+                <sch:let name="anaGood" 
+                  value="if (@ana) then matches(@ana,'^#') else true()"/>
+                <sch:let name="correspGood" 
+                  value="if (@corresp) then matches(@corresp,'^#') else true()"/>
+                <sch:assert test="$anaGood and $correspGood">
+                  ERROR: All @ana and @corresp attribute values must start with a hash (#).
+                </sch:assert>
+              </sch:rule>
+            </sch:pattern>
+          </constraint>
+        </constraintSpec>
+        
+        <constraintSpec ident="allRefsShouldHavePrecedingThing" scheme="schematron">
+          <constraint>
+            <sch:pattern>
+              <sch:rule context="tei:ref[@ana and @corresp]">
+                <sch:let name="thisEl" value="."/>
+                <sch:let name="correspPtr" value="@corresp"/>
+                <sch:let name="poem" value="ancestor::tei:div[1]"/>
+                <sch:let name="precedingRef" value="ancestor::tei:div[1]/descendant::tei:seg[@ana = $correspPtr]"/>
+                <sch:assert test="not(empty($precedingRef))">
+                  ERROR: Cannot find reference to <sch:value-of select="@corresp"/> in poem <sch:value-of select="$poem/@xml:id"/>.
+                </sch:assert>
+              </sch:rule>
+            </sch:pattern>
+          </constraint>
+        </constraintSpec>
+        
+        
+        
+        
+      </schemaSpec>
+    </body>
+  </text>
+</TEI>
