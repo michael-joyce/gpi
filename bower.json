@@ -20,6 +20,7 @@
     "bootstrap": "bootstrap#^3.3.7",
     "tablesorter": "jquery.tablesorter#^2.31.1",
     "ebgaramond-googlefont": "*",
-    "roboto-googlefont": "*"
+    "roboto-googlefont": "*",
+    "css-hamburgers": "^1.1.3"
   }
 }
