@@ -7,51 +7,248 @@
   sass --watch resources/sass:resources/css
 */
 
-$footer_height: 60px;
-$footer_bg: #f5f5f5;
 
-// error rendering
-$error_bg: #fefedd;
-$error_outline: 1px solid #f00;
-$error_padding: 3px;
+/******************************************** NAMESPACES */
 
-// typography
-$p_margin: 10px;
+@use 'sass:map';
 
-// line counters
-$lc_width: 4em;
+/******************************************** IMPORTS */
 
-$lc_offset: 1em;
-$lc_fg: #ccc;
+@import "_variables.scss";
+@import "_fonts.scss";
+@import "_mixins.scss";
+@import "../lib/css-hamburgers/_sass/hamburgers/hamburgers.scss";
 
-// gendered reference colours
-$gender_u_fg: #800080;
-$gender_m_fg: #0000ff;
-$gender_f_fg: #ff0000;
-$gender_n_fg: #008000;
-$gender_y_fg: #b8860b;
 
-// -----------------------------------------------------
-// Generic bootstrappy stuff.
+
+/******************************************** MAIN STRUCTURE */
+
 html {
     position: relative;
     min-height: 100%;
+    font-size: 16px;
 }
 
-body {
-    // Margin bottom by footer height
-    margin-bottom: $footer_height;
+body{
+    font-family: "EB Garamond";
+    display:grid;
+    grid-template-areas:
+    "nav"
+    "main"
+    "footer";
+    min-height:100vh;
+    color: $gpi-black;
+     font-size: 16px;
 }
 
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: $footer_height;
-    // Vertically center the text there
-    line-height: $footer_height;
-    background-color: $footer_bg;
+
+nav{
+    grid-area: nav;
+    position:fixed;
+    height: $nav-height;
+    font-family: "Roboto";
+    background: $gpi-grey;
 }
+
+main{
+    grid-area: main;
+    margin-top: $nav-height;
+    position:relative;
+    .poem-container{
+        display:flex;
+    }
+    max-width: 70rem;
+}
+
+
+
+
+
+aside{
+    width:15rem;
+    background: $gpi-grey;
+    position:sticky;
+    overflow-y:auto;
+    order:0;
+    height:calc(100vh - #{$nav-height});
+    padding: map.get($typescale, 10) 0;
+    top: $nav-height;
+ 
+     transition: transform 0.5s ease;
+    font-family: "Roboto";
+    h1, h2, h3, h4, h5, h6{
+        font-weight: 300;
+    }
+    .aside-heading, h2, h3{
+        font-size: map.get($typescale, 5);
+    }
+
+}
+
+
+
+
+aside, .poem{
+   transform: translateX(0);
+
+}
+
+
+aside > button{
+    display:block;
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:9000;
+    opacity: 0.7;
+}
+
+.poem{
+    transition: transform $shift-left-time ease;
+}
+
+.aside-hidden .poem{
+    transform: translateX($shift-left-width);
+    margin-right: $shift-left-width;
+}
+
+aside > div{
+    opacity: 1;
+    transition: opacity $shift-left-time ease;
+}
+
+aside[aria-expanded='false']{
+    transform: translateX($shift-left-width);
+    overflow-y:hidden;
+}
+
+
+aside[aria-expanded='false'] > div{
+    opacity:0.1;
+    pointer-events: none;
+}
+
+
+
+
+aside > div {
+    padding: map.get($typescale, 8);
+    &:not(:first-of-type){
+        border-top: map.get($typescale, 16) solid rgba($gpi-black, 0.4);
+    }
+}
+
+
+footer::before{
+    content:"";
+    height:4rem;
+    display:block;
+}
+
+footer{
+    grid-area:footer;
+    height:20rem;
+    background: green;
+}
+
+
+
+/*********************************************** HEADINGS */
+
+/* Quick SASS formula for creating heading scale */
+@for $i from 1 to 6{
+    h#{$i}{
+        font-size: map.get($typescale, $i);
+    }
+}
+
+
+// -----------------------------------------------------
+// Poem display
+.poem {
+    counter-reset: line-counter;
+    max-width: 50rem;
+    font-size:18px;
+        order:1;
+    margin-bottom: 5 * map.get($typescale, 1);
+    margin-top: map.get($typescale, 4);
+    margin-left: map.get($typescale, 1);
+    blockquote {
+        font-size: 16px;
+        margin: map.get($typescale, 4) map.get($typescale, 1);
+        max-width:25rem;
+        p{
+            margin:0;
+        }
+        cite{
+            margin-left: map.get($typescale, 1);
+            display:block;
+            font-style:italic;
+        }
+        footer {
+            font-size: inherit;
+        }
+        border:none;
+    }
+
+    ol {
+        list-style-type: none;
+        padding-left: 0;
+        margin-left:0;
+        & + ol{
+            margin-top: map.get($typescale, 5);
+        }
+    }
+
+    li {
+        counter-increment: line-counter;
+        margin-left:0;
+        padding-left:0;
+       & + li{
+           margin-top: map.get($typescale, 13);
+       }
+    }
+
+    li::before {
+        content: counter(line-counter) '.';
+        color: rgba($gpi-black, 0.5);
+        padding-right: $lc_offset;
+        text-align: right;
+        display: inline-block;
+    }
+    
+}
+
+
+
+main a{
+    text-decoration:none;
+    color: inherit;
+    border-bottom: 0.1rem solid rgba(#008080, 0.6);
+    background: linear-gradient(
+    0deg, 
+    $bc 0%,
+    $bc $initHeight * 1%,
+    $transparent $initHeight * 1%,
+    $transparent 100%);
+}
+
+main a.selected,
+main.clicked{
+    background: linear-gradient(
+        0deg,
+        $bc 0%,
+        $bc 100%
+    );
+    animation: background-up $backgroundTime linear;
+    
+}
+
+main a.deselected{
+    animation: background-down $backgroundTime linear;
+}
+
+
 
 // -----------------------------------------------------
 // transformation errors
@@ -76,41 +273,7 @@ span.hi {
     color: darkred;
 }
 
-// -----------------------------------------------------
-// Poem display
-.poem {
-    counter-reset: line-counter;
 
-    blockquote {
-        font-size: inherit;
-
-        p {
-            margin: $p_margin 0 0 0;
-        }
-
-        footer {
-            font-size: inherit;
-        }
-    }
-
-    ol {
-        list-style-type: none;
-        padding-left: 0;
-    }
-
-    li {
-        counter-increment: line-counter;
-    }
-
-    li::before {
-        content: counter(line-counter) '.';
-        color: $lc_fg;
-        width: $lc_width;
-        padding-right: $lc_offset;
-        text-align: right;
-        display: inline-block;
-    }
-}
 
 span.target {
     color: $gender_u_fg;
@@ -121,30 +284,7 @@ span.target {
     font-weight: bolder;
 }
 
-a.reference {
 
-    &:hover {
-        text-decoration: none;
-    }
-    
-    color: $gender_u_fg;
-
-    &[data-gender='m'] {
-        color: $gender_m_fg;
-    }
-
-    &[data-gender='f'] {
-        color: $gender_f_fg;
-    }
-
-    &[data-gender='n'] {
-        color: $gender_n_fg
-    }
-
-    &[data-gender='y'] {
-        color: $gender_y_fg;
-    }
-}
 
 p.signed {
     margin-left: 4em;
@@ -158,3 +298,6 @@ ul.references {
         font-style: italic;
     }
 }
+
+//15 seems to be about the right param
+@include animateBorderBottom(15)

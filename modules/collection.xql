@@ -59,7 +59,7 @@ declare function collection:object($id as xs:string) as node() {
         if ($object) then
             $object
         else 
-            <object xmlns="http://www.tei-c.org/ns/1.0" xml:id="error" type="error">
+            <object xmlns="http://www.tei-c.org/ns/1.0" xml:id="error_{$id}" type="error">
                   <objectIdentifier>
                      <objectName>Error</objectName>
                   </objectIdentifier>

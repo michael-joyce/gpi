@@ -54,9 +54,6 @@ declare function tx:p($node as node(), $poem as node()) as node() {
     <p>{tx:render($node/node(), $poem)}</p>
 };
 
-declare function tx:listObject($node as node(), $poem as node()) as node() {
-    <dl>{tx:render($node/node(), $poem)}</dl>
-};
 
 declare function tx:epigraph($node as node(), $poem as node()) as node() {
     <blockquote class='epigraph'>{tx:render($node/node(), $poem)}</blockquote>
@@ -73,17 +70,39 @@ declare function tx:quote($node as node(), $poem as node()) as node() {
     <p>{tx:render($node/node()[local-name(.) != 'bibl'], $poem)}</p>
 };
 
+declare function tx:listObject($node as node(), $poem as node()) as node() {
+    <aside aria-expanded="true" id="aside">
+    <button id="aside-toggle" class="hamburger hamburger--arrow is-active" type="button" aria-label="Toggle">
+        <span class="hamburger-box">
+         <span class="hamburger-inner"></span>
+        </span>
+         <span class="sr-only" aria-hidden="true">Toggle</span>
+    </button>
+        <div class="aside-heading">
+            <h2>Personifications</h2>
+ 
+        </div>
+    
+        {tx:render($node/node(), $poem)}
+    
+    </aside>
+};
+
+
 declare function tx:object($node as node(), $poem as node()) as node() {
     <div id="{$node/@xml:id}">
-        <dt>{tx:render($node//tei:objectName, $poem)}</dt>
+        {
+           if ($node[@type]) then attribute{"class"}{$node/@type} else ()
+        }
+        <h3>{tx:render($node//tei:objectName, $poem)}</h3>
         { 
             for $node in $node/node()[local-name(.) != 'objectIdentifier']/node()
             return <dd>{tx:render($node, $poem)}</dd>
         }
-        <dd><ul class='references list-inline'> {
-            for $ref in $poem//tei:ref[@corresp= '#' || $node/@xml:id]
+        <ul class='references list-inline'> {
+            for $ref in $poem//tei:ref[@corresp= ('#' || $node/@xml:id)]
             return <li> { tx:render($ref, $poem) } </li>
-        } </ul></dd>
+        } </ul>
     </div>
 };
 

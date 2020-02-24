@@ -3,11 +3,9 @@
     data-template-with="templates/subpage.html" data-template-at="content">
 
     <div data-template="app:load-poem">
-        <div class='row'>
-            <div class='col-sm-8'>
-                <div data-template='app:render-poem'></div>
-                <div data-template='app:render-poem-references'></div>
-            </div>
+        <div class="poem-container">
+            <div data-template='app:render-poem'></div>
+            <div data-template='app:render-poem-references'></div>
         </div>
     </div>
     <script src="../resources/js/poem.js"></script>

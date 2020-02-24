@@ -1,0 +1,35 @@
+@mixin animateBorderBottom($increments){
+    $ratio: (100 / $increments);
+    $directions: up, down;
+  
+  //We need this to go both directions
+    @each $dir in $directions{
+      //Go up or down depending on the direction
+        @keyframes background-#{$dir}{
+          //Now iterate through the incremenets
+            @for $i from 0 to $increments + 1{
+               //The number to use is the ratio times the number
+                $num: $i * $ratio;
+              
+              //Factor is usually the same as the num, unless we're reversing
+                $factor: $num;
+              
+              //If dir is down, then we reverse
+                @if ($dir == down){
+                    $factor: ($increments - $i) * $ratio;
+                }
+              
+              //But the num stays the same for both directions
+                #{$num * 1%}{
+                  
+                  //And now make the linear gradient
+                    background: linear-gradient(0deg,
+                     $bc 0%, 
+                     $bc $initHeight * 1%,
+                      $bc $factor * 1%, $transparent $factor *1%, $transparent 100%)
+                    }
+                  
+                }
+              }
+        }
+    }

@@ -1,23 +1,409 @@
 /*!
   This style sheet was generated from a SASS stylesheet. Don't edit this
   stylesheet directly, edit and compile the SASS instead.
+
+  Try something like this:
+
+  sass --watch resources/sass:resources/css
 */
+/******************************************** NAMESPACES */
+/******************************************** IMPORTS */
+/* Nav bar stuff */
+/* Major third type scale */
+/* Special stuff for hamburger thing */
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../lib/ebgaramond-googlefont/EBGaramond-Regular.ttf") format("truetype");
+}
+/* roboto-100 - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 100;
+  src: local("Roboto Thin"), local("Roboto-Thin"), url("../lib/roboto-googlefont/Roboto-Thing.ttf") format("truetype");
+}
+/* roboto-100italic - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 100;
+  src: local("Roboto Thin Italic"), local("Roboto-ThinItalic"), url("../lib/roboto-googlefont/Roboto-ThingItalic.ttf") format("truetype");
+}
+/* roboto-300 - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Roboto Light"), local("Roboto-Light"), url("../lib/roboto-googlefont/Roboto-Light.ttf") format("truetype");
+}
+/* roboto-300italic - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 300;
+  src: local("Roboto Light Italic"), local("Roboto-LightItalic"), url("../lib/roboto-googlefont/Roboto-LightItalic.ttf") format("truetype");
+}
+/* roboto-regular - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"), local("Roboto-Regular"), url("../lib/roboto-googlefont/Roboto-Regular.ttf") format("truetype");
+}
+/* roboto-italic - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 400;
+  src: local("Roboto Italic"), local("Roboto-Italic"), url("../lib/roboto-googlefont/Roboto-Italic.ttf") format("truetype");
+}
+/* roboto-500 - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: local("Roboto Medium"), local("Roboto-Medium"), url("../lib/roboto-googlefont/Roboto-Medium.ttf") format("truetype");
+}
+/* roboto-500italic - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 500;
+  src: local("Roboto Medium Italic"), local("Roboto-MediumItalic"), url("../lib/roboto-googlefont/Roboto-MediumItalic.ttf") format("truetype");
+}
+/* roboto-700 - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../lib/roboto-googlefont/Roboto-Bold.ttf") format("truetype");
+}
+/* roboto-700italic - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 700;
+  src: local("Roboto Bold Italic"), local("Roboto-BoldItalic"), url("../lib/roboto-googlefont/Roboto-BoldItalic.ttf") format("truetype");
+}
+/* roboto-900 - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  src: local("Roboto Black"), local("Roboto-Black"), url("../lib/roboto-googlefont/Roboto-Black.ttf") format("truetype");
+}
+/* roboto-900italic - latin */
+@font-face {
+  font-family: "Roboto";
+  font-style: italic;
+  font-weight: 900;
+  src: local("Roboto Black Italic"), local("Roboto-BlackItalic"), url("../lib/roboto-googlefont/Roboto-BlackItalic.ttf") format("truetype");
+}
+/*!
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */
+.hamburger {
+  padding: 15px 15px;
+  display: inline-block;
+  cursor: pointer;
+  transition-property: opacity, filter;
+  transition-duration: 0.15s;
+  transition-timing-function: linear;
+  font: inherit;
+  color: inherit;
+  text-transform: none;
+  background-color: transparent;
+  border: 0;
+  margin: 0;
+  overflow: visible;
+}
+.hamburger:hover {
+  opacity: 0.7;
+}
+.hamburger.is-active:hover {
+  opacity: 0.7;
+}
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: #000;
+}
+
+.hamburger-box {
+  width: 28px;
+  height: 18px;
+  display: inline-block;
+  position: relative;
+}
+
+.hamburger-inner {
+  display: block;
+  top: 50%;
+  margin-top: -1px;
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+  width: 28px;
+  height: 2px;
+  background-color: #000;
+  border-radius: 4px;
+  position: absolute;
+  transition-property: transform;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+.hamburger-inner::before, .hamburger-inner::after {
+  content: "";
+  display: block;
+}
+.hamburger-inner::before {
+  top: -8px;
+}
+.hamburger-inner::after {
+  bottom: -8px;
+}
+
+/*@import "types/3dx";
+@import "types/3dx-r";
+@import "types/3dy";
+@import "types/3dy-r";
+@import "types/3dxy";
+@import "types/3dxy-r";*/
+/*
+ * Arrow
+ */
+.hamburger--arrow.is-active .hamburger-inner::before {
+  transform: translate3d(-5.6px, 0, 0) rotate(-45deg) scale(0.7, 1);
+}
+.hamburger--arrow.is-active .hamburger-inner::after {
+  transform: translate3d(-5.6px, 0, 0) rotate(45deg) scale(0.7, 1);
+}
+
+/*@import "types/arrow-r";
+@import "types/arrowalt";
+@import "types/arrowalt-r";
+@import "types/arrowturn";
+@import "types/arrowturn-r";
+@import "types/boring";
+@import "types/collapse";
+@import "types/collapse-r";
+@import "types/elastic";
+@import "types/elastic-r";
+@import "types/emphatic";
+@import "types/emphatic-r";
+@import "types/minus";
+@import "types/slider";
+@import "types/slider-r";
+@import "types/spin";
+@import "types/spin-r";
+@import "types/spring";
+@import "types/spring-r";
+@import "types/stand";
+@import "types/stand-r";
+@import "types/squeeze";
+@import "types/vortex";
+@import "types/vortex-r";*/
+/******************************************** MAIN STRUCTURE */
 html {
   position: relative;
   min-height: 100%;
+  font-size: 16px;
 }
 
 body {
-  margin-bottom: 60px;
+  font-family: "EB Garamond";
+  display: grid;
+  grid-template-areas: "nav" "main" "footer";
+  min-height: 100vh;
+  color: #111111;
+  font-size: 16px;
 }
 
-.footer {
+nav {
+  grid-area: nav;
+  position: fixed;
+  height: 4rem;
+  font-family: "Roboto";
+  background: #F8F8F8;
+}
+
+main {
+  grid-area: main;
+  margin-top: 4rem;
+  position: relative;
+  max-width: 70rem;
+}
+main .poem-container {
+  display: flex;
+}
+
+aside {
+  width: 15rem;
+  background: #F8F8F8;
+  position: sticky;
+  overflow-y: auto;
+  order: 0;
+  height: calc(100vh - 4rem);
+  padding: 0.41rem 0;
+  top: 4rem;
+  transition: transform 0.5s ease;
+  font-family: "Roboto";
+}
+aside h1, aside h2, aside h3, aside h4, aside h5, aside h6 {
+  font-weight: 300;
+}
+aside .aside-heading, aside h2, aside h3 {
+  font-size: 1.25rem;
+}
+
+aside, .poem {
+  transform: translateX(0);
+}
+
+aside > button {
+  display: block;
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  background-color: #f5f5f5;
+  top: 10px;
+  right: 10px;
+  z-index: 9000;
+  opacity: 0.7;
+}
+
+.poem {
+  transition: transform 0.42s ease;
+}
+
+.aside-hidden .poem {
+  transform: translateX(-10.5rem);
+  margin-right: -10.5rem;
+}
+
+aside > div {
+  opacity: 1;
+  transition: opacity 0.42s ease;
+}
+
+aside[aria-expanded=false] {
+  transform: translateX(-10.5rem);
+  overflow-y: hidden;
+}
+
+aside[aria-expanded=false] > div {
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+aside > div {
+  padding: 0.64rem;
+}
+aside > div:not(:first-of-type) {
+  border-top: 0.086rem solid rgba(17, 17, 17, 0.4);
+}
+
+footer::before {
+  content: "";
+  height: 4rem;
+  display: block;
+}
+
+footer {
+  grid-area: footer;
+  height: 20rem;
+  background: green;
+}
+
+/*********************************************** HEADINGS */
+/* Quick SASS formula for creating heading scale */
+h1 {
+  font-size: 3.052rem;
+}
+
+h2 {
+  font-size: 2.441rem;
+}
+
+h3 {
+  font-size: 1.953rem;
+}
+
+h4 {
+  font-size: 1.563rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+.poem {
+  counter-reset: line-counter;
+  max-width: 50rem;
+  font-size: 18px;
+  order: 1;
+  margin-bottom: 15.26rem;
+  margin-top: 1.563rem;
+  margin-left: 3.052rem;
+}
+.poem blockquote {
+  font-size: 16px;
+  margin: 1.563rem 3.052rem;
+  max-width: 25rem;
+  border: none;
+}
+.poem blockquote p {
+  margin: 0;
+}
+.poem blockquote cite {
+  margin-left: 3.052rem;
+  display: block;
+  font-style: italic;
+}
+.poem blockquote footer {
+  font-size: inherit;
+}
+.poem ol {
+  list-style-type: none;
+  padding-left: 0;
+  margin-left: 0;
+}
+.poem ol + ol {
+  margin-top: 1.25rem;
+}
+.poem li {
+  counter-increment: line-counter;
+  margin-left: 0;
+  padding-left: 0;
+}
+.poem li + li {
+  margin-top: 0.21rem;
+}
+.poem li::before {
+  content: counter(line-counter) ".";
+  color: rgba(17, 17, 17, 0.5);
+  padding-right: 1em;
+  text-align: right;
+  display: inline-block;
+}
+
+main a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 0.1rem solid rgba(0, 128, 128, 0.6);
+  background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 100%);
+}
+
+main a.selected,
+main.clicked {
+  background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 100%);
+  animation: background-up 0.2s linear;
+}
+
+main a.deselected {
+  animation: background-down 0.2s linear;
 }
 
 .tx-error {
@@ -37,34 +423,6 @@ span.hi {
   color: darkred;
 }
 
-.poem {
-  counter-reset: line-counter;
-}
-.poem blockquote {
-  font-size: inherit;
-}
-.poem blockquote p {
-  margin: 10px 0 0 0;
-}
-.poem blockquote footer {
-  font-size: inherit;
-}
-.poem ol {
-  list-style-type: none;
-  padding-left: 0;
-}
-.poem li {
-  counter-increment: line-counter;
-}
-.poem li::before {
-  content: counter(line-counter) ".";
-  color: #ccc;
-  width: 4em;
-  padding-right: 1em;
-  text-align: right;
-  display: inline-block;
-}
-
 span.target {
   color: #800080;
   cursor: pointer;
@@ -72,25 +430,6 @@ span.target {
 
 .referenced {
   font-weight: bolder;
-}
-
-a.reference {
-  color: #800080;
-}
-a.reference:hover {
-  text-decoration: none;
-}
-a.reference[data-gender=m] {
-  color: #0000ff;
-}
-a.reference[data-gender=f] {
-  color: #ff0000;
-}
-a.reference[data-gender=n] {
-  color: #008000;
-}
-a.reference[data-gender=y] {
-  color: #b8860b;
 }
 
 p.signed {
@@ -102,6 +441,107 @@ ul.references {
 }
 ul.references li {
   font-style: italic;
+}
+
+@keyframes background-up {
+  0% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 0%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  6.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 6.6666666667%, rgba(255, 255, 255, 0) 6.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  13.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 13.3333333333%, rgba(255, 255, 255, 0) 13.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  20% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 20%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 100%);
+  }
+  26.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 26.6666666667%, rgba(255, 255, 255, 0) 26.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  33.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 33.3333333333%, rgba(255, 255, 255, 0) 33.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  40% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 40%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 100%);
+  }
+  46.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 46.6666666667%, rgba(255, 255, 255, 0) 46.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  53.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 53.3333333333%, rgba(255, 255, 255, 0) 53.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  60% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 60%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+  }
+  66.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 66.6666666667%, rgba(255, 255, 255, 0) 66.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  73.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 73.3333333333%, rgba(255, 255, 255, 0) 73.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  80% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 80%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0) 100%);
+  }
+  86.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 86.6666666667%, rgba(255, 255, 255, 0) 86.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  93.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 93.3333333333%, rgba(255, 255, 255, 0) 93.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  100% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 100%, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 0) 100%);
+  }
+}
+@keyframes background-down {
+  0% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 100%, rgba(255, 255, 255, 0) 100%, rgba(255, 255, 255, 0) 100%);
+  }
+  6.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 93.3333333333%, rgba(255, 255, 255, 0) 93.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  13.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 86.6666666667%, rgba(255, 255, 255, 0) 86.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  20% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 80%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0) 100%);
+  }
+  26.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 73.3333333333%, rgba(255, 255, 255, 0) 73.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  33.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 66.6666666667%, rgba(255, 255, 255, 0) 66.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  40% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 60%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0) 100%);
+  }
+  46.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 53.3333333333%, rgba(255, 255, 255, 0) 53.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  53.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 46.6666666667%, rgba(255, 255, 255, 0) 46.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  60% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 40%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 100%);
+  }
+  66.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 33.3333333333%, rgba(255, 255, 255, 0) 33.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  73.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 26.6666666667%, rgba(255, 255, 255, 0) 26.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  80% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 20%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 100%);
+  }
+  86.6666666667% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 13.3333333333%, rgba(255, 255, 255, 0) 13.3333333333%, rgba(255, 255, 255, 0) 100%);
+  }
+  93.3333333333% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 6.6666666667%, rgba(255, 255, 255, 0) 6.6666666667%, rgba(255, 255, 255, 0) 100%);
+  }
+  100% {
+    background: linear-gradient(0deg, rgba(0, 128, 128, 0.5) 0%, rgba(0, 128, 128, 0.5) 10%, rgba(0, 128, 128, 0.5) 0%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
