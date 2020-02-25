@@ -150,6 +150,19 @@ declare function app:poem-title($node as node(), $model as map(*)) as node()* {
   return <a href="../poem/view.html?id={poem:id($poem)}">{tx:render(poem:title($poem)/node())}</a>
 };
 
+declare function app:object-title($node as node(), $model as map(*)) as node()*{
+    let $object := $model('object')
+    let $name := object:name($object)
+    return
+    <div class="row">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <h1>{$name}</h1>
+                </div>
+            </div>
+        </div>
+};
+
 declare function app:count-object-references($node as node(), $model as map(*)) as xs:integer {
   $model('count')
 };

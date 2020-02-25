@@ -89,22 +89,20 @@ declare function tx:listObject($node as node(), $poem as node()) as node() {
 
 
 declare function tx:object($node as node(), $poem as node()) as node() {
-    <div id="{$node/@xml:id}">
-        {
-           if ($node[@type]) then attribute{"class"}{$node/@type} else ()
-        }
-        <h3>{tx:render($node//tei:objectName, $poem)}</h3>
+    <div id="{$node/@xml:id}" class="object{if ($node[@type]) then (' ', $node/@type) else ()}">
+        <h1>{tx:render($node//tei:objectName, $poem)}</h1>
         <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
         { 
-            for $node in $node/node()[local-name(.) != 'objectIdentifier']/node()
-            return <dd>{tx:render($node, $poem)}</dd>
+            if ($node[tei:p]) then
+            tx:render($node/tei:p, $poem)
+            else ()
         }
         
         <div class="references">
-        <h4>Personified in this text as: </h4>
-        <ul class='references list-inline'> {
-            let $refs := $poem//tei:ref[@corresp = ('#' || $node/@xml:id)],
-            $genders := distinct-values($refs/@ana)
+            <h2>Personified in this text as: </h2>
+            <ul class='references list-inline'> {
+                let $refs := $poem//tei:ref[@corresp = ('#' || $node/@xml:id)],
+                $genders := distinct-values($refs/@ana)
             return
             for $g in $genders return 
                 let $genderRefs := $refs[@ana=$g]/generate-id(.)
@@ -187,7 +185,11 @@ declare function tx:poem-references($poem as node()) as node()* {
 };
 
 declare function tx:browse-poems($poems as node()*) as node()* {
-<table>
+<table class="table">
+    <thead>
+        <th>Title</th>
+        <th>Author</th>
+    </thead>
 <tbody>
 {
         for $poem in $poems
@@ -213,22 +215,31 @@ declare function tx:browse-poems($poems as node()*) as node()* {
 };
 
 declare function tx:browse-objects($objects as node()*) as node()* {
-    let $null := <tei:div/>
-    
-    return
-        <dl> {
-            for $object in $objects
-            return 
-            <div>
-                    <dt>
-                        <a href='view.html?id={$object/@xml:id}'>
-                            { tx:render($object/tei:objectIdentifier/node()) }
-                        </a>
-                    </dt>
-                    { 
-                        for $node in $object/node()[local-name(.) != 'objectIdentifier']/node()
-                        return <dd>{tx:render($node)}</dd>
-                    }
-                </div>
-        } </dl>
+    <table class="table">
+    <thead>
+        <th>Object</th>
+        <th>Instances</th>
+    </thead>
+    <tbody>
+    {
+        for $object in $objects
+        return 
+            <tr>
+            <td>
+             <a href="view.html?id={$object/@xml:id}"> { 
+                    if(exists($object/tei:objectIdentifier)) then 
+                        tx:render($object/tei:objectIdentifier/node()) 
+                    else 
+                       ()
+                } </a>
+            </td>
+            <td>
+                {
+                    count(collection:references($object/@xml:id))
+                }
+            </td>
+            </tr>
+    }
+</tbody>
+</table>
 };

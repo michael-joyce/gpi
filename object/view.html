@@ -3,30 +3,25 @@
     data-template-with="templates/subpage.html" data-template-at="content">
 <div class="container">
     <div data-template="app:load-object">
-
+        <div data-template="app:object-title">
+        </div>
+    </div>
+    <div data-template="app:load-object">
         <div class="row">
-            <div class="col-sm-12">
-                <div class="page-header">
-                    <h1>Gendered Personification Index</h1>
+            <div data-template="app:render-object"/>
+        </div>
+        <div class="row">
+            <div data-template="app:load-object-references">
+                <p>Found in <span data-template='app:count-object-references'></span> poems.</p>
+                <div class='templates:each?from=poems&amp;to=poem'>
+                    <h3><a data-template="app:poem-title"></a></h3>
+                    <ul data-template='app:object-usage'>
+                    </ul>
                 </div>
             </div>
+            
         </div>
-
-        <div class="row">
-            <div class="col-sm-8">
-                <div data-template="app:load-object">
-                    <div data-template="app:render-object"/>
-                    <div data-template="app:load-object-references">
-                        <p>Found in <span data-template='app:count-object-references'></span> poems.</p>
-                        <div class='templates:each?from=poems&amp;to=poem'>
-                            <h3><a data-template="app:poem-title"></a></h3>
-                            <ul data-template='app:object-usage'>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </div>
 </div>
 </div>

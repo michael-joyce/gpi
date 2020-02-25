@@ -19,15 +19,6 @@ function makeGenderLinks(){
     });
 }
 
-function highlightRefs(link){
-    var refs = link.getAttribute('data-refs');
-    var refTokens = refs.split(' ');
-    for (var i=0; i < refTokens.length; i++){
-        console.log(refTokens[i]);
-        document.getElementById(refTokens[i]).classList.add('selected');
-    }
-    
-}
 
 function addHoverListener(){
     document.querySelectorAll('.poem a').forEach(function(a){
