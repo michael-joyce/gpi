@@ -8,9 +8,10 @@
         
         <link rel="stylesheet" type="text/css" href="resources/lib/bootstrap/dist/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+
         <script src="resources/lib/jquery/dist/jquery.min.js"></script>
         <script src="resources/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-        
+ 
     </head>
     <body id="body">
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -55,5 +56,15 @@
                 </p>
             </div>
         </footer>
+        <script src="resources/js/gpi.js"/>
+        
+        <script src="../resources/lib/tablesorter/dist/js/jquery.tablesorter.min.js"/>
+        <script>
+        (function($){
+            $(function(){
+                $('table.sortable').tablesorter();
+            });
+        })(jQuery);
+    </script>
     </body>
 </html>

@@ -41,7 +41,7 @@ declare function tx:seg($node as node(), $poem as node()) as node() {
 };
 
 declare function tx:ref($node as node(), $poem as node()) as node() {
-    <a class="reference" href="{$node/@corresp}" data-gender='{substring-after($node/@ana, '#')}'> { 
+    <a class="reference" href="{$node/@corresp}" data-gender='{substring-after($node/@ana, '#')}' id="{generate-id($node)}"> { 
         tx:render($node/node(), $poem)
     } </a>
 };
@@ -62,7 +62,7 @@ declare function tx:epigraph($node as node(), $poem as node()) as node() {
 declare function tx:cit($node as node(), $poem as node()) as node()* {
     tx:render($node/node()[local-name(.) != 'bibl'], $poem),
     if(exists($node/tei:bibl)) then 
-        <footer>{tx:render($node/tei:bibl/node(), $poem)}</footer> 
+        <cite>{tx:render($node/tei:bibl/node(), $poem)}</cite> 
     else ()     
 };
 
@@ -72,17 +72,16 @@ declare function tx:quote($node as node(), $poem as node()) as node() {
 
 declare function tx:listObject($node as node(), $poem as node()) as node() {
     <aside aria-expanded="true" id="aside">
-    <button id="aside-toggle" class="hamburger hamburger--arrow is-active" type="button" aria-label="Toggle">
-        <span class="hamburger-box">
-         <span class="hamburger-inner"></span>
-        </span>
-         <span class="sr-only" aria-hidden="true">Toggle</span>
-    </button>
+        
         <div class="aside-heading">
             <h2>Personifications</h2>
- 
+            <button id="aside-toggle" class="hamburger hamburger--arrow is-active" type="button" aria-label="Toggle">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+            <span class="sr-only" aria-hidden="true">Toggle</span>
+        </button>
         </div>
-    
         {tx:render($node/node(), $poem)}
     
     </aside>
@@ -95,14 +94,35 @@ declare function tx:object($node as node(), $poem as node()) as node() {
            if ($node[@type]) then attribute{"class"}{$node/@type} else ()
         }
         <h3>{tx:render($node//tei:objectName, $poem)}</h3>
+        <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
         { 
             for $node in $node/node()[local-name(.) != 'objectIdentifier']/node()
             return <dd>{tx:render($node, $poem)}</dd>
         }
+        
+        <div class="references">
+        <h4>Personified in this text as: </h4>
         <ul class='references list-inline'> {
-            for $ref in $poem//tei:ref[@corresp= ('#' || $node/@xml:id)]
-            return <li> { tx:render($ref, $poem) } </li>
+            let $refs := $poem//tei:ref[@corresp = ('#' || $node/@xml:id)],
+            $genders := distinct-values($refs/@ana)
+            return
+            for $g in $genders return 
+                let $genderRefs := $refs[@ana=$g]/generate-id(.)
+                return
+             <li>
+             
+             <a class="genderLink" href="#{$genderRefs[1]}" data-refs="{string-join($genderRefs,' ')}">{
+                if ($g = '#f') then 'Female'
+                else if ($g = '#m') then 'Male'
+                else if ($g = '#n') then 'Neutral'
+                else if ($g = '#u') then 'Unknown'
+                else ()
+             }</a></li>
+           (: for $ref in $poem//tei:ref[@corresp= ('#' || $node/@xml:id)]
+            return <li> { tx:render($ref, $poem) } </li>:)
         } </ul>
+        </div>
+        
     </div>
 };
 
@@ -167,18 +187,29 @@ declare function tx:poem-references($poem as node()) as node()* {
 };
 
 declare function tx:browse-poems($poems as node()*) as node()* {
-    <ul> {
+<table>
+<tbody>
+{
         for $poem in $poems
         return 
-            <li>
-                <a href="view.html?id={$poem/@xml:id}"> { 
+            <tr>
+            <td>
+             <a href="view.html?id={$poem/@xml:id}"> { 
                     if(exists($poem//tei:head/tei:title)) then 
                         tx:render($poem//tei:head/tei:title/node()) 
                     else 
                         tx:render($poem//tei:head/node())
                 } </a>
-            </li>
-    } </ul>
+            </td>
+            <td>
+                {
+                    if (exists($poem[matches(@xml:id,'^b')])) then 'Byron' else 'Coleridge'
+                }
+            </td>
+            </tr>
+    }
+</tbody>
+</table>
 };
 
 declare function tx:browse-objects($objects as node()*) as node()* {

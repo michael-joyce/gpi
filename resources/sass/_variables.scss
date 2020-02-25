@@ -1,5 +1,5 @@
 $gpi-grey: #F8F8F8;
-$gpi-black: #111111;
+$gpi-black: #131516;
 
 $nav-height: 4rem;
 
@@ -56,12 +56,13 @@ $typescale: (
 
 
 /* Special stuff for hamburger thing */
-$hamburger-layer-height: 2px;
-$hamburger-layer-width:28px;
+$hamburger-layer-height: 1px;
+$hamburger-layer-width:22px;
+$hamburger-layer-spacing: 4px;
 
 
 
-$bc: rgba(#008080, 0.5);
+$bc: rgba(#008080, 0.3);
 $transparent: rgba(255,255,255,0);
 $initHeight: 10;
 $backgroundTime: 0.2s;

@@ -5,10 +5,32 @@ function init(){
     body.classList.add('js');
     addCloser();
     addHoverListener();
+    makeGenderLinks();
+}
+
+
+function makeGenderLinks(){
+    var genderLinks = document.querySelectorAll('a.genderLink');
+    genderLinks.forEach(function(link){
+        link.addEventListener('click', function(e){
+            e.preventDefault();
+            highlightRefs(link);
+        });
+    });
+}
+
+function highlightRefs(link){
+    var refs = link.getAttribute('data-refs');
+    var refTokens = refs.split(' ');
+    for (var i=0; i < refTokens.length; i++){
+        console.log(refTokens[i]);
+        document.getElementById(refTokens[i]).classList.add('selected');
+    }
+    
 }
 
 function addHoverListener(){
-    document.querySelectorAll('main a').forEach(function(a){
+    document.querySelectorAll('.poem a').forEach(function(a){
         a.addEventListener('mouseenter', select);
         a.addEventListener('mouseleave', deselect);
         a.addEventListener('click', toggle);
@@ -44,7 +66,10 @@ function deselect(){
 
 function addCloser(){
     var closer = document.getElementById('aside-toggle');
-    closer.addEventListener('click', toggleAside);
+    if (closer){
+            closer.addEventListener('click', toggleAside);
+    }
+
 }
 
 function toggleAside(){
