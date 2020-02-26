@@ -66,7 +66,12 @@ function toggleInline(){
        return;
     } else {
        targBtn.click();
-       targBtn.scrollIntoView();
+       if (!inViewport(obj)){
+          document.body.style.overflowY='hidden';
+          obj.parentNode.scrollTop = obj.offsetTop;
+          document.body.style.overflowY='auto';
+       }
+
        toggleBtns.forEach(function(btn){
         if (btn.getAttribute('aria-pressed') == 'true' && (!(btn.getAttribute('id') == ref))){
             btn.click();
@@ -77,6 +82,16 @@ function toggleInline(){
      
  
 }
+
+function inViewport (elem) {
+    var bounding = elem.getBoundingClientRect();
+    return (
+        bounding.top >= 0 &&
+        bounding.left >= 0 &&
+        bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+};
 
 
 function addCloser(){
