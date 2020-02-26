@@ -17,6 +17,7 @@
 @import "_variables.scss";
 @import "_fonts.scss";
 @import "_mixins.scss";
+@import "_toggle.scss";
 @import "../lib/css-hamburgers/_sass/hamburgers/hamburgers.scss";
 
 
@@ -81,6 +82,7 @@ aside{
     position:sticky;
     overflow-y:auto;
     order:0;
+    scroll-behavior: smooth;
     height:calc(100vh - #{$nav-height});
     padding: map.get($typescale, 10) 0;
     top: $nav-height;
@@ -269,7 +271,12 @@ aside .object{
 
 /****************** POEM ASIDE */
 
-aside button.hamburger{
+button.hamburger{
+    display:none;
+}
+
+.js aside button.hamburger{
+    display:block;
     margin-left: 10px;
 }
 
@@ -370,6 +377,32 @@ ul.references {
         font-style: italic;
     }
 }
+
+/******************************************************** TOGGLE SWITCH */
+
+.object-header{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom: map.get($typescale, 8);
+}
+
+
+.toggles{
+    display:none;
+    button{
+            top: -1rem;
+    }
+}
+
+.js aside .toggles{
+    display:block;
+}
+
+
+
+
 
 //15 seems to be about the right param
 @include animateBorderBottom(15)

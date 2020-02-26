@@ -35,9 +35,9 @@ declare function tx:l($node as node(), $poem as node()) as node() {
 };
 
 declare function tx:seg($node as node(), $poem as node()) as node() {
-    <span class="target" data-reference="{$node/@ana}"> {
+    <a class="reference" href="{$node/@ana}"> {
         tx:render($node/node(), $poem)
-    }</span>
+    }</a>
 };
 
 declare function tx:ref($node as node(), $poem as node()) as node() {
@@ -90,7 +90,16 @@ declare function tx:listObject($node as node(), $poem as node()) as node() {
 
 declare function tx:object($node as node(), $poem as node()) as node() {
     <div id="{$node/@xml:id}" class="object{if ($node[@type]) then (' ', $node/@type) else ()}">
-        <h1>{tx:render($node//tei:objectName, $poem)}</h1>
+        <div class="object-header">
+            <h1>{tx:render($node//tei:objectName, $poem)}</h1>
+             <div class="toggles">
+            <button type="button" id="toggle_{$node/@xml:id}" aria-label="Highlight references for {$node/@xml:id}" aria-pressed="false" class="refToggle" data-ref="{$node/@xml:id}">
+            </button>
+          </div>
+        </div>
+        
+         
+        
         <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
         { 
             if ($node[tei:p]) then
@@ -99,7 +108,7 @@ declare function tx:object($node as node(), $poem as node()) as node() {
         }
         
         <div class="references">
-            <h2>Personified in this text as: </h2>
+            <h2>Personified in this text as:</h2>
             <ul class='references list-inline'> {
                 let $refs := $poem//tei:ref[@corresp = ('#' || $node/@xml:id)],
                 $genders := distinct-values($refs/@ana)
@@ -109,13 +118,13 @@ declare function tx:object($node as node(), $poem as node()) as node() {
                 return
              <li>
              
-             <a class="genderLink" href="#{$genderRefs[1]}" data-refs="{string-join($genderRefs,' ')}">{
+             {
                 if ($g = '#f') then 'Female'
                 else if ($g = '#m') then 'Male'
                 else if ($g = '#n') then 'Neutral'
                 else if ($g = '#u') then 'Unknown'
                 else ()
-             }</a></li>
+             }</li>
            (: for $ref in $poem//tei:ref[@corresp= ('#' || $node/@xml:id)]
             return <li> { tx:render($ref, $poem) } </li>:)
         } </ul>

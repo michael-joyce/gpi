@@ -5,53 +5,77 @@ function init(){
     body.classList.add('js');
     addCloser();
     addHoverListener();
-    makeGenderLinks();
+    addRefToggles();
 }
 
-
-function makeGenderLinks(){
-    var genderLinks = document.querySelectorAll('a.genderLink');
-    genderLinks.forEach(function(link){
-        link.addEventListener('click', function(e){
-            e.preventDefault();
-            highlightRefs(link);
-        });
+function addRefToggles(){
+    var toggles = document.querySelectorAll('button.refToggle');
+    toggles.forEach(function(btn){
+       var ref = btn.getAttribute('data-ref');
+       btn.addEventListener('click', function(e){
+           e.preventDefault();
+           var pressed = btn.getAttribute('aria-pressed');
+            if (pressed == 'true'){
+                btn.setAttribute('aria-pressed','false');
+            } else {
+                btn.setAttribute('aria-pressed', 'true');
+            }
+           toggleTogglers(ref);
+       })
     });
 }
 
+function toggleTogglers(ref){
+    var active = document.querySelectorAll("a[href='#" + ref +"']");
+    active.forEach(function(a){
+        if (a.classList.contains('clicked')){
+            a.classList.remove('clicked');
+            a.classList.add('deselected');
+        } else {
+            a.classList.add('clicked');
+            a.classList.remove('selected');
+            a.classList.remove('deselected');
+        }
+    });
+}
 
 function addHoverListener(){
     document.querySelectorAll('.poem a').forEach(function(a){
         a.addEventListener('mouseenter', select);
         a.addEventListener('mouseleave', deselect);
-        a.addEventListener('click', toggle);
+        a.addEventListener('click', function(e){
+            e.preventDefault();
+            toggleInline.call(a);
+        });
     }); 
 }
 
-function toggle(){
-  if (this.classList.contains('clicked')){
-    this.classList.remove('clicked');
-    removeClicks();
-  } else {
-    removeClicks();
-    this.classList.add('clicked');
-  }
-}
 
-function removeClicks(){
-  document.querySelectorAll('a.clicked').forEach(function(a){
-    a.classList.remove('clicked');
-  })
-}
-
-function select(){
-  this.classList.remove('deselected');
-  this.classList.add('selected');
-}
-
-function deselect(){
-  this.classList.remove('selected');
-  this.classList.add('deselected');
+function toggleInline(){
+    var ref = this.getAttribute('href').substring(1);
+    var obj = document.getElementById(ref);
+    var toggleBtns = document.querySelectorAll('.refToggle[aria-pressed="true"]');
+    var targBtn = document.getElementById('toggle_' + ref);
+    var aside = document.getElementById('aside');
+    if (aside.getAttribute('aria-expanded') == 'false'){
+        document.getElementById('aside-toggle').click();
+    }
+    
+    if (this.classList.contains('clicked')){
+       targBtn.click();
+       return;
+    } else {
+       targBtn.click();
+       targBtn.scrollIntoView();
+       toggleBtns.forEach(function(btn){
+        if (btn.getAttribute('aria-pressed') == 'true' && (!(btn.getAttribute('id') == ref))){
+            btn.click();
+      }});
+    }
+    
+   
+     
+ 
 }
 
 
@@ -62,6 +86,30 @@ function addCloser(){
     }
 
 }
+
+
+function select(){
+    if (!this.classList.contains('clicked')){
+     var refs = document.querySelectorAll("a[href='" + this.getAttribute('href') + "']");
+     refs.forEach(function(ref){
+         ref.classList.remove('deselected');
+         ref.classList.add('selected');
+     });
+  }
+
+}
+
+function deselect(){
+  if (!this.classList.contains('clicked')){
+     var refs = document.querySelectorAll("a[href='" + this.getAttribute('href') + "']");
+     refs.forEach(function(ref){
+         ref.classList.remove('selected');
+         ref.classList.add('deselected');
+     });
+  }
+
+}
+
 
 function toggleAside(){
     var aside = document.getElementById('aside');
@@ -80,38 +128,6 @@ function toggleAside(){
   
 }
 
-(function($){
-    $(function(){
-
-        // <span class="target" data-reference="#ida">
-        function targetIn() {            
-            var $this = $(this);
-            var reference = $this.data('reference');
-            console.log(reference);
-            $("a[href='" + reference + "']").addClass('referenced');
-        }
-
-        function targetOut() {
-            var $this = $(this);
-            $(".referenced").removeClass("referenced");
-        }
-
-        function referenceIn() {
-            var $this = $(this);
-            var target = $this.attr('href');
-            $("span[data-reference='" + target + "']").addClass('referenced');
-        }
-
-        function referenceOut() {
-            var $this = $(this);
-            $(".referenced").removeClass("referenced");
-        }
-        
-        $("span.target").hover(targetIn, targetOut);
-        $("a.reference").hover(referenceIn, referenceOut);
-        
-    });
-})(jQuery);
 
 
 
