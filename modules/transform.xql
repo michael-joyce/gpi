@@ -97,9 +97,7 @@ declare function tx:object($node as node(), $poem as node()) as node() {
             </button>
           </div>
         </div>
-        
-         
-        
+
         <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
         { 
             if ($node[tei:p]) then
@@ -198,6 +196,10 @@ declare function tx:browse-poems($poems as node()*) as node()* {
     <thead>
         <th>Title</th>
         <th>Author</th>
+        <th>Male</th>
+        <th>Female</th>
+        <th>Neutral</th>
+        <th>Unknown</th>
     </thead>
 <tbody>
 {
@@ -217,6 +219,12 @@ declare function tx:browse-poems($poems as node()*) as node()* {
                     if (exists($poem[matches(@xml:id,'^b')])) then 'Byron' else 'Coleridge'
                 }
             </td>
+            {
+                for $g in ('m','f','n','u') return
+                <td>
+                    {count($poem//tei:ref[@ana = ('#' || $g)])}
+                </td>
+            }
             </tr>
     }
 </tbody>
