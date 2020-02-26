@@ -192,7 +192,7 @@ declare function tx:poem-references($poem as node()) as node()* {
 };
 
 declare function tx:browse-poems($poems as node()*) as node()* {
-<table class="table">
+<table class="table poem-index">
     <thead>
         <th>Title</th>
         <th>Author</th>

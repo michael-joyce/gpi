@@ -269,6 +269,8 @@ aside .object{
 
 
 
+
+
 /****************** POEM ASIDE */
 
 button.hamburger{
@@ -325,6 +327,14 @@ aside .object{
     
 }
 
+
+/********************************************** INDICES */
+
+table.poem-index td:first-of-type{
+    
+    max-width: 20rem;
+    
+}
 
 
 
@@ -401,6 +411,19 @@ ul.references {
 }
 
 
+/************************************* MEDIA Q */
+
+
+
+
+@media (max-width: 768px){
+    #aside{
+        display:none!important;
+        background:green;
+    }
+
+}
+    
 
 
 

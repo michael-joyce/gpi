@@ -541,6 +541,11 @@ aside .object p {
   margin-top: 1rem;
 }
 
+/********************************************** INDICES */
+table.poem-index td:first-of-type {
+  max-width: 20rem;
+}
+
 .tx-error {
   background-color: #fefedd;
   outline: 1px solid #f00;
@@ -598,6 +603,13 @@ ul.references li {
   display: block;
 }
 
+/************************************* MEDIA Q */
+@media (max-width: 768px) {
+  #aside {
+    display: none !important;
+    background: green;
+  }
+}
 @keyframes background-up {
   0% {
     background: linear-gradient(0deg, rgba(0, 128, 128, 0.3) 0%, rgba(0, 128, 128, 0.3) 10%, rgba(0, 128, 128, 0.3) 0%, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 100%);

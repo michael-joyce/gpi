@@ -266,7 +266,7 @@ h1,h2,h3,h4,h5,h6{
   margin-top:8px;
 }
 
-@media (max-width: 768px){
+@media (min-width: 768px){
     #images{
         display:none;
     }
@@ -276,5 +276,6 @@ h1,h2,h3,h4,h5,h6{
     #index-content{
         margin-left: 2em;
     }
+
 }
 
