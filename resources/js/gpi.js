@@ -4,7 +4,7 @@ window.addEventListener('load',init);
 function init(){
     body.classList.add('js');
     addCloser();
-    addHoverListener();
+    addLinkListeners();
     addRefToggles();
 }
 
@@ -39,17 +39,30 @@ function toggleTogglers(ref){
     });
 }
 
-function addHoverListener(){
+function addLinkListeners(){
     document.querySelectorAll('.poem a').forEach(function(a){
         a.addEventListener('mouseenter', select);
         a.addEventListener('mouseleave', deselect);
         a.addEventListener('click', function(e){
             e.preventDefault();
             toggleInline.call(a);
+            if (window.matchMedia('(max-width: 600px)')){
+                toggleModal();
+            };
         });
     }); 
 }
 
+
+function toggleModal(){
+    var aside = document.getElementById('aside');
+    if (aside.classList.contains('gpi-modal')){
+        aside.classList.remove('gpi-modal');
+    } else {
+        aside.classList.add('gpi-modal');
+    }
+    
+}
 
 function toggleInline(){
     var ref = this.getAttribute('href').substring(1);
@@ -62,20 +75,33 @@ function toggleInline(){
     }
     
     if (this.classList.contains('clicked')){
+        obj.classList.remove('active');
        targBtn.click();
        return;
     } else {
+        
        targBtn.click();
+       
+       
+       // Now remove all of the active states on the objects (this is only)
+       // really necessary for mobile popups, but rather than detect device
+       // size here, we'll just do it always
+       document.querySelectorAll('.object.active').forEach(function(o){
+           o.classList.remove('active');
+       });
+       obj.classList.add('active');
+       
+       
+       // If the object isn't visible, scroll to it
        if (!inViewport(obj)){
-          document.body.style.overflowY='hidden';
+          //Note that we can't use .scrollTo() here
+          // since we're scrolling the object's parent
           obj.parentNode.scrollTop = obj.offsetTop;
-          document.body.style.overflowY='auto';
        }
-
-       toggleBtns.forEach(function(btn){
+   /*    toggleBtns.forEach(function(btn){
         if (btn.getAttribute('aria-pressed') == 'true' && (!(btn.getAttribute('id') == ref))){
             btn.click();
-      }});
+      }});*/
     }
     
    

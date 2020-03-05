@@ -27,6 +27,9 @@ else if (ends-with($exist:resource, ".html")) then
         <view>
             <forward url="{$exist:controller}/modules/view.xql"/>
         </view>
+        <error-handler>
+         <forward url="{$exist:controller}/error-page.html" method="get"/>
+        </error-handler>
     </dispatch>
 
 (: Resource paths starting with $shared are loaded from the shared-resources app :)

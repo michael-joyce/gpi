@@ -167,6 +167,7 @@ declare function app:count-object-references($node as node(), $model as map(*)) 
   $model('count')
 };
 
+
 declare 
   %templates:wrap
 function app:object-usage($node as node(), $model as map(*)) as node()* {
@@ -232,6 +233,7 @@ declare function app:search-summary($node as node(), $model as map(*)) as node()
   return
     kwic:summarize($hit, <config width="40"/>)
 };
+
 
 declare 
   %templates:wrap

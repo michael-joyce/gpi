@@ -262,8 +262,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   transform: translate3d(-4.4px, 0, 0) rotate(45deg) scale(0.7, 1);
 }
 
-/*@import "types/arrow-r";
-@import "types/arrowalt";
+/*
+ * Arrow Right
+ */
+.hamburger--arrow-r.is-active .hamburger-inner::before {
+  transform: translate3d(4.4px, 0, 0) rotate(45deg) scale(0.7, 1);
+}
+.hamburger--arrow-r.is-active .hamburger-inner::after {
+  transform: translate3d(4.4px, 0, 0) rotate(-45deg) scale(0.7, 1);
+}
+
+/*  @import "types/arrowalt";
 @import "types/arrowalt-r";
 @import "types/arrowturn";
 @import "types/arrowturn-r";
@@ -303,17 +312,41 @@ body {
   overflow-x: hidden;
 }
 
+/******************************************** NAV */
 nav.navbar {
   grid-area: nav;
   position: fixed;
-  height: 4rem;
+  height: 3.2rem;
   font-family: "Roboto";
   background: #F8F8F8;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+nav.navbar ul.nav > li {
+  text-align: center;
+  width: 8rem;
 }
 
+.dropdown-menu {
+  font-size: 1rem;
+  position: static;
+  flex-direction: wrap;
+  flex-wrap: nowrap;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.dropdown-menu li:not(:last-child) {
+  border-bottom: 1px solid rgba(19, 21, 22, 0.2);
+}
+.dropdown-menu li > a {
+  padding: 1rem;
+}
+
+/******************************************** MAIN */
 main {
   grid-area: main;
-  margin-top: 4rem;
+  margin-top: 3.2rem;
   position: relative;
   min-height: 100vh;
 }
@@ -330,6 +363,7 @@ main .container {
   align-items: baseline;
 }
 
+/******************************************** ASIDE */
 aside {
   flex: 0 0 15rem;
   background: #F8F8F8;
@@ -337,9 +371,9 @@ aside {
   overflow-y: auto;
   order: 0;
   scroll-behavior: smooth;
-  height: calc(100vh - 4rem);
+  height: calc(100vh - 3.2rem);
   padding: 0.41rem 0;
-  top: 4rem;
+  top: 3.2rem;
   margin-right: 3.052rem;
   transition: transform 0.5s ease;
   font-family: "Roboto";
@@ -358,6 +392,7 @@ aside .aside-heading, aside h2, aside h3 {
   font-size: 1.25rem;
 }
 
+/******************************************** FOOTER */
 footer {
   grid-area: footer;
   height: 20rem;
@@ -390,7 +425,7 @@ h1 {
   margin-bottom: 3.052rem;
 }
 
-/*********************************************** CONTAINER OVERRIDE */
+/*********************************************** Bootstrap OVERRIDE */
 .row {
   width: 100%;
   min-height: 0;
@@ -398,6 +433,10 @@ h1 {
 
 #content nav {
   width: 100%;
+}
+
+.breadcrumb {
+  background-color: white;
 }
 
 /*********************************************** OBJECTS */
@@ -606,8 +645,22 @@ ul.references li {
 /************************************* MEDIA Q */
 @media (max-width: 768px) {
   #aside {
-    display: none !important;
-    background: green;
+    position: fixed;
+    top: 0;
+    background: rgba(252, 252, 252, 0.4);
+    width: 100%;
+    height: 100%;
+    z-index: 90000;
+  }
+
+  #aside > * {
+    display: none;
+  }
+
+  #aside > .object.active {
+    display: flex;
+    position: absolute;
+    top: 10rem;
   }
 }
 @keyframes background-up {

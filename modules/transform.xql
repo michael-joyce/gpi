@@ -46,6 +46,8 @@ declare function tx:ref($node as node(), $poem as node()) as node() {
     } </a>
 };
 
+
+
 declare function tx:signed($node as node(), $poem as node()) as node() {
     <p class="signed">{tx:render($node/node(), $poem)}</p>
 };
@@ -72,20 +74,20 @@ declare function tx:quote($node as node(), $poem as node()) as node() {
 
 declare function tx:listObject($node as node(), $poem as node()) as node() {
     <aside aria-expanded="true" id="aside">
-        
         <div class="aside-heading">
             <h2>Personifications</h2>
             <button id="aside-toggle" class="hamburger hamburger--arrow is-active" type="button" aria-label="Toggle">
-            <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-            </span>
-            <span class="sr-only" aria-hidden="true">Toggle</span>
-        </button>
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+                <span class="sr-only" aria-hidden="true">Toggle</span>
+            </button>
         </div>
         {tx:render($node/node(), $poem)}
-    
     </aside>
 };
+
+
 
 
 declare function tx:object($node as node(), $poem as node()) as node() {
@@ -93,18 +95,15 @@ declare function tx:object($node as node(), $poem as node()) as node() {
         <div class="object-header">
             <h1>{tx:render($node//tei:objectName, $poem)}</h1>
              <div class="toggles">
-            <button type="button" id="toggle_{$node/@xml:id}" aria-label="Highlight references for {$node/@xml:id}" aria-pressed="false" class="refToggle" data-ref="{$node/@xml:id}">
+            <button type="button" id="toggle_{$node/@xml:id}"
+            aria-label="Highlight references for {$node/@xml:id}" 
+            aria-pressed="false" class="refToggle" data-ref="{$node/@xml:id}">
             </button>
           </div>
         </div>
-
-        <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
-        { 
-            if ($node[tei:p]) then
-            tx:render($node/tei:p, $poem)
-            else ()
-        }
         
+        <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
+        {tx:render($node/tei:p)}
         <div class="references">
             <h2>Personified in this text as:</h2>
             <ul class='references list-inline'> {
@@ -112,7 +111,7 @@ declare function tx:object($node as node(), $poem as node()) as node() {
                 $genders := distinct-values($refs/@ana)
             return
             for $g in $genders return 
-                let $genderRefs := $refs[@ana=$g]/generate-id(.)
+                let $genderRefs := $refs[@ana=$g]
                 return
              <li>
              
@@ -122,7 +121,8 @@ declare function tx:object($node as node(), $poem as node()) as node() {
                 else if ($g = '#n') then 'Neutral'
                 else if ($g = '#u') then 'Unknown'
                 else ()
-             }</li>
+             }
+             </li>
            (: for $ref in $poem//tei:ref[@corresp= ('#' || $node/@xml:id)]
             return <li> { tx:render($ref, $poem) } </li>:)
         } </ul>
@@ -191,15 +191,20 @@ declare function tx:poem-references($poem as node()) as node()* {
     return tx:render($list, $poem)
 };
 
+
+
 declare function tx:browse-poems($poems as node()*) as node()* {
-<table class="table poem-index">
+<table class="table poem-index sortable">
     <thead>
-        <th>Title</th>
+    <tr>
+    <th>Title</th>
         <th>Author</th>
         <th>Male</th>
         <th>Female</th>
         <th>Neutral</th>
         <th>Unknown</th>
+    </tr>
+        
     </thead>
 <tbody>
 {
@@ -232,10 +237,12 @@ declare function tx:browse-poems($poems as node()*) as node()* {
 };
 
 declare function tx:browse-objects($objects as node()*) as node()* {
-    <table class="table">
+    <table class="table sortable">
     <thead>
-        <th>Object</th>
-        <th>Instances</th>
+    <tr>
+           <th>Object</th>
+        <th>Poems</th>
+    </tr>
     </thead>
     <tbody>
     {
