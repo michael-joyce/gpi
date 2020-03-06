@@ -4,6 +4,7 @@ window.addEventListener('load',init);
 function init(){
     body.classList.add('js');
     addCloser();
+    addObjectCloser();
     addLinkListeners();
     addRefToggles();
 }
@@ -46,23 +47,11 @@ function addLinkListeners(){
         a.addEventListener('click', function(e){
             e.preventDefault();
             toggleInline.call(a);
-            if (window.matchMedia('(max-width: 600px)')){
-                toggleModal();
-            };
         });
     }); 
 }
 
 
-function toggleModal(){
-    var aside = document.getElementById('aside');
-    if (aside.classList.contains('gpi-modal')){
-        aside.classList.remove('gpi-modal');
-    } else {
-        aside.classList.add('gpi-modal');
-    }
-    
-}
 
 function toggleInline(){
     var ref = this.getAttribute('href').substring(1);
@@ -70,38 +59,42 @@ function toggleInline(){
     var toggleBtns = document.querySelectorAll('.refToggle[aria-pressed="true"]');
     var targBtn = document.getElementById('toggle_' + ref);
     var aside = document.getElementById('aside');
+    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    var isSmol = (vw < 768);
     if (aside.getAttribute('aria-expanded') == 'false'){
         document.getElementById('aside-toggle').click();
     }
     
     if (this.classList.contains('clicked')){
-        obj.classList.remove('active');
+    
+       obj.classList.remove('active');
+        if (isSmol){
+            aside.classList.remove('gpi-modal');
+        }
        targBtn.click();
        return;
     } else {
-        
+
        targBtn.click();
        
        
        // Now remove all of the active states on the objects (this is only)
        // really necessary for mobile popups, but rather than detect device
        // size here, we'll just do it always
-       document.querySelectorAll('.object.active').forEach(function(o){
-           o.classList.remove('active');
-       });
+       removeActiveObj();
+
        obj.classList.add('active');
-       
+       if (vw < 768){
+           aside.setAttribute('class','gpi-modal');
+           document.body.classList.add('modal-on');
+        }
        
        // If the object isn't visible, scroll to it
-       if (!inViewport(obj)){
+       if (!inViewport(obj) && vw > 768){
           //Note that we can't use .scrollTo() here
           // since we're scrolling the object's parent
           obj.parentNode.scrollTop = obj.offsetTop;
        }
-   /*    toggleBtns.forEach(function(btn){
-        if (btn.getAttribute('aria-pressed') == 'true' && (!(btn.getAttribute('id') == ref))){
-            btn.click();
-      }});*/
     }
     
    
@@ -109,6 +102,12 @@ function toggleInline(){
  
 }
 
+
+function removeActiveObj(){
+document.querySelectorAll('.object.active').forEach(function(o){
+           o.classList.remove('active');
+       });
+}
 function inViewport (elem) {
     var bounding = elem.getBoundingClientRect();
     return (
@@ -126,6 +125,20 @@ function addCloser(){
             closer.addEventListener('click', toggleAside);
     }
 
+}
+
+function addObjectCloser(){
+    var objectClosers = document.querySelectorAll('.objectCloser');
+    var aside = document.getElementById('aside');
+    objectClosers.forEach(function(closer){
+        closer.addEventListener('click', function(e){
+            removeActiveObj();
+            var ref = closer.getAttribute('data-ref');
+            toggleTogglers(ref);
+            document.body.classList.remove('modal-on');
+            aside.classList.remove('gpi-modal');
+        });
+    });
 }
 
 
