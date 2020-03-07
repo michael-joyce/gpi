@@ -73,6 +73,7 @@ declare function tx:quote($node as node(), $poem as node()) as node() {
 };
 
 declare function tx:listObject($node as node(), $poem as node()) as node() {
+   
     <aside aria-expanded="true" id="aside">
         <div class="aside-heading">
             <h2>Personifications</h2>
@@ -82,6 +83,7 @@ declare function tx:listObject($node as node(), $poem as node()) as node() {
                 </span>
                 <span class="sr-only" aria-hidden="true">Toggle</span>
             </button>
+            
         </div>
         {tx:render($node/node(), $poem)}
     </aside>
@@ -101,10 +103,12 @@ declare function tx:object($node as node(), $poem as node()) as node() {
             </button>
             <button type="button" data-ref="{$node/@xml:id}" class="objectCloser">
             <span class="sr-only">Close</span>
-          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.2132 1.04348L1 17.2567M1.04372 1L17.1696 17.3001" stroke="#989898"/>
-</svg>
-
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+                <path 
+                d="M17.2132 1.04348L1 17.2567M1.04372 1L17.1696 17.3001" 
+                stroke="#989898"/>
+            </svg>
             </button>
           </div>
         </div>

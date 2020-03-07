@@ -154,10 +154,10 @@ declare function app:object-title($node as node(), $model as map(*)) as node()*{
     let $object := $model('object')
     let $name := object:name($object)
     return
-    <div class="row">
+    <div class="row object-title">
             <div class="col-sm-12">
                 <div class="page-header">
-                    <h1>{$name}</h1>
+                    <h1>{tx:render($name/node())}</h1>
                 </div>
             </div>
         </div>

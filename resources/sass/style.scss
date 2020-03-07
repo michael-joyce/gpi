@@ -47,17 +47,69 @@ body{
 nav.navbar{
     grid-area: nav;
     position:fixed;
-    height: $nav-height;
+    height:$nav-height;
     font-family: "Roboto";
+    font-weight:300;
+    font-size: map.get($typescale, 5);
     background: $gpi-grey;
     display:flex;
     justify-content:center;
-    align-content:center;
-    
     ul.nav > li{
         text-align:center;
         width:8rem;
     }
+}
+
+nav.navbar::before,
+nav.navbar::after{
+    content:unset;
+}
+
+nav.navbar .logo{
+    padding: 0 2rem;
+    font-family: "EB Garamond";
+    font-size: map.get($typescale, 2);
+    font-weight: bold;
+    margin-top: -0.31rem; 
+}
+
+nav.navbar ul{
+    display:flex;
+    list-style:none;
+    flex: 0 1 60rem;
+    align-items:bottom;
+    height:100%;
+    justify-content:space-between;
+}
+
+nav.navbar li{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    width:100%;
+    border-bottom:.2rem solid transparent;
+     transition: border-bottom-color 0.25s ease-in-out;
+    &:not(.logo):hover{
+        border-bottom-color: $bc;
+        transition: border-bottom-color 0.25s ease-in-out;
+    }
+ 
+}
+
+
+nav.navbar a{
+    color:inherit;
+    width:100%;
+    display:block;
+    align-self:center;
+    text-align:center;
+    text-decoration:none;
+
+    &:hover,:active,:visited{
+        text-decoration:none;
+    }
+
+
 }
 
 .dropdown-menu{
@@ -84,6 +136,9 @@ main{
     margin-top: $nav-height;
     position:relative;
     min-height:100vh;
+    display:flex;
+    flex:0 1 60rem;
+    align-items:baseline;
     .poem-container{
         display:flex;
     }
@@ -91,12 +146,16 @@ main{
         display:flex;
         flex-direction:row;
         flex-wrap:wrap;
-        flex: 1 1 50rem;
+        flex: 0 1 60rem;
         margin:0 auto;
         padding-left: $poem-left-margin;
 
         align-items: baseline;
     }
+}
+
+.object-title .page-header{
+   border-bottom:none;
 }
 
 
@@ -109,6 +168,7 @@ aside{
     position:sticky;
     overflow-y:auto;
     order:0;
+    will-change:transform;
     scroll-behavior: smooth;
     height:calc(100vh - #{$nav-height});
     padding: map.get($typescale, 10) 0;
@@ -159,6 +219,17 @@ footer{
 
 h1{
     margin-bottom: map.get($typescale, 1);
+    .poem &{
+       margin-right:map.get($typescale, 1);
+    }
+  
+}
+
+
+/*********************************************** NAV */
+
+nav .hamburger{
+    display:none;
 }
 
 /*********************************************** Bootstrap OVERRIDE */
@@ -214,7 +285,7 @@ aside .object{
 .poem {
     counter-reset: line-counter;
     flex: 0 1 $poem-width;
-
+    will-change:transform;
     order:1;
     transition: transform $shift-left-time ease;
     transform: translateX(0);
@@ -245,7 +316,7 @@ aside .object{
     ol {
         list-style-type: none;
         padding-left: 0;
-        margin-left:0;
+        margin-left:2rem;
         & + ol{
             margin-top: map.get($typescale, 5);
         }
@@ -254,7 +325,8 @@ aside .object{
     li {
         counter-increment: line-counter;
         margin-left:0;
-        padding-left:0;
+        padding-left:.1.5rem;
+        text-indent:-1.5rem;
        & + li{
            margin-top: map.get($typescale, 13);
        }
@@ -307,7 +379,7 @@ aside .object{
 
 /****************** POEM ASIDE */
 
-button.hamburger{
+aside button.hamburger{
     display:none;
 }
 
@@ -413,15 +485,6 @@ p.signed {
     margin-left: 4em;
 }
 
-// -----------------------------------------------------
-// reference display
-ul.references {
-    padding-left: 1em;
-    li {
-        font-style: italic;
-    }
-}
-
 /******************************************************** TOGGLE SWITCH */
 
 .object-header{
@@ -455,9 +518,27 @@ ul.references {
 
 
 
+    body:before{
+        content:"";
+        display:block;
+        position:fixed;
+        top:0;
+        height:100vh;
+        width:100vw;
+        z-index:0;
+        background-color:transparent;
+        transition:background-color 0.2s ease-in-out;
+    }
 
 
 @media (max-width: 768px){
+
+      body.gpi-modal:before{
+        z-index:100;
+        background-color:rgba($gpi-grey,0.9);
+        transition:background-color 0.2s ease-in-out;
+    }
+    
 
 #aside{
     transform: translateX(-15rem);
@@ -474,6 +555,8 @@ ul.references {
     transform: translateX(0)!important;
     margin-right:.5rem!important;
     transition:none!important;
+    line-height:1.6;
+    margin-left:1.5rem;
 }
 
 .modal-on{
@@ -523,28 +606,91 @@ ul.references {
 .objectCloser:hover  *{
     stroke: $bc;
 }
-/*.objectCloser::after{
-    display:block;
-    content:"";
-    background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M17.2132 1.04348L1 17.2567M1.04372 1L17.1696 17.3001' stroke='#989898'/%3E%3C/svg%3E");
-    height:2rem;
-    width:2rem;
-  background-size: 30%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}*/
+
+
+
 
 .poem-container{
     margin: 0 auto;
     justify-content:center;
 }
 
+/* MOBILE NAV */
 
-
-}
+nav.navbar{
+    align-items:center;
+    justify-content:space-between;
+    overflow-y:visible;
     
+    
+    ul{
+       flex: 0 0 8rem;
+       justify-content:flex-end;
+       flex-direction:row;
+       flex-wrap:wrap;
+       margin-top:.5rem;
+       height:100%;
+
+    }
+   &[aria-open='true']{
+     
+    ul > li:not(.logo){
+        transform: translateX(0);
+        transition: opacity 0.35s ease-in-out;
+        opacity:1;
+        
+    }
+       
+   } 
+   ul > li{
+       &.logo {
+           justify-content:flex-end;
+       }
+       &:not(.logo){
+           order:1;
+           position:relative;
+           transform: translateX(20rem);
+           background: $gpi-grey;
+           width:8rem;
+           height:4rem;
+           opacity:0;
+       }
+   }
+   
+   
+   
+/*    ul > li{
+        & a{
+            width:unset;
+        }
+       &.logo{
+         justify-content:flex-end;
+       }
+       position:relative;
+       left:0;
+       &:not(.logo){
+        margin-top:0;
+        order:1;
+        
+            &:hover{
+            border-bottom-color: transparent;
+            }
+       
+        
+     }
+     
+    }*/
 
 
-
+    
+   .hamburger{
+      display:block;
+      margin-right:3rem;
+      align-self:flex-start;
+      margin-top:-.2rem;
+    }
+    
+}
+}
 //15 seems to be about the right param
 @include animateBorderBottom(15)

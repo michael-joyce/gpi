@@ -4,6 +4,7 @@ window.addEventListener('load',init);
 function init(){
     body.classList.add('js');
     addCloser();
+    addMenuBurger();
     addObjectCloser();
     addLinkListeners();
     addRefToggles();
@@ -127,14 +128,33 @@ function addCloser(){
 
 }
 
+function addMenuBurger(){
+    var menuBurger = document.querySelectorAll('nav.navbar > .hamburger')[0];
+    menuBurger.addEventListener('click',toggleNav);
+}
+
+function toggleNav(){
+    var nav = document.querySelectorAll('body > nav')[0];
+    
+    if (nav.getAttribute('aria-open') == 'true'){
+        nav.setAttribute('aria-open', 'false');
+        document.body.classList.remove('gpi-modal');
+        this.classList.remove('is-active');
+    } else {
+        nav.setAttribute('aria-open', 'true');
+        document.body.classList.add('gpi-modal');
+        this.classList.add('is-active');
+    }
+}
+
 function addObjectCloser(){
     var objectClosers = document.querySelectorAll('.objectCloser');
     var aside = document.getElementById('aside');
     objectClosers.forEach(function(closer){
         closer.addEventListener('click', function(e){
             removeActiveObj();
-            var ref = closer.getAttribute('data-ref');
-            toggleTogglers(ref);
+            var btn = closer.parentNode.querySelectorAll('.refToggle')[0];
+            btn.click();
             document.body.classList.remove('modal-on');
             aside.classList.remove('gpi-modal');
         });
