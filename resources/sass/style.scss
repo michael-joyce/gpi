@@ -536,8 +536,10 @@ p.signed {
       body.gpi-modal:before{
         z-index:100;
         background-color:rgba($gpi-grey,0.9);
-        transition:background-color 0.2s ease-in-out;
-    }
+        backdrop-filter: blur(4px);
+        transition:background-color 0.2s ease-in-out,
+                   backdrop-filter 0.2s ease-in-out;
+      }
     
 
 #aside{
@@ -547,7 +549,7 @@ p.signed {
     height:120vh;
     z-index:9000;
     top: -1 * $nav-height;
-    transition:none!important;
+    transition:background-color 0.2s ease-in-out;
 }
 
 
@@ -570,6 +572,7 @@ p.signed {
     transform:translateX(0);
     min-width:100vw;
     background-color: rgba($gpi-black, 0.3);
+    transition:background-color 0.2s ease-in-out;
     align-content:center;
     justify-content:center;
     transition:none;
