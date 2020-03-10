@@ -31,7 +31,11 @@ declare function tx:lg($node as node(), $poem as node()) as node() {
 };
 
 declare function tx:l($node as node(), $poem as node()) as node() {
-    <li>{tx:render($node/node(), $poem)}</li>
+    
+    <li>
+        <a href="#l{$node/@n}" id="l{$node/@n}" class="linenum">{$node/@n/xs:string(.)}</a>
+        {tx:render($node/node(), $poem)}
+    </li>
 };
 
 declare function tx:seg($node as node(), $poem as node()) as node() {
@@ -115,36 +119,73 @@ declare function tx:object($node as node(), $poem as node()) as node() {
         
         <a href="../object/view.html?id={$node/@xml:id}" class="record-link">View full record</a>
         {tx:render($node/tei:p)}
-        <div class="references">
-            <h2>Personified in this text as:</h2>
-            <ul class='references list-inline'> {
-                let $refs := $poem//tei:ref[@corresp = ('#' || $node/@xml:id)],
-                $genders := distinct-values($refs/@ana)
-            return
-            for $g in $genders return 
-                let $genderRefs := $refs[@ana=$g]
-                return
-             <li>
-             
-             {
-                if ($g = '#f') then 'Female'
-                else if ($g = '#m') then 'Male'
-                else if ($g = '#n') then 'Neutral'
-                else if ($g = '#u') then 'Unknown'
-                else ()
-             }
-             </li>
-           (: for $ref in $poem//tei:ref[@corresp= ('#' || $node/@xml:id)]
-            return <li> { tx:render($ref, $poem) } </li>:)
-        } </ul>
-        </div>
-        
+        {tx:list-references($node, $poem)}
     </div>
 };
 
 declare function tx:objectName($node as node(), $poem as node()) as node() {
     tx:render($node/node(), $poem)
 };
+
+declare function tx:list-references($node as node(), $poem as node()) as node()*{
+    let $id := $node/@xml:id
+    let $idRef := ('#' || $id)
+    let $nameRefs := $poem//tei:seg[@ana = $idRef]
+    let $lineRefs := for $val in distinct-values($nameRefs/ancestor::tei:l[1]/@n) return xs:integer($val)
+    let $genderRefs := $poem//tei:ref[some $c in tokenize(@corresp,'\s+') satisfies $c=$idRef]
+    let $genderIdents := distinct-values($genderRefs/substring-after(@ana,'#')[not(.='')])
+    return 
+    (tx:list-personifications($genderIdents),
+    tx:list-cited-lines($lineRefs))
+};
+
+declare function tx:list-personifications($refs as xs:string*){
+    let $count := count($refs)
+    return if (not($count = 0))
+    then
+    <div>
+    <h2>Personified as:</h2>
+    <ul class="list-inline references">
+     {for $ref in $refs return 
+        <li>{tx:ident-to-gender($ref)}</li>
+     }
+    </ul>
+    </div>
+    else ()
+};
+
+declare function tx:list-cited-lines($nums as xs:integer*){
+    let $count := count($nums)
+    return if ($count gt 0)
+    then
+    <div>
+        <h2>Referenced on:</h2>
+        <ul class="list-inline references">
+        {for $num in $nums return 
+            <li>
+                <a href="#l{$num}">{$num}</a>
+            </li>
+        }
+        </ul>
+    </div>
+    else ()
+};
+
+declare function tx:ident-to-gender($string as xs:string) {
+    let $ident := $string
+    return
+        if ($ident = 'm')
+        then 'Male'
+        else if ($ident = 'f')
+        then 'Female'
+        else if ($ident = 'u')
+        then 'Unknown'
+        else if ($ident = 'n')
+        then 'Neutral'
+        else ()
+};
+
+
 
 declare function local:callback($node as node(), $poem as node()) as node()* {
     let $name := local-name($node)
@@ -197,8 +238,8 @@ declare function tx:poem($node as node()) as node()* {
 };
 
 declare function tx:poem-references($poem as node()) as node()* {
-    let $references := distinct-values($poem//tei:ref/@corresp/string())
-    let $list := collection:listObjects($references)
+    let $references := distinct-values($poem//tei:seg/tokenize(@ana,'\s+'))
+    let $list := collection:listObjects($references, $poem)
     return tx:render($list, $poem)
 };
 
@@ -223,12 +264,7 @@ declare function tx:browse-poems($poems as node()*) as node()* {
         return 
             <tr>
             <td>
-             <a href="view.html?id={$poem/@xml:id}"> { 
-                    if(exists($poem//tei:head/tei:title)) then 
-                        tx:render($poem//tei:head/tei:title/node()) 
-                    else 
-                        tx:render($poem//tei:head/node())
-                } </a>
+             <a href="view.html?id={$poem/@xml:id}"> { string-join($poem//tei:head/descendant::text(),'')} </a>
             </td>
             <td>
                 {

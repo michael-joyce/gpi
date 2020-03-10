@@ -42,7 +42,7 @@ function toggleTogglers(ref){
 }
 
 function addLinkListeners(){
-    document.querySelectorAll('.poem a').forEach(function(a){
+    document.querySelectorAll('.poem a:not(.linenum)').forEach(function(a){
         a.addEventListener('mouseenter', select);
         a.addEventListener('mouseleave', deselect);
         a.addEventListener('click', function(e){

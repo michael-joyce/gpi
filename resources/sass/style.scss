@@ -41,7 +41,10 @@ body{
     color: $gpi-black;
     font-size:18px;
      overflow-x:hidden;
+
 }
+
+
 /******************************************** NAV */
 
 nav.navbar{
@@ -127,7 +130,11 @@ nav.navbar a{
     }
 }
 
-.open > .dropdown-menu{}
+/* Now for fixing the targets */
+
+:not(aside) :target{
+     scroll-margin-top: $nav-height;
+}
 
 
 /******************************************** MAIN */
@@ -275,10 +282,40 @@ aside .object{
 }
 
 
+/*********************************************** OBJECT PAGE */
+
+ul[data-template='app:object-usage']{
+    list-style:none;
+     a{
+        color: $gpi-black;
+        background: $bc;
+        pointer-events:none;
+        &.linenum{
+            background:none;
+            margin-left:-1 * map.get($typescale, 6);
+            margin-right:map.get($typescale, 6);
+            opacity: 0.8;
+        }
+    }
+    li{
+        margin: map.get($typescale, 9) 0;
+        &:after{
+            content:"...";
+            padding-left:.2rem;
+            opacity: 0.8;
+            display:inline;
+        }
+    }
+    
+    
+}
+
+
 /*********************************************** POEM DISPLAY */
 
 .poem-container{
     margin-right:1rem;
+
 }
 
 
@@ -286,6 +323,7 @@ aside .object{
     counter-reset: line-counter;
     flex: 0 1 $poem-width;
     will-change:transform;
+  
     order:1;
     transition: transform $shift-left-time ease;
     transform: translateX(0);
@@ -332,13 +370,15 @@ aside .object{
        }
     }
 
-    li::before {
-        content: counter(line-counter) '.';
+    .linenum {
         color: rgba($gpi-black, 0.5);
         padding-right: $lc_offset;
         text-align: right;
         display: inline-block;
+        background:none;
+        border-bottom:none;
     }
+    
     
 }
 

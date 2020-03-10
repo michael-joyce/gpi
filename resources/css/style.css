@@ -1123,6 +1123,11 @@ nav.navbar a:hover, nav.navbar a :active, nav.navbar a :visited {
   padding: 1rem;
 }
 
+/* Now for fixing the targets */
+:not(aside) :target {
+  scroll-margin-top: 3.2rem;
+}
+
 /******************************************** MAIN */
 main {
   grid-area: main;
@@ -1249,6 +1254,31 @@ aside .object h2 {
   font-size: 1rem;
 }
 
+/*********************************************** OBJECT PAGE */
+ul[data-template="app:object-usage"] {
+  list-style: none;
+}
+ul[data-template="app:object-usage"] a {
+  color: #131516;
+  background: rgba(0, 128, 128, 0.3);
+  pointer-events: none;
+}
+ul[data-template="app:object-usage"] a.linenum {
+  background: none;
+  margin-left: -1rem;
+  margin-right: 1rem;
+  opacity: 0.8;
+}
+ul[data-template="app:object-usage"] li {
+  margin: 0.512rem 0;
+}
+ul[data-template="app:object-usage"] li:after {
+  content: "...";
+  padding-left: 0.2rem;
+  opacity: 0.8;
+  display: inline;
+}
+
 /*********************************************** POEM DISPLAY */
 .poem-container {
   margin-right: 1rem;
@@ -1302,12 +1332,13 @@ aside .object h2 {
 .poem li + li {
   margin-top: 0.21rem;
 }
-.poem li::before {
-  content: counter(line-counter) ".";
+.poem .linenum {
   color: rgba(19, 21, 22, 0.5);
   padding-right: 1em;
   text-align: right;
   display: inline-block;
+  background: none;
+  border-bottom: none;
 }
 
 /******************* POEM LINKS */

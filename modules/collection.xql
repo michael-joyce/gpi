@@ -67,15 +67,19 @@ declare function collection:object($id as xs:string) as node() {
                </object>
 };
 
-declare function collection:listObjects($references as xs:string*) as node() {
+declare function collection:listObjects($references as xs:string*, $poem as node()) as node() {
     <listObject xmlns="http://www.tei-c.org/ns/1.0"> {
         for $reference in $references
             let $id := substring-after($reference, '#')
             let $object := collection:object($id)
-            order by $object//tei:objectName
+            let $firstRef := $poem//tei:seg[@ana = $reference][1]/ancestor::tei:l[1]/xs:integer(@n)
+            order by $firstRef
             return $object
     } </listObject>  
 };
+
+
+
 
 declare function collection:search-poems($q as xs:string) as node()* {
   if(empty($q) or $q = '') then 
