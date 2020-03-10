@@ -41,8 +41,9 @@ body{
     color: $gpi-black;
     font-size:18px;
      overflow-x:hidden;
-
+     position:static;
 }
+
 
 
 /******************************************** NAV */
@@ -548,11 +549,15 @@ table.poem-index td:first-of-type{
     
 }
 
+/********************************************** PAGINATION */
+
+ul.pagination{
+    font-family: "Roboto";
+    font-size:map.get($typescale, 7);
+}
 
 
-
-// -----------------------------------------------------
-// transformation errors
+/********************************************** TRANSFORMATION ERRORS */
 .tx-error {
     background-color: $error_bg;
     outline: $error_outline;
@@ -566,8 +571,7 @@ table.poem-index td:first-of-type{
     }
 }
 
-// -----------------------------------------------------
-// Search results
+/********************************************** SEARCH RESULTS */
 
 span.hi {
     font-weight: bold;
@@ -590,6 +594,7 @@ span.target {
 p.signed {
     margin-left: 4em;
 }
+
 
 /******************************************************** TOGGLE SWITCH */
 
@@ -667,9 +672,13 @@ p.signed {
     margin-left:1.5rem;
 }
 
-.modal-on{
-    overflow-y:hidden;
+.poem-index {
+    td:nth-of-type(n+3),
+    th:nth-of-type(n+3){
+    display:none;
+    }
 }
+
 #aside *{
     opacity: 1!important;
 }

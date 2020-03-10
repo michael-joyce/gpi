@@ -1042,6 +1042,7 @@ body {
   color: #131516;
   font-size: 18px;
   overflow-x: hidden;
+  position: static;
 }
 
 /******************************************** NAV */
@@ -1475,6 +1476,13 @@ table.poem-index td:first-of-type {
   max-width: 20rem;
 }
 
+/********************************************** PAGINATION */
+ul.pagination {
+  font-family: "Roboto";
+  font-size: 0.8rem;
+}
+
+/********************************************** TRANSFORMATION ERRORS */
 .tx-error {
   background-color: #fefedd;
   outline: 1px solid #f00;
@@ -1487,6 +1495,7 @@ table.poem-index td:first-of-type {
   padding: 3px;
 }
 
+/********************************************** SEARCH RESULTS */
 span.hi {
   font-weight: bold;
   color: darkred;
@@ -1568,8 +1577,9 @@ body:before {
     margin-left: 1.5rem;
   }
 
-  .modal-on {
-    overflow-y: hidden;
+  .poem-index td:nth-of-type(n+3),
+.poem-index th:nth-of-type(n+3) {
+    display: none;
   }
 
   #aside * {
