@@ -22,6 +22,7 @@ declare function app:load-poems($node as node(), $model as map(*)) {
     }
 };
 
+
 declare function app:load-objects($node as node(), $model as map(*)) {
     let $objects := collection:get-objects()
     return map {

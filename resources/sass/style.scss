@@ -149,7 +149,10 @@ main{
     .poem-container{
         display:flex;
     }
-    .container{
+  
+}
+
+  .container{
         display:flex;
         flex-direction:row;
         flex-wrap:wrap;
@@ -158,8 +161,8 @@ main{
         padding-left: $poem-left-margin;
 
         align-items: baseline;
+        margin-bottom:5rem;
     }
-}
 
 .object-title .page-header{
    border-bottom:none;
@@ -206,11 +209,51 @@ aside{
 /******************************************** FOOTER */
 
 
-footer{
+footer.footer{
     grid-area:footer;
-    height:20rem;
+    max-height:20rem;
     background: $gpi-black;
+    z-index:50;
+
+    display:flex;
+    flex:0 1 60rem;
+    font-family:"Roboto";
+    list-style:none;
+    a{
+            color: white;
+    }
+    .container{
+        margin-top:map.get($typescale, 3);
+        justify-content:space-between;
+        margin-bottom:map.get($typescale, 5);
+        &>div{
+            max-width:30%;
+        }
+    }
+    
+    
+    ul{
+        list-style:none;
+        columns: 2;
+        margin-left:0;
+        padding-left:0;
+    }
+    li{
+        margin-left:0;
+        padding-left:0;
+    }
+    
+    img{
+        
+        max-width:100%;
+        height:auto;
+    }
 }
+
+#footer_links{
+    margin-right:auto;
+}
+
 
 
 

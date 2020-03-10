@@ -6,30 +6,46 @@
 
   sass --watch resources/sass:resources/css
 */
+/******************************************** NAMESPACES */
+/* Nav bar stuff */
+/* Major third type scale */
+/* Special stuff for hamburger thing */
+main {
+  align-items: flex-start;
+  justify-content: center;
+}
+
 #images {
-  max-width: 25%;
-  padding: 0 2rem;
+  padding-right: 1.953rem;
+  position: sticky;
+  top: 4.2rem;
+  display: flex;
   text-align: center;
+  flex: 0 1 20rem;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 4rem;
 }
 
 img {
-  max-width: 100%;
+  max-width: 60%;
+  height: auto;
   margin-bottom: 5%;
 }
 div img {
   max-height: 50vh;
 }
 
-.sticky {
-  position: sticky;
-  top: 1rem;
+article {
+  margin-bottom: 10rem;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 0 1 60rem;
 }
 
 #index-content {
-  margin-top: 4rem;
-  margin-left: 8rem;
+  margin-top: 3.2rem;
 }
 
 p {
@@ -38,8 +54,8 @@ p {
 }
 
 #logo {
-  margin: 0 auto;
   position: relative;
+  margin-left: -8rem;
 }
 
 #logo {
@@ -56,7 +72,6 @@ p {
   top: -1.5rem;
   left: 1rem;
   padding: 0 0.75rem 0rem 0.45rem;
-  background: #FFFFFA;
   font-size: 31.25px;
 }
 
@@ -83,7 +98,6 @@ p {
 #index-content h2 {
   margin-bottom: 25px;
   margin-left: -0.5em;
-  background-color: #FFFFFA;
   display: flex;
   align-items: center;
   font-size: 31.25px;
@@ -108,6 +122,10 @@ p {
 
   #index-content {
     margin-left: 2em;
+  }
+
+  #logo {
+    margin-left: 0;
   }
 }
 

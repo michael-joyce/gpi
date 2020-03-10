@@ -1141,7 +1141,8 @@ main {
 main .poem-container {
   display: flex;
 }
-main .container {
+
+.container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -1149,6 +1150,7 @@ main .container {
   margin: 0 auto;
   padding-left: 4vw;
   align-items: baseline;
+  margin-bottom: 5rem;
 }
 
 .object-title .page-header {
@@ -1186,10 +1188,44 @@ aside .aside-heading, aside h2, aside h3 {
 }
 
 /******************************************** FOOTER */
-footer {
+footer.footer {
   grid-area: footer;
-  height: 20rem;
+  max-height: 20rem;
   background: #131516;
+  z-index: 50;
+  display: flex;
+  flex: 0 1 60rem;
+  font-family: "Roboto";
+  list-style: none;
+}
+footer.footer a {
+  color: white;
+}
+footer.footer .container {
+  margin-top: 1.953rem;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+footer.footer .container > div {
+  max-width: 30%;
+}
+footer.footer ul {
+  list-style: none;
+  columns: 2;
+  margin-left: 0;
+  padding-left: 0;
+}
+footer.footer li {
+  margin-left: 0;
+  padding-left: 0;
+}
+footer.footer img {
+  max-width: 100%;
+  height: auto;
+}
+
+#footer_links {
+  margin-right: auto;
 }
 
 /*********************************************** HEADINGS */

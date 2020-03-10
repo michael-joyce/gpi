@@ -5,10 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <meta charset="utf-8"/>
         <meta data-template="config:app-meta"/>
-        
         <link rel="stylesheet" type="text/css" href="resources/lib/bootstrap/dist/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
-
+        <link rel="stylesheet" type="text/css" href="resources/css/index.css" id="index-css" disabled="true"/>
         <script src="resources/lib/jquery/dist/jquery.min.js"></script>
         <script src="resources/lib/bootstrap/dist/js/bootstrap.min.js"></script>
  
@@ -24,22 +23,22 @@
             <ul>
                 
                 <li>
-                    <a href="../index.html" class="front-page">Home</a>
+                    <a href="index.html" class="front-page">Home</a>
                 </li>
                 <li>
-                    <a href="../poem/index.html">Poems</a>
+                    <a href="poem/index.html">Poems</a>
                 </li>
                 <li class="logo">
-                    <a href="../index.html">
+                    <a href="index.html">
                         GPI
                     </a> 
                 </li>
                 <li>
-                    <a href="../object/index.html">Objects</a>
+                    <a href="object/index.html">Objects</a>
                 </li>
                 
                 <li>
-                    <a href="../search.html">
+                    <a href="search.html">
                         Search
                     </a>
                 </li>
@@ -52,11 +51,26 @@
         
         <footer class="footer">
             <div class="container">
-                <p>
-                    <b>GPI</b>
-                    <br/>
-                </p>
+                <div id="footer_links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="poem/index.html">Poems</a></li>
+                        <li><a href="object/index.html">Objects</a></li>
+                        <li><a href="privacy.html">Privacy</a></li>
+                        <li><a href="search.html">Search</a></li>
+                    </ul>
+                </div>
+                
+                <div id="footer_imgs">
+                    <a href="https://www.lib.sfu.ca/help/publish/dh/dhil">
+                        <img src="resources/images/DHIL-Logo-Horizontal.png" alt="Built by the DHIL"/>
+                    </a>
+                    
+                </div>
+                
             </div>
+            
         </footer>
         <script src="resources/js/gpi.js"/>
         
