@@ -97,9 +97,16 @@ declare function tx:listObject($node as node(), $poem as node()) as node() {
 
 
 declare function tx:object($node as node(), $poem as node()) as node() {
-    <div id="{$node/@xml:id}" class="object{if ($node[@type]) then (' ', $node/@type) else ()}">
+            let $name := $node//tei:objectName
+            let $nameText := normalize-space(string-join($name,''))
+            let $nameLength := string-length($nameText)
+            return
+    <div id="{$node/@xml:id}" 
+    class="object{if ($node[@type]) then (' ', $node/@type) else ()}">
         <div class="object-header">
-            <h1>{tx:render($node//tei:objectName, $poem)}</h1>
+            <h1 class="object-head{if ($nameLength gt 10) then ' long' else ()}">
+            {tx:render($node//tei:objectName, $poem)}
+            </h1>
              <div class="toggles">
             <button type="button" id="toggle_{$node/@xml:id}"
             aria-label="Highlight references for {$node/@xml:id}" 
