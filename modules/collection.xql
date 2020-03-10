@@ -85,8 +85,8 @@ declare function collection:search-poems($q as xs:string) as node()* {
   if(empty($q) or $q = '') then 
     ()
   else
-    for $hit in collection:get-poems()[ft:query(., $q)]
-    order by ft:score($hit)
+    for $hit in collection:get-poems()[ft:query(., $q) | ft:query(tei:head, $q)]
+    order by ft:score($hit) descending
     return $hit
 };
 
