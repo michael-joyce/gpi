@@ -288,6 +288,7 @@ declare function tx:browse-objects($objects as node()*) as node()* {
     <thead>
     <tr>
            <th>Object</th>
+           <th>Type</th>
         <th>Poems</th>
     </tr>
     </thead>
@@ -303,6 +304,9 @@ declare function tx:browse-objects($objects as node()*) as node()* {
                     else 
                        ()
                 } </a>
+            </td>
+            <td>
+                {$object/@type/string()}
             </td>
             <td>
                 {

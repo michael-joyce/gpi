@@ -1,13 +1,23 @@
 
 window.addEventListener('load',init);
 
+const urlParams = new URLSearchParams(window.location.search);
+const object = urlParams.get('object');
+
 function init(){
     body.classList.add('js');
+  
     addCloser();
     addMenuBurger();
     addObjectCloser();
     addLinkListeners();
     addRefToggles();
+    if (object !== null){
+        var firstRef = document.querySelectorAll("a[href='#" + object + "']")[0];
+        
+        firstRef.click();
+        
+    }
 }
 
 function addRefToggles(){

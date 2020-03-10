@@ -148,7 +148,8 @@ declare function app:load-object-references($node as node(), $model as map(*)) a
 
 declare function app:poem-title($node as node(), $model as map(*)) as node()* {
   let $poem := $model('poem')
-  return <a href="../poem/view.html?id={poem:id($poem)}">{tx:render(poem:title($poem)/node())}</a>
+  let $object := $model('object')
+  return <a href="../poem/view.html?id={poem:id($poem)}&amp;object={object:id($object)}">{tx:render(poem:title($poem)/node())}</a>
 };
 
 declare function app:object-title($node as node(), $model as map(*)) as node()*{
