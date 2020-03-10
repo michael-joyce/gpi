@@ -168,6 +168,10 @@ main{
    border-bottom:none;
 }
 
+.page-header{
+    width:100%;
+}
+
 
 
 /******************************************** ASIDE */
@@ -226,9 +230,7 @@ footer.footer{
         margin-top:map.get($typescale, 3);
         justify-content:space-between;
         margin-bottom:map.get($typescale, 5);
-        &>div{
-            max-width:30%;
-        }
+        align-items: flex-start;
     }
     
     
@@ -247,15 +249,26 @@ footer.footer{
         
         max-width:100%;
         height:auto;
+        &.dhilLogo{
+            max-width:75%;
+        }
     }
 }
 
 #footer_links{
     margin-right:auto;
+    max-width:30%;
+}
+
+#footer_imgs{
+    max-width:50%;
 }
 
 
-
+section{
+    width:100%;
+    margin-top: map.get($typescale, 6);
+}
 
 /*********************************************** HEADINGS */
 
@@ -299,6 +312,12 @@ nav .hamburger{
     background-color:white;
 }
 
+.page-header{
+    margin-bottom:0;
+    margin-top: map.get($typescale, 3);
+    padding-bottom:0;
+}
+
 
 
 /*********************************************** OBJECTS */
@@ -317,6 +336,10 @@ aside .object{
         display:block;
         font-size: map.get($typescale, 5);
         margin-bottom:map.get($typescale, 10);
+        max-width:50%;
+        &.long{
+            font-size:map.get($typescale, 5) * 0.95;
+        }
     }
     
     h2 {

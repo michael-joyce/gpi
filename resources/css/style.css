@@ -1157,6 +1157,10 @@ main .poem-container {
   border-bottom: none;
 }
 
+.page-header {
+  width: 100%;
+}
+
 /******************************************** ASIDE */
 aside {
   flex: 0 0 15rem;
@@ -1205,9 +1209,7 @@ footer.footer .container {
   margin-top: 1.953rem;
   justify-content: space-between;
   margin-bottom: 1.25rem;
-}
-footer.footer .container > div {
-  max-width: 30%;
+  align-items: flex-start;
 }
 footer.footer ul {
   list-style: none;
@@ -1223,9 +1225,22 @@ footer.footer img {
   max-width: 100%;
   height: auto;
 }
+footer.footer img.dhilLogo {
+  max-width: 75%;
+}
 
 #footer_links {
   margin-right: auto;
+  max-width: 30%;
+}
+
+#footer_imgs {
+  max-width: 50%;
+}
+
+section {
+  width: 100%;
+  margin-top: 1rem;
 }
 
 /*********************************************** HEADINGS */
@@ -1276,6 +1291,12 @@ nav .hamburger {
   background-color: white;
 }
 
+.page-header {
+  margin-bottom: 0;
+  margin-top: 1.953rem;
+  padding-bottom: 0;
+}
+
 /*********************************************** OBJECTS */
 .object .record-link, .object .references, .object h1 {
   display: none;
@@ -1285,6 +1306,10 @@ aside .object h1 {
   display: block;
   font-size: 1.25rem;
   margin-bottom: 0.41rem;
+  max-width: 50%;
+}
+aside .object h1.long {
+  font-size: 1.1875rem;
 }
 aside .object h2 {
   font-size: 1rem;
