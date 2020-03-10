@@ -94,7 +94,7 @@ declare function collection:search-objects($q as xs:string) as node()* {
   if(empty($q) or $q = '') then 
     ()
   else
-    for $hit in doc($config:data-root || '/dictionary.xml')//tei:object[ft:query(., $q)]
+    for $hit in doc($config:data-root || '/dictionary.xml')//tei:object/tei:objectIdentifier/tei:objectName[ft:query(., $q)]
     order by ft:score($hit)
     return $hit
 };
