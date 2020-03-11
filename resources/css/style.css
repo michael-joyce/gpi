@@ -1239,7 +1239,7 @@ nav.navbar a:hover, nav.navbar a :active, nav.navbar a :visited {
 
 /* Now for fixing the targets */
 :not(aside) :target {
-  scroll-margin-top: 3.2rem;
+  scroll-margin-top: 25vh;
 }
 
 /******************************************** MAIN */
@@ -1522,6 +1522,10 @@ ul[data-template="app:object-usage"] li:after {
 #poem .poem li + li {
   margin-top: 0.21rem;
 }
+#poem .poem li:target .linenum {
+  color: #131516;
+  font-weight: bold;
+}
 #poem .poem .linenum {
   color: rgba(19, 21, 22, 0.5);
   padding-right: 1em;
@@ -1623,6 +1627,12 @@ p.signed {
   margin-left: 4em;
 }
 
+/******************************************************** BASIC IN-TEXT STYLES */
+section p {
+  line-height: 1.6;
+  margin-right: 5rem;
+}
+
 /******************************************************** TOGGLE SWITCH */
 .object-header {
   display: flex;
@@ -1680,10 +1690,10 @@ body:before {
 
   .poem {
     transform: translateX(0) !important;
-    margin-right: 0.5rem !important;
+    margin-right: 1rem !important;
     transition: none !important;
     line-height: 1.6;
-    margin-left: 1.5rem;
+    margin-left: 0.8rem;
   }
 
   .poem-index td:nth-of-type(n+3),
@@ -1743,32 +1753,19 @@ body:before {
     justify-content: center;
   }
 
+  main > section {
+    margin: 0 1rem;
+  }
+
+  section p {
+    margin-right: 0;
+  }
+
   /* MOBILE NAV */
   nav.navbar {
     align-items: center;
     justify-content: space-between;
     overflow-y: visible;
-    /*    ul > li{
-            & a{
-                width:unset;
-            }
-           &.logo{
-             justify-content:flex-end;
-           }
-           position:relative;
-           left:0;
-           &:not(.logo){
-            margin-top:0;
-            order:1;
-
-                &:hover{
-                border-bottom-color: transparent;
-                }
-
-
-         }
-
-        }*/
   }
   nav.navbar ul {
     flex: 0 0 8rem;

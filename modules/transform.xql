@@ -32,8 +32,8 @@ declare function tx:lg($node as node(), $poem as node()) as node() {
 
 declare function tx:l($node as node(), $poem as node()) as node() {
     
-    <li>
-        <a href="#l{$node/@n}" id="l{$node/@n}" class="linenum">{$node/@n/xs:string(.)}</a>
+    <li id="l{$node/@n}">
+        <a href="#l{$node/@n}"  class="linenum">{$node/@n/xs:string(.)}</a>
         {tx:render($node/node(), $poem)}
     </li>
 };

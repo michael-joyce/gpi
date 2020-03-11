@@ -135,7 +135,8 @@ nav.navbar a{
 /* Now for fixing the targets */
 
 :not(aside) :target{
-     scroll-margin-top: $nav-height;
+     scroll-margin-top: 25vh;
+
 }
 
 
@@ -462,6 +463,11 @@ ul[data-template='app:object-usage']{
        & + li{
            margin-top: map.get($typescale, 13);
        }
+       &:target .linenum{
+            color: $gpi-black;
+            font-weight:bold;
+           
+       }
     }
 
     .linenum {
@@ -593,6 +599,12 @@ p.signed {
     margin-left: 4em;
 }
 
+/******************************************************** BASIC IN-TEXT STYLES */
+
+section p{
+    line-height: 1.6;
+    margin-right:5rem;
+}
 
 /******************************************************** TOGGLE SWITCH */
 
@@ -664,10 +676,10 @@ p.signed {
 
 .poem{
     transform: translateX(0)!important;
-    margin-right:.5rem!important;
+    margin-right:1rem!important;
     transition:none!important;
     line-height:1.6;
-    margin-left:1.5rem;
+    margin-left:map.get($typescale, 7);
 }
 
 .poem-index {
@@ -731,6 +743,16 @@ p.signed {
     justify-content:center;
 }
 
+   main > section{
+       margin:0 1rem;
+   }
+   
+   section p{
+       margin-right:0;
+   }
+
+
+
 /* MOBILE NAV */
 
 nav.navbar{
@@ -773,29 +795,6 @@ nav.navbar{
        }
    }
    
-   
-   
-/*    ul > li{
-        & a{
-            width:unset;
-        }
-       &.logo{
-         justify-content:flex-end;
-       }
-       position:relative;
-       left:0;
-       &:not(.logo){
-        margin-top:0;
-        order:1;
-        
-            &:hover{
-            border-bottom-color: transparent;
-            }
-       
-        
-     }
-     
-    }*/
 
 
     
