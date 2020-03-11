@@ -179,6 +179,111 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   border-color: #36a829;
 }
 
+.breadcrumbs, .breadcrumbs2 {
+  list-style: none;
+  overflow: hidden;
+  font-family: "Roboto";
+  font-weight: 200;
+  padding: 0;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+}
+
+.breadcrumbs li > * {
+  color: black;
+  text-decoration: none;
+  position: relative;
+  display: block;
+  padding: 0.5rem 0 0.5rem 4rem;
+}
+
+/*
+* Now create the various triangles
+* that will overlap; this is the
+* common stuff between the two
+* triangles
+*/
+.breadcrumbs li > *:before,
+.breadcrumbs li > *:after {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  left: 100%;
+  border-left-width: 30px;
+  border-left-style: solid;
+}
+
+.breadcrumbs li > *:before {
+  /*This should be the colour
+  you want the arrow*/
+  border-left-color: #E7E7E7;
+  /*The margin left here dictates the width of the arrow*/
+  margin-left: 3px;
+  /*And make sure the zindex is 1*/
+  z-index: 1;
+}
+
+.breadcrumbs li > *:after {
+  /*BORDER LEFT should be the
+  same as the background colour*/
+  border-left-color: white;
+  /*Z index should be 2 to overlap*/
+  z-index: 2;
+}
+
+/*Now small, project specific 
+paddings etc*/
+.breadcrumbs li:first-child > * {
+  padding-left: 1rem;
+}
+
+.breadcrumbs li > *,
+.breadcrumbs li > *:after,
+.breadcrumbs li > *:before {
+  transition: all 0.2s ease-in-out;
+}
+
+.breadcrumbs li:last-child {
+  background: #e2efe8;
+}
+
+.breadcrumbs li > *:hover {
+  background: #efefef;
+}
+
+.breadcrumbs li > *:hover:after {
+  border-left-color: #efefef;
+}
+
+.breadcrumbs li > *:hover:before {
+  border-left-color: #efefef;
+}
+
+.current {
+  margin-right: 1rem;
+  text-overflow: ellipsis;
+  max-width: 25ch;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.breadcrumbs li:last-child > *:after,
+.breadcrumbs li:last-child > *:before {
+  content: unset;
+}
+
+/* Media query to reset the size of things */
+@media (max-width: 780px) {
+  .current {
+    max-width: 15ch;
+  }
+}
 /*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -1346,10 +1451,8 @@ ul[data-template="app:object-usage"] li:after {
   margin-right: 1rem;
 }
 
-.poem {
-  counter-reset: line-counter;
+#poem {
   flex: 0 1 32.5rem;
-  will-change: transform;
   order: 1;
   transition: transform 0.42s ease;
   transform: translateX(0);
@@ -1360,66 +1463,64 @@ ul[data-template="app:object-usage"] li:after {
   margin-top: 1.563rem;
   margin-left: 4vw;
 }
-.poem blockquote {
+#poem .poem a {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 0.1rem solid rgba(0, 128, 128, 0.6);
+  background: linear-gradient(0deg, rgba(0, 128, 128, 0.3) 0%, rgba(0, 128, 128, 0.3) 10%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 100%);
+}
+#poem .poem a:hover, #poem .poem a:visited, #poem .poem a:active {
+  color: inherit;
+  text-decoration: none;
+}
+#poem .poem a.selected, #poem .poem a.clicked {
+  background: linear-gradient(0deg, rgba(0, 128, 128, 0.3) 0%, rgba(0, 128, 128, 0.3) 100%);
+  animation: background-up 0.2s linear;
+}
+#poem .poem a.deselected {
+  animation: background-down 0.2s linear;
+}
+#poem .poem blockquote {
   font-size: 16px;
   margin: 1.563rem 3.052rem;
   max-width: 25rem;
   border: none;
 }
-.poem blockquote p {
+#poem .poem blockquote p {
   margin: 0;
 }
-.poem blockquote cite {
+#poem .poem blockquote cite {
   margin-left: 3.052rem;
   display: block;
   font-style: italic;
 }
-.poem blockquote footer {
+#poem .poem blockquote footer {
   font-size: inherit;
 }
-.poem ol {
+#poem .poem ol {
   list-style-type: none;
   padding-left: 0;
   margin-left: 2rem;
 }
-.poem ol + ol {
+#poem .poem ol + ol {
   margin-top: 1.25rem;
 }
-.poem li {
+#poem .poem li {
   counter-increment: line-counter;
   margin-left: 0;
   padding-left: 0.1 0.5rem;
   text-indent: -1.5rem;
 }
-.poem li + li {
+#poem .poem li + li {
   margin-top: 0.21rem;
 }
-.poem .linenum {
+#poem .poem .linenum {
   color: rgba(19, 21, 22, 0.5);
   padding-right: 1em;
   text-align: right;
   display: inline-block;
   background: none;
   border-bottom: none;
-}
-
-/******************* POEM LINKS */
-.poem a {
-  text-decoration: none;
-  color: inherit;
-  border-bottom: 0.1rem solid rgba(0, 128, 128, 0.6);
-  background: linear-gradient(0deg, rgba(0, 128, 128, 0.3) 0%, rgba(0, 128, 128, 0.3) 10%, rgba(255, 255, 255, 0) 10%, rgba(255, 255, 255, 0) 100%);
-}
-.poem a:hover, .poem a:visited, .poem a:active {
-  color: inherit;
-  text-decoration: none;
-}
-.poem a.selected, .poem a.clicked {
-  background: linear-gradient(0deg, rgba(0, 128, 128, 0.3) 0%, rgba(0, 128, 128, 0.3) 100%);
-  animation: background-up 0.2s linear;
-}
-.poem a.deselected {
-  animation: background-down 0.2s linear;
 }
 
 /****************** POEM ASIDE */
@@ -1432,7 +1533,7 @@ aside button.hamburger {
   margin-left: 10px;
 }
 
-.aside-hidden .poem {
+.aside-hidden #poem {
   transform: translateX(-10.5rem);
   margin-right: -10.5rem;
 }

@@ -39,7 +39,7 @@ declare function app:render-breadcrumb($node as node(), $model as map(*)) {
                     if($bc('path')) then
                         <a href="{$base}/{$bc('path')}">{$bc('label')}</a>
                     else 
-                        $bc('label')
+                        <span class="current">{$bc('label')}</span>
                 } </li>
         } </ul>
 };
