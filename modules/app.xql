@@ -309,7 +309,7 @@ declare function app:count-object-references($node as node(), $model as map(*)) 
 
 
 (:~
- : Find all the lines in $model('poem') which contain a tei:sig or tei:ref pointing at
+ : Find all the lines in $model('poem') which contain a tei:seg or tei:ref pointing at
  : $model('object'). The lines are rendered by transform.xql into HTML.
  :)
 declare 
