@@ -69,11 +69,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 .toggles [aria-pressed=true]::after {
   left: 1.6em;
-  border-color: #36a829;
+  border-color: $teal;
 }
 
 .toggles [aria-pressed=true]::before {
-  background-color: #36a829;
-  border-color: #36a829;
+  background-color: $teal;
+  border-color: $teal;
 }
 

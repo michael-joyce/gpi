@@ -6,19 +6,15 @@ const object = urlParams.get('object');
 
 function init(){
     body.classList.add('js');
-  
+
     addCloser();
     addMenuBurger();
     addObjectCloser();
     addLinkListeners();
     addRefToggles();
-    console.log(isSmol());
     if (object !== null && !(isSmol())){
-
         var firstRef = document.querySelectorAll("a[href='#" + object + "']")[0];
-        
         firstRef.click();
-        
     }
 }
 

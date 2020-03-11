@@ -2,10 +2,20 @@
   list-style: none; 
   overflow:hidden;
   font-family: "Roboto";
-  font-weight: 200;
+  font-weight: 300;
   padding: 0;
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
   display:flex;
+  font-size:map.get($typescale, 7);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+
+  margin-top: map.get($typescale, 3);
+  #poem &{
+      margin-top:0;
+      margin-bottom: map.get($typescale, 3);
+  }
 }
 
 
@@ -15,7 +25,7 @@
   text-decoration: none; 
   position: relative; 
   display: block;
-  padding:0.5rem 0 0.5rem 4rem;
+  padding:0.5em 0 0.5em 4em;
 
 }
 
@@ -32,16 +42,16 @@
     width: 0; 
     height: 0;
     border-top: 50px solid transparent;
-  border-bottom: 50px solid transparent;
+    border-bottom: 50px solid transparent;
     position: absolute;
     top: 50%;
-   margin-top: -50px; 
+    margin-top: -50px; 
     left: 100%;
     border-left-width: 30px;
     border-left-style:solid;
 }
 
-.breadcrumbs li > *:before { 
+.breadcrumbs li:not(:last-child) > *:before { 
   /*This should be the colour
   you want the arrow*/
   border-left-color: #E7E7E7;
@@ -71,26 +81,22 @@ paddings etc*/
 
 .breadcrumbs li > *,
 .breadcrumbs li > *:after,
-.breadcrumbs li > *:before{
+.breadcrumbs li > *:before {
     transition: all 0.2s ease-in-out;
 }
 
 .breadcrumbs li:last-child{
-    background:#e2efe8;
+    background:$gpi-greenish;
 }
 
-.breadcrumbs li > *:hover{
-  background:#efefef;
 
-}
-
-.breadcrumbs li > *:hover:after{
-  border-left-color:#efefef;
-}
-
-.breadcrumbs li > *:hover:before{
-  border-left-color:#efefef;
-}
+.breadcrumbs li:not(:last-child) > *:hover{
+    background:#efefef;
+    &:after,
+    &:before{
+        border-left-color:#efefef;
+    }
+ }
 
 .current{
   margin-right:1rem;
@@ -98,6 +104,10 @@ paddings etc*/
   max-width:25ch;
   white-space:nowrap;
   overflow-x:hidden;
+  font-style:italic;
+  li > &{
+      color:rgba($gpi-black, 0.8);
+  }
 }
 
 

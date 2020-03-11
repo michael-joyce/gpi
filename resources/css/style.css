@@ -171,22 +171,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 .toggles [aria-pressed=true]::after {
   left: 1.6em;
-  border-color: #36a829;
+  border-color: #008080;
 }
 
 .toggles [aria-pressed=true]::before {
-  background-color: #36a829;
-  border-color: #36a829;
+  background-color: #008080;
+  border-color: #008080;
 }
 
 .breadcrumbs, .breadcrumbs2 {
   list-style: none;
   overflow: hidden;
   font-family: "Roboto";
-  font-weight: 200;
+  font-weight: 300;
   padding: 0;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
   display: flex;
+  font-size: 0.8rem;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin-top: 1.953rem;
+}
+#poem .breadcrumbs, #poem .breadcrumbs2 {
+  margin-top: 0;
+  margin-bottom: 1.953rem;
 }
 
 .breadcrumbs li > * {
@@ -194,7 +203,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   text-decoration: none;
   position: relative;
   display: block;
-  padding: 0.5rem 0 0.5rem 4rem;
+  padding: 0.5em 0 0.5em 4em;
 }
 
 /*
@@ -219,7 +228,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   border-left-style: solid;
 }
 
-.breadcrumbs li > *:before {
+.breadcrumbs li:not(:last-child) > *:before {
   /*This should be the colour
   you want the arrow*/
   border-left-color: #E7E7E7;
@@ -253,15 +262,10 @@ paddings etc*/
   background: #e2efe8;
 }
 
-.breadcrumbs li > *:hover {
+.breadcrumbs li:not(:last-child) > *:hover {
   background: #efefef;
 }
-
-.breadcrumbs li > *:hover:after {
-  border-left-color: #efefef;
-}
-
-.breadcrumbs li > *:hover:before {
+.breadcrumbs li:not(:last-child) > *:hover:after, .breadcrumbs li:not(:last-child) > *:hover:before {
   border-left-color: #efefef;
 }
 
@@ -271,6 +275,10 @@ paddings etc*/
   max-width: 25ch;
   white-space: nowrap;
   overflow-x: hidden;
+  font-style: italic;
+}
+li > .current {
+  color: rgba(19, 21, 22, 0.8);
 }
 
 .breadcrumbs li:last-child > *:after,
