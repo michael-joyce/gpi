@@ -12,6 +12,36 @@ import module namespace object='http://dhil.lib.sfu.ca/exist/gpi/object' at 'obj
 import module namespace kwic="http://exist-db.org/xquery/kwic";
 
 declare namespace tei = 'http://www.tei-c.org/ns/1.0';
+declare namespace exist="http://exist.sourceforge.net/NS/exist";
+declare namespace request="http://exist-db.org/xquery/request";
+
+declare function app:load-breadcrumb($node as node(), $model as map(*)) { 
+    map {
+        'breadcrumbs' := (
+            map {
+                'path' := 'index.html',
+                'label' := 'Home'
+            },
+            for $bc in $model('breadcrumb') return $bc
+        )
+    }
+};
+
+declare function app:render-breadcrumb($node as node(), $model as map(*)) {
+    let $base := request:get-attribute('exist:controller')
+    
+    return
+        <ul class="breadcrumbs"> {
+            for $bc in $model('breadcrumbs')
+            return 
+                <li> {
+                    if($bc('path')) then
+                        <a href="{$base}/{$bc('path')}">{$bc('label')}</a>
+                    else 
+                        $bc('label')
+                } </li>
+        } </ul>
+};
 
 (:~
  : Load the complete list of poems into the model. They will be paginated and 
@@ -22,7 +52,11 @@ declare function app:load-poems($node as node(), $model as map(*)) {
     return map {
         'poems' := $poems,
         'page-size' := $config:poem-page-size,
-        'total' := count($poems)
+        'total' := count($poems),
+        'breadcrumb' := (
+            map { 'label' := 'Poems', 'path' := 'poem/index.html' },
+            map { 'label' := 'Page ' || request:get-parameter('page', 1) }
+        )
     }
 };
 
@@ -35,7 +69,11 @@ declare function app:load-objects($node as node(), $model as map(*)) {
     return map {
         'objects' := $objects,
         'page-size' := $config:object-page-size,
-        'total' := count($objects)
+        'total' := count($objects),
+        'breadcrumb' := (
+            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Page ' || request:get-parameter('page', 1) }
+        )
     }
 };
 
@@ -160,7 +198,11 @@ declare function app:load-poem($node as node(), $model as map(*), $id as xs:stri
     
     return map {
         'poem-id' := $id,
-        'poem' := $poem
+        'poem' := $poem,
+        'breadcrumb' := (
+            map { 'label' := 'Poems', 'path' := 'poem/index.html' },
+            map { 'label' := poem:title($poem)/text() }
+        )
     }
 };
 
@@ -171,7 +213,11 @@ declare function app:load-object($node as node(), $model as map(*), $id as xs:st
     let $object := collection:object($id)
     return map {
         'object-id' := $id,
-        'object' := $object
+        'object' := $object,
+        'breadcrumb' := (
+            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := object:name($object)/text() }
+        )
     }
 };
 
@@ -256,7 +302,12 @@ declare
   %templates:default('page', 1)
 function app:load-poem-search($node as node(), $model as map(*), $q as xs:string, $page) as map(*) {
   if($q = '') then
-    map {}
+    map {
+        'breadcrumb' := (
+            map { 'label' := 'Poems', 'path' := 'poem/index.html' },
+            map { 'label' := 'Search' }            
+        )
+    }
   else
     let $hits := collection:search-poems($q)
     return
@@ -265,7 +316,12 @@ function app:load-poem-search($node as node(), $model as map(*), $q as xs:string
         'page-size' := $config:object-page-size,
         'total' := count($hits),
         'q' := $q,
-        'page' := $page
+        'page' := $page,
+        'breadcrumb' := (
+            map { 'label' := 'Poems', 'path' := 'poem/index.html' },
+            map { 'label' := 'Search', 'path' := 'poem/search.html' },
+            map { 'label' := $q }
+        )
       }
 };
 
@@ -277,7 +333,12 @@ declare
   %templates:default('page', 1)
 function app:load-object-search($node as node(), $model as map(*), $q as xs:string, $page) as map(*) {
   if($q = '') then
-    map {}
+    map {
+        'breadcrumb' := (
+            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Search' }            
+        )
+    }
   else
     let $hits := collection:search-objects($q)
     return
@@ -286,7 +347,12 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
         'page-size' := $config:object-page-size,
         'total' := count($hits),
         'q' := $q,
-        'page' := $page
+        'page' := $page,
+        'breadcrumb' := (
+            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Search', 'path' := 'object/search.html' },
+            map { 'label' := $q }
+        )
       }
 };
 

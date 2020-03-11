@@ -25,7 +25,9 @@ else if (ends-with($exist:resource, ".html")) then
     (: the html page is run through view.xql to expand templates :)
     <dispatch xmlns="http://exist.sourceforge.net/NS/exist">
         <view>
-            <forward url="{$exist:controller}/modules/view.xql"/>
+            <forward url="{$exist:controller}/modules/view.xql">
+                <set-attribute name="exist:controller" value="{$exist:controller}"/>
+            </forward>
         </view>
     </dispatch>
 
