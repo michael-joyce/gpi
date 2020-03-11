@@ -6,3 +6,4 @@
 .idea
 .ant-targets-build.xml
 .DS_Store
+/design

@@ -29,6 +29,9 @@ else if (ends-with($exist:resource, ".html")) then
                 <set-attribute name="exist:controller" value="{$exist:controller}"/>
             </forward>
         </view>
+        <error-handler>
+         <forward url="{$exist:controller}/error-page.html" method="get"/>
+        </error-handler>
     </dispatch>
 
 (: Resource paths starting with $shared are loaded from the shared-resources app :)
