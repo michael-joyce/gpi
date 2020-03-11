@@ -99,10 +99,10 @@ declare function collection:search-objects($q as xs:string) as node()* {
     return $hit
 };
 
-declare function collection:references($id) {
+declare function collection:references($id) {  
   for $poem in collection:get-poems()
-  where $poem//tei:seg[contains(@ana, '#' || $id)]
-  order by poem:title($poem)//string()
+  let $count := count($poem//tei:seg[contains(@ana, '#' || $id)])
+  where $count gt 0
+  order by $count descending, poem:title($poem)//string()
   return $poem
 };
-
