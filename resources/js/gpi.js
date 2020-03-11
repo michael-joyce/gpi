@@ -12,7 +12,9 @@ function init(){
     addObjectCloser();
     addLinkListeners();
     addRefToggles();
-    if (object !== null && (!isSmol)){
+    console.log(isSmol());
+    if (object !== null && !(isSmol())){
+
         var firstRef = document.querySelectorAll("a[href='#" + object + "']")[0];
         
         firstRef.click();
@@ -70,8 +72,6 @@ function toggleInline(){
     var toggleBtns = document.querySelectorAll('.refToggle[aria-pressed="true"]');
     var targBtn = document.getElementById('toggle_' + ref);
     var aside = document.getElementById('aside');
-
-    
     if (aside.getAttribute('aria-expanded') == 'false'){
         document.getElementById('aside-toggle').click();
     }
@@ -79,7 +79,7 @@ function toggleInline(){
     if (this.classList.contains('clicked')){
     
        obj.classList.remove('active');
-        if (isSmol){
+        if (isSmol()){
             aside.classList.remove('gpi-modal');
         }
        targBtn.click();
@@ -95,13 +95,13 @@ function toggleInline(){
        removeActiveObj();
 
        obj.classList.add('active');
-       if (isSmol){
+       if (isSmol()){
            aside.setAttribute('class','gpi-modal');
            document.body.classList.add('modal-on');
         }
        
        // If the object isn't visible, scroll to it
-       if (!inViewport(obj) && (!isSmol)){
+       if (!inViewport(obj)){
           //Note that we can't use .scrollTo() here
           // since we're scrolling the object's parent
           obj.parentNode.scrollTop = obj.offsetTop;
@@ -113,10 +113,9 @@ function toggleInline(){
  
 }
 
-var isSmol = function(){
+function isSmol(){
    const vw = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
    return (vw < 768); 
-    
 } 
 
 function removeActiveObj(){
