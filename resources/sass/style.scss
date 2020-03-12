@@ -769,14 +769,17 @@ section p{
         transition:background-color 0.2s ease-in-out;
     }
 
-
-    .poem{
+    #poem{
         transform: translateX(0)!important;
         margin-right:1rem!important;
         transition:none!important;
-        line-height:1.6;
-        margin-left:map.get($typescale, 7);
+        .poem{
+            line-height:1.6;
+             transition:none!important;
+            margin-left:map.get($typescale, 7);
+        }
     }
+    
 
     .poem-index {
         td:nth-of-type(n+3),
