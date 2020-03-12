@@ -294,7 +294,7 @@ declare function tx:browse-objects($objects as node()*) as node()* {
     <table class="table sortable">
     <thead>
     <tr>
-           <th>Object</th>
+           <th>Personification</th>
            <th>Type</th>
         <th>Poems</th>
     </tr>

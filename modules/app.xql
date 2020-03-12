@@ -74,7 +74,7 @@ declare function app:load-objects($node as node(), $model as map(*)) {
         'page-size' := $config:object-page-size,
         'total' := count($objects),
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := 'Page ' || request:get-parameter('page', 1) }
         )
     }
@@ -223,7 +223,7 @@ declare function app:load-object($node as node(), $model as map(*), $id as xs:st
         'object-id' := $id,
         'object' := $object,
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := object:name($object)/text() }
         )
     }
@@ -365,7 +365,7 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
   if($q = '') then
     map {
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := 'Search' }            
         )
     }
@@ -379,7 +379,7 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
         'q' := $q,
         'page' := $page,
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := 'Search', 'path' := 'object/search.html' },
             map { 'label' := $q }
         )

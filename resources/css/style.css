@@ -1776,6 +1776,7 @@ body:before {
     flex-wrap: wrap;
     margin-top: 0.5rem;
     height: 100%;
+    margin-right: 1.25rem;
   }
   nav.navbar[aria-open=true] ul > li:not(.logo) {
     transform: translateX(0);
@@ -1784,6 +1785,7 @@ body:before {
   }
   nav.navbar ul > li.logo {
     justify-content: flex-end;
+    margin-right: -0.25rem;
   }
   nav.navbar ul > li:not(.logo) {
     order: 1;
