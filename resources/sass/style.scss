@@ -535,7 +535,6 @@ ul[data-template='app:object-usage']{
     ol {
         list-style-type: none;
         padding-left: 0;
-        margin-left:2rem;
         & + ol{
             margin-top: map.get($typescale, 5);
         }
@@ -551,7 +550,7 @@ ul[data-template='app:object-usage']{
            margin-top: map.get($typescale, 13);
         }
         &:target .linenum{
-            color: $gpi-black;
+            color: $teal;
             font-weight:bold; 
        }
     }
@@ -563,6 +562,10 @@ ul[data-template='app:object-usage']{
         display: inline-block;
         background:none;
         border-bottom:none;
+        &:hover{
+            color: $teal!important;
+            transition: color 0.2s ease-in-out;
+        }
     }
         
   }  
