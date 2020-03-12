@@ -65,6 +65,12 @@ $hamburger-layer-height: 1px;
 $hamburger-layer-width:22px;
 $hamburger-layer-spacing: 4px;
 
+/* Only include a couple burgers */
+$hamburger-types: (
+  arrow,
+  collapse
+);
+
 
 $teal: #008080;
 $bc: rgba($teal, 0.3);
