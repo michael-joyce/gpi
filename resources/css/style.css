@@ -1330,10 +1330,12 @@ footer.footer ul {
   columns: 2;
   margin-left: 0;
   padding-left: 0;
+  font-size: 1.25rem;
 }
 footer.footer li {
   margin-left: 0;
   padding-left: 0;
+  margin-bottom: 1rem;
 }
 footer.footer img {
   max-width: 100%;

@@ -242,10 +242,12 @@ footer.footer{
         columns: 2;
         margin-left:0;
         padding-left:0;
+        font-size: map.get($typescale, 5);
     }
     li{
         margin-left:0;
         padding-left:0;
+        margin-bottom: 1rem;
     }
     
     img{
