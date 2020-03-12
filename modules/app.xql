@@ -406,7 +406,7 @@ declare
 function app:search-poem-title($node as node(), $model as map(*)) as node()* {
   let $hit := $model('hit')
   let $title := poem:title($hit)
-  return <a href="view.html?id={poem:id($hit)}">{ tx:render($title/node()) }</a>
+  return <a href="view.html?id={poem:id($hit)}">{normalize-space(string-join($title,''))}</a>
 };
 
 

@@ -680,6 +680,15 @@ ul.pagination{
 }
 
 
+/* Search inputs
+   ========================================================================== */
+   
+input[type='text']{
+    font-size: map.get($typescale, 5);
+    
+}
+   
+
 /* Search results
    ========================================================================== */
 
@@ -703,6 +712,13 @@ span.target {
 
 p.signed {
     margin-left: 4em;
+}
+
+.searchHeader{
+    border-bottom:none;
+}
+.searchResults{
+    margin-top: map.get($typescale, 2);
 }
 
 
