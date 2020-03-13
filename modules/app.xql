@@ -1,3 +1,4 @@
+  
 xquery version "3.1";
 
 module namespace app="http://dhil.lib.sfu.ca/exist/gpi/templates";
@@ -38,7 +39,7 @@ declare function app:render-breadcrumb($node as node(), $model as map(*)) {
                     if($bc('path')) then
                         <a href="{$base}/{$bc('path')}">{$bc('label')}</a>
                     else 
-                        $bc('label')
+                        <span class="current">{$bc('label')}</span>
                 } </li>
         } </ul>
 };
@@ -47,6 +48,7 @@ declare function app:render-breadcrumb($node as node(), $model as map(*)) {
  : Load the complete list of poems into the model. They will be paginated and 
  : displayed elsewhere.
  :)
+
 declare function app:load-poems($node as node(), $model as map(*)) {
     let $poems := collection:get-poems()
     return map {
@@ -60,6 +62,7 @@ declare function app:load-poems($node as node(), $model as map(*)) {
     }
 };
 
+
 (:~
  : Load the complete list of objects into the model. They will be paginated and 
  : displayed elsewhere.
@@ -71,7 +74,7 @@ declare function app:load-objects($node as node(), $model as map(*)) {
         'page-size' := $config:object-page-size,
         'total' := count($objects),
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := 'Page ' || request:get-parameter('page', 1) }
         )
     }
@@ -90,6 +93,7 @@ function app:browse-poems($node as node(), $model as map(*), $page as xs:integer
 
     return tx:browse-poems($model('poems')[$start le position() and position() lt $end])
 };
+
 
 (:~
  : Display a one-page list of objects. The objects come from the model (app:load-poems()) and 
@@ -112,6 +116,7 @@ declare
 function app:count-poems($node as node(), $model as map(*)) as xs:integer {
   count($model('poems'))
 };
+
 
 (:~
  : Count the objects stored in the model and return the count.
@@ -146,6 +151,7 @@ function app:load-missing-objects($node as node(), $model as map(*)) as map(*) {
     }
 };
 
+
 (:~
  : Fetch the text wrapped by a tei:seg or tei:ref which is stored in the 
  : $model('object').
@@ -171,6 +177,7 @@ function app:object-poem($node as node(), $model as map(*)) as xs:string {
   let $id := $poem/@xml:id
   return $poem//tei:title/text()
 };
+
 
 (:~
  : Get the referencing string from a tei:ref or tei:seg.
@@ -206,6 +213,7 @@ declare function app:load-poem($node as node(), $model as map(*), $id as xs:stri
     }
 };
 
+
 (:~
  : Load a object from the collection and store it in the model.
  :)
@@ -215,7 +223,7 @@ declare function app:load-object($node as node(), $model as map(*), $id as xs:st
         'object-id' := $id,
         'object' := $object,
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := object:name($object)/text() }
         )
     }
@@ -265,12 +273,31 @@ declare function app:load-object-references($node as node(), $model as map(*)) a
 declare function app:poem-title($node as node(), $model as map(*)) as node()* {
   let $poem := $model('poem')
   let $title := poem:title($poem)
-  
+  let $object := $model('object')
   return 
-    if(empty($title)) then 
-        <a href="../poem/view.html?id={poem:id($poem)}"><i>Title Missing</i></a>
-    else 
-        <a href="../poem/view.html?id={poem:id($poem)}">{tx:render(poem:title($poem)/node())}</a>
+    <a href="../poem/view.html?id={poem:id($poem)}&amp;object={object:id($object)}">
+    {
+        if (empty($title))
+        then <i>Title Missing</i>
+        else normalize-space(string-join($title,''))
+    }
+    </a>
+};
+
+(:~
+ : Render an object title in the context of its index page.
+ :)
+declare function app:object-title($node as node(), $model as map(*)) as node()*{
+    let $object := $model('object')
+    let $name := object:name($object)
+    return
+    <div class="row object-title">
+            <div class="col-sm-12">
+                <div class="page-header">
+                    <h1>{tx:render($name/node())}</h1>
+                </div>
+            </div>
+        </div>
 };
 
 (:~
@@ -280,8 +307,9 @@ declare function app:count-object-references($node as node(), $model as map(*)) 
   $model('count')
 };
 
+
 (:~
- : Find all the lines in $model('poem') which contain a tei:sig or tei:ref pointing at
+ : Find all the lines in $model('poem') which contain a tei:seg or tei:ref pointing at
  : $model('object'). The lines are rendered by transform.xql into HTML.
  :)
 declare 
@@ -293,6 +321,8 @@ function app:object-usage($node as node(), $model as map(*)) as node()* {
   let $lines := $poem//tei:l[ ( .//tei:seg[@ana=$id] | .//tei:ref[@corresp=$id])]
   return tx:render($lines)
 };
+
+
 
 (:~
  : Perform a search of the poems and store the results in the model.
@@ -335,7 +365,7 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
   if($q = '') then
     map {
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := 'Search' }            
         )
     }
@@ -349,12 +379,13 @@ function app:load-object-search($node as node(), $model as map(*), $q as xs:stri
         'q' := $q,
         'page' := $page,
         'breadcrumb' := (
-            map { 'label' := 'Objects', 'path' := 'object/index.html' },
+            map { 'label' := 'Personifications', 'path' := 'object/index.html' },
             map { 'label' := 'Search', 'path' := 'object/search.html' },
             map { 'label' := $q }
         )
       }
 };
+
 
 (:~
  : Render an object name in a link to the object. The object is in $model('hit').
@@ -366,6 +397,8 @@ function app:search-object-name($node as node(), $model as map(*)) as node()* {
   return <a href="view.html?id={object:id($hit)}">{ tx:render($title/node()) }</a>
 };
 
+
+
 (:~
  : Render a poem title in a link to the poem. The poem is in $model('hit').
  :)
@@ -373,8 +406,10 @@ declare
 function app:search-poem-title($node as node(), $model as map(*)) as node()* {
   let $hit := $model('hit')
   let $title := poem:title($hit)
-  return <a href="view.html?id={poem:id($hit)}">{ tx:render($title/node()) }</a>
+  return <a href="view.html?id={poem:id($hit)}">{normalize-space(string-join($title,''))}</a>
 };
+
+
 
 (:~
  : Summarize one search it, stored in $model('hit') as a KWIC thing and return it.
@@ -384,6 +419,7 @@ declare function app:search-summary($node as node(), $model as map(*)) as node()
   return
     kwic:summarize($hit, <config width="40"/>)
 };
+
 
 (:~
  : Return the search term stored in the model as $model('q').

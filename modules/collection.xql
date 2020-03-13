@@ -59,7 +59,7 @@ declare function collection:object($id as xs:string) as node() {
         if ($object) then
             $object
         else 
-            <object xmlns="http://www.tei-c.org/ns/1.0" xml:id="error" type="error">
+            <object xmlns="http://www.tei-c.org/ns/1.0" xml:id="error_{$id}" type="error">
                   <objectIdentifier>
                      <objectName>Error</objectName>
                   </objectIdentifier>
@@ -67,22 +67,26 @@ declare function collection:object($id as xs:string) as node() {
                </object>
 };
 
-declare function collection:listObjects($references as xs:string*) as node() {
+declare function collection:listObjects($references as xs:string*, $poem as node()) as node() {
     <listObject xmlns="http://www.tei-c.org/ns/1.0"> {
         for $reference in $references
             let $id := substring-after($reference, '#')
             let $object := collection:object($id)
-            order by $object//tei:objectName
+            let $firstRef := $poem//tei:seg[@ana = $reference][1]/ancestor::tei:l[1]/xs:integer(@n)
+            order by $firstRef
             return $object
     } </listObject>  
 };
+
+
+
 
 declare function collection:search-poems($q as xs:string) as node()* {
   if(empty($q) or $q = '') then 
     ()
   else
-    for $hit in collection:get-poems()[ft:query(., $q)]
-    order by ft:score($hit)
+    for $hit in collection:get-poems()[ft:query(., $q) | ft:query(tei:head, $q)]
+    order by ft:score($hit) descending
     return $hit
 };
 
@@ -90,7 +94,7 @@ declare function collection:search-objects($q as xs:string) as node()* {
   if(empty($q) or $q = '') then 
     ()
   else
-    for $hit in doc($config:data-root || '/dictionary.xml')//tei:object[ft:query(., $q)]
+    for $hit in doc($config:data-root || '/dictionary.xml')//tei:object/tei:objectIdentifier/tei:objectName[ft:query(., $q)]
     order by ft:score($hit)
     return $hit
 };

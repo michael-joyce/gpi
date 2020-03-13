@@ -1,48 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns="http://www.w3.org/1999/xhtml" data-template="templates:surround"
     data-template-with="templates/subpage.html" data-template-at="content">
-
-    <div data-template="app:load-poems">
+    <div class="container">
         <div class="row">
-        <div class="col-sm-12">
-            <div class="page-header">
-                <h1>Gendered Personification Index</h1>
-                <p>The database contains <span data-template="app:count-poems"/> poems.</p>
-                
-                <div data-template="app:load-breadcrumb">
-                    <ul data-template="app:render-breadcrumb"></ul>
+            <div class="col-sm-12">
+                <div class="page-header">
+                    
+                    <h1>Poems</h1>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            <form action="search.html">
-                <div class="form-group">
-                    <label class="sr-only" for="q">Search term</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="q" name="q"
-                            data-template="templates:form-control"/>
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <span class="glyphicon glyphicon-search"/>
-                            </button>
+        <div class="row">
+            <div class="col-sm-12">
+                <form action="search.html">
+                    <div class="form-group">
+                        <label class="sr-only" for="q">Search term</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="q" name="q"
+                                data-template="templates:form-control"/>
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <span class="glyphicon glyphicon-search"/>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
-
-
-        <ul>
-            <li class='templates:each?from=poems&amp;to=poem'>
-                <a data-template="app:poem-title"></a>
-            </li>
-        </ul>
         
-        <div data-template="app:paginate"/>
+        
+        <div data-template="app:load-poems">
+            <div data-template="app:browse-poems"/>
+            <div data-template="app:paginate"/>
+        </div>
+        
     </div>
     
-    <script src="resources/js/poem.js"/>
+    
 </div>

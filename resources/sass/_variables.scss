@@ -1,0 +1,82 @@
+$gpi-grey: #F8F8F8;
+$gpi-black: #131516;
+
+$nav-height: 3.2rem;
+
+$footer_height: 60px;
+$footer_bg: #f5f5f5;
+
+// error rendering
+$error_bg: #fefedd;
+$error_outline: 1px solid #f00;
+$error_padding: 3px;
+
+
+$poem-width: 32.5rem;
+
+$poem-left-margin: 4vw;
+
+/* Nav bar stuff */
+
+$shift-left-width: -10.5rem;
+$shift-left-time: 0.42s;
+
+// typography
+$p_margin: 10px;
+
+// line counters
+$lc_width: 4em;
+
+$lc_offset: 1em;
+
+// gendered reference colours
+$gender_u_fg: #800080;
+$gender_m_fg: #0000ff;
+$gender_f_fg: #ff0000;
+$gender_n_fg: #008000;
+$gender_y_fg: #b8860b;
+
+
+/* Major third type scale */
+
+
+$typescale: (
+1: 3.052rem,
+2: 2.441rem,
+3: 1.953rem,
+4: 1.563rem,
+5: 1.25rem,
+6: 1rem,
+7: 0.8rem,
+8: 0.64rem,
+9: 0.512rem,
+10: 0.41rem,
+11: 0.328rem,
+12: 0.252rem,
+13: 0.21rem,
+14: 0.168rem,
+15: 0.107rem,
+16: 0.086rem
+);
+
+
+/* Special stuff for hamburger thing */
+$hamburger-layer-height: 1px;
+$hamburger-layer-width:22px;
+$hamburger-layer-spacing: 4px;
+
+/* Only include a couple burgers */
+$hamburger-types: (
+  arrow,
+  collapse
+);
+
+
+$teal: #008080;
+$bc: rgba($teal, 0.3);
+$gpi-greenish: #e2efe8;
+
+$transparent: rgba(255,255,255,0);
+$initHeight: 10;
+$backgroundTime: 0.2s;
+

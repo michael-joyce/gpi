@@ -2,21 +2,22 @@
 <div xmlns="http://www.w3.org/1999/xhtml" data-template="templates:surround"
     data-template-with="templates/subpage.html" data-template-at="content">
 
+  <div class="container">
     <div class="app:load-poem-search">
+        <div data-template="app:load-breadcrumb">
+            <ul data-template="app:render-breadcrumb"></ul>
+        </div>
         <div class="row">
             <div class="col-sm-12">
-                <div class="page-header">
-                    <h1> Search the poems </h1>
-                    <div data-template="app:load-breadcrumb">
-                        <ul data-template="app:render-breadcrumb"></ul>
-                    </div>
-                    <p class="templates:if-parameter-set?param=q"> Your search for 
-                        <i data-template="app:search-term"/> found <span data-template="app:search-count"/> results. </p>
+                <div class="page-header searchHeader">
+                    <h1>Search the Poems</h1>
+                    <p class="templates:if-parameter-set?param=q">Your search for 
+                        <i data-template="app:search-term"/> found <span data-template="app:search-count"/> results.</p>
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <div class="row searchResults">
             <div class="col-sm-12">
                 <form action="search.html">
                     <div class="form-group">
@@ -48,4 +49,6 @@
             </div>
         </div>
     </div>
+    </div>
+  
 </div>

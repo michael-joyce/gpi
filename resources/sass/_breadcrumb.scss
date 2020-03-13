@@ -1,0 +1,129 @@
+.breadcrumbs, .breadcrumbs2 { 
+  list-style: none; 
+  overflow:hidden;
+  font-family: "Roboto";
+  font-weight: 300;
+  padding: 0;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.05);
+  display:flex;
+  font-size:map.get($typescale, 7);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+
+  margin-top: map.get($typescale, 3);
+  #poem &{
+      margin-top:0;
+      margin-bottom: map.get($typescale, 3);
+  }
+}
+
+
+
+.breadcrumbs li > * {
+  color:black;
+  text-decoration: none; 
+  position: relative; 
+  display: block;
+  padding:0.5em 0 0.5em 4em;
+
+}
+
+/*
+* Now create the various triangles
+* that will overlap; this is the
+* common stuff between the two
+* triangles
+*/
+.breadcrumbs li > *:before,
+.breadcrumbs li > *:after{
+    content: " "; 
+    display: block; 
+    width: 0; 
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px; 
+    left: 100%;
+    border-left-width: 30px;
+    border-left-style:solid;
+}
+
+.breadcrumbs li:not(:last-child) > *:before { 
+  /*This should be the colour
+  you want the arrow*/
+  border-left-color: #E7E7E7;
+  /*The margin left here dictates the width of the arrow*/
+  margin-left: 3px;
+  /*And make sure the zindex is 1*/
+  z-index: 1; 
+}	
+
+.breadcrumbs li > *:after { 
+  /*BORDER LEFT should be the
+  same as the background colour*/
+  border-left-color: white;
+  
+  /*Z index should be 2 to overlap*/
+  z-index: 2; 
+}	
+
+
+
+/*Now small, project specific 
+paddings etc*/
+.breadcrumbs li:first-child > * {
+  padding-left: 1rem;
+}
+
+
+.breadcrumbs li > *,
+.breadcrumbs li > *:after,
+.breadcrumbs li > *:before {
+    transition: all 0.2s ease-in-out;
+}
+
+.breadcrumbs li:last-child{
+    background:$gpi-greenish;
+}
+
+
+.breadcrumbs li:not(:last-child) > *:hover{
+    background:#efefef;
+    &:after,
+    &:before{
+        border-left-color:#efefef;
+    }
+ }
+
+.current{
+  margin-right:1rem;
+  text-overflow:ellipsis;
+  max-width:25ch;
+  white-space:nowrap;
+  overflow-x:hidden;
+  font-style:italic;
+  li > &{
+      color:rgba($gpi-black, 0.8);
+  }
+}
+
+
+
+
+.breadcrumbs li:last-child > *:after,
+.breadcrumbs li:last-child > *:before{
+  content: unset;
+}
+
+/* Media query to reset the size of things */
+@media (max-width:780px){
+    
+    .current{
+        max-width:15ch;
+    }
+}
+
+  

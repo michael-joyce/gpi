@@ -1,46 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<html>
-    <head>
-        <title>The Gendered Personifications Index</title>
-        <link rel="stylesheet" type="text/css" href="resources/lib/bootstrap/dist/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="resources/css/index.css"/>
-        <script src="resources/lib/jquery/dist/jquery.min.js"></script>
-        <script src="resources/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-     
-    </head>
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="navbar-header">
-                <button class="navbar-toggle" data-target="#navbar-collapse-1" data-toggle="collapse" type="button">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse" id="navbar-collapse-1">
-                <div class="container">
-                    <ul class="nav navbar-nav">
-                        <li>
-                            <a href="index.html" class="front-page">Home</a>
-                        </li>
-                        <li class="dropdown">
-                            <a aria-expanded="false" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">Explore <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="poem/index.html">Poems</a>
-                                </li>
-                                <li>
-                                    <a href="object/index.html">Objects</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <main>
+<div data-template="templates:surround" data-template-at="content"
+    data-template-with="templates/page.html" xmlns="http://www.w3.org/1999/xhtml">
+    <script>
+            document.getElementById('index-css').removeAttribute('disabled');
+        </script>
         <section id="images">
             <div class="sticky">
                 <div id="index-coleridge">
@@ -56,7 +19,7 @@
             <header id="logo">
                 <h1>
                     <span class="logo-top">The Gendered</span><br/>
-                    <span class="logo-middle">Personifications</span><br/>
+                    <span class="logo-middle">Personification</span><br/>
                     <span class="logo-bottom">Index</span><br/>
                     <span class="credits">Edited by Rawia Inaim</span>
                 </h1>
@@ -74,8 +37,4 @@
                 
             </section>
         </article>
-    </main>
-</body>
-        
-
-</html>
+</div>

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div xmlns="http://www.w3.org/1999/xhtml" data-template="templates:surround"
     data-template-with="templates/subpage.html" data-template-at="content">
-    
+    <div class="container">
     <div class="app:load-object-search">
         <div class="row">
+            <div data-template="app:load-breadcrumb">
+                <ul data-template="app:render-breadcrumb"></ul>
+            </div>
             <div class="col-sm-12">
-                <div class="page-header">
-                    <h1>Gendered Personification Index</h1>
-                    <div data-template="app:load-breadcrumb">
-                        <ul data-template="app:render-breadcrumb"></ul>
-                    </div>
+                <div class="page-header searchHeader">
+                    <h1>Search Personifications</h1>
                     <p class="templates:if-parameter-set?param=q"> Your search for 
-                        <i data-template="app:search-term"/> found <span data-template="app:search-count"/> results. </p>
+                        <i data-template="app:search-term"/> found <span data-template="app:search-count"/> results.</p>
                 </div>
             </div>
         </div>
         
-        <div class="row">
+        <div class="row searchResults">
             <div class="col-sm-12">
                 <form action="search.html">
                     <div class="form-group">
@@ -47,5 +47,6 @@
                 <div data-template="app:paginate"/>
             </div>
         </div>
+    </div>
     </div>
 </div>
