@@ -725,10 +725,39 @@ p.signed {
 /* Born-digital pages
    ========================================================================== */
 
-section p{
-    line-height: 1.6;
-    margin-right:5rem;
+section {
+    p {
+        line-height: 1.6;
+        margin-right: 5rem;
+    }
+
+    figure {
+        line-height: 1.6;
+        margin-right: 5rem;
+        figcaption {
+            text-align: center;
+            font-style: italic;
+        }
+    }
+
+    pre {
+        margin-right: 5rem;
+    }
+
+    td, th {
+        padding: 7px;
+    }
+
+    span.seg {
+        color: red;
+    }
+
+    span.ref {
+        color: blue;
+    }
 }
+
+
 
 /* ==========================================================================
    Media queries
