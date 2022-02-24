@@ -1,6 +1,6 @@
 xquery version "3.1";
 
-module namespace object="http://dhil.lib.sfu.ca/exist/gpi/object";
+module namespace object = "http://dhil.lib.sfu.ca/exist/gpi/object";
 
 declare default element namespace 'http://www.tei-c.org/ns/1.0';
 

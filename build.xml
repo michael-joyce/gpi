@@ -1,43 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="xar" name="gpi">
-    <xmlproperty file="expath-pkg.xml"/>
-    <property name="project.version" value="${package(version)}"/>
-    <property name="project.app" value="gpi"/>
-    <property name="build.dir" value="build"/>
-    
-    <fileset id="console-usages" dir="." includes="**/*.xql">
-        <contains text="console"/>
-    </fileset>
-    <fail status="1" message="One or more usages of console detected in ${toString:console-usages}.">
-        <condition>
-            <resourcecount when="greater" count="0" refid="console-usages" />
-        </condition>
-    </fail>
+  <description>Gendered Personification Index</description>
 
-    <target name='precheck'>
-        <exec executable='git' outputproperty="pc.output">
-            <arg value="status"/>
-            <arg value="--porcelain"/>
-            <arg value="--untracked-files=no"/>
-        </exec>
-        <fail status="2" message="One or more modified files exists in ${pc.output}">
-            <condition>
-                <not>
-                    <equals arg1="${pc.output}" arg2="" />
-                </not>
-            </condition>
-        </fail>
-    </target>
-        
-    <target depends="precheck, bower" name="xar">
-        <mkdir dir="${build.dir}"/>
-        <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludes="${build.dir}/*"/>
-    </target>
-    
-    <target name="bower">
-        <exec executable="bower">
-            <arg value="install" />
-        </exec>
-    </target>
-    
+  <xmlproperty file="expath-pkg.xml" />
+  <property name="project.version" value="${package(version)}" />
+  <property name="project.app" value="gpi" />
+  <property name="build.dir" value="build" />
+
+  <target depends="bower" name="xar">
+    <mkdir dir="${build.dir}" />
+    <zip basedir="." destfile="${build.dir}/${project.app}-${project.version}.xar" excludesfile='excludes.txt' />
+  </target>
+  
+  <target name="bower">
+    <exec executable="bower">
+      <arg value="install" />
+    </exec>
+  </target>
+  
 </project>

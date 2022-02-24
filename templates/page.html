@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/index.css" id="index-css" disabled="true"/>
         <script src="resources/lib/jquery/dist/jquery.min.js"></script>
         <script src="resources/lib/bootstrap/dist/js/bootstrap.min.js"></script>
- 
+        
     </head>
     <body id="body">
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -23,28 +23,11 @@
                 </span>
             </button>
             <ul>
-                
-                <li>
-                    <a href="index.html" class="front-page">Home</a>
-                </li>
-                <li>
-                    <a href="poem/index.html">Poems</a>
-                </li>
-                <li class="logo">
-                    <a href="index.html">
-                        GPI
-                    </a> 
-                </li>
-                <li>
-                    <a href="object/index.html">Personifications</a>
-                </li>
-                
-                <li>
-                    <a href="about.html">
-                        About
-                    </a>
-                </li>
-                
+                <li><a href="index.html" class="front-page">Home</a></li>
+                <li><a href="poem/index.html">Poems</a></li>
+                <li class="logo"><a href="index.html">GPI</a></li>
+                <li><a href="object/index.html">Personifications</a></li>               
+                <li><a href="about.html">About</a></li>
             </ul>
         </nav>
         
@@ -77,32 +60,33 @@
             </div>
             
         </footer>
-        <script src="resources/js/gpi.js"/>
+        <script src="resources/js/gpi.js"></script>
         
-        <script src="../resources/lib/tablesorter/dist/js/jquery.tablesorter.min.js"/>
+        <script src="../resources/lib/tablesorter/dist/js/jquery.tablesorter.min.js"></script>
         <script>
-        (function($){
-            $(function(){
-                $('table.sortable').tablesorter();
-            });
-        })(jQuery);
-    </script>
-
-        <script type="text/javascript">
-        var _paq = window._paq = window._paq || [];
-        _paq.push(["setDomains", ["dhil.lib.sfu.ca/gpi"]]);
-        _paq.push(["setDoNotTrack", true]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function() {
-            var u="//matomo.lib.sfu.ca/library/";
-            _paq.push(['setTrackerUrl', u+'matomo.php']);
-            _paq.push(['setSiteId', '43']);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-        })();
+            (function($){
+                $(function(){
+                    $('table.sortable').tablesorter();
+                });
+            })(jQuery);
         </script>
-        <noscript><p><img src="https://matomo.lib.sfu.ca/library/matomo.php?idsite=43&amp;rec=1" style="border:0;" alt="" /></p></noscript>        
         
+        <script type="text/javascript">
+            var _paq = window._paq = window._paq || [];
+            _paq.push(["setDomains", ["dhil.lib.sfu.ca/gpi"]]);
+            _paq.push(["setDoNotTrack", true]);
+            _paq.push(['trackPageView']);
+            _paq.push(['enableLinkTracking']);
+            (function() {
+                var u="//matomo.lib.sfu.ca/library/";
+                _paq.push(['setTrackerUrl', u+'matomo.php']);
+                _paq.push(['setSiteId', '43']);
+                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+                g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+            })();
+        </script>
+        <noscript>
+            <p><img src="https://matomo.lib.sfu.ca/library/matomo.php?idsite=43&amp;rec=1" style="border:0;" alt="" /></p>
+        </noscript>                
     </body>
 </html>

@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<meta xmlns="http://exist-db.org/xquery/repo">
-    <description>GPI</description>
-    <author/>
-    <website/>
-    <status>alpha</status>
-    <license>GNU-LGPL</license>
-    <copyright>true</copyright>
-    <type>application</type>
-    <target>gpi</target>
-    <prepare>pre-install.xql</prepare>
-    <finish/>
-<deployed>2019-11-07T12:25:00.129-08:00</deployed>
+<meta 
+  xmlns="http://exist-db.org/xquery/repo">
+  <description>Gendered Personification Index</description>
+  <author>Michael Joyce</author>
+  <website>http://dhil.lib.sfu.ca/</website>
+  <status>stable</status>
+  <license>GPL-3.0</license>
+  <copyright>true</copyright>
+  <type>application</type>
+  <target>gpi</target>
+  <prepare>pre-install.xql</prepare>
 </meta>

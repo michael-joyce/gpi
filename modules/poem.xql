@@ -1,11 +1,11 @@
 xquery version "3.1";
 
-module namespace poem="http://dhil.lib.sfu.ca/exist/gpi/poem";
+module namespace poem = "http://dhil.lib.sfu.ca/exist/gpi/poem";
 
 declare default element namespace 'http://www.tei-c.org/ns/1.0';
 
-declare function poem:root($node as node()) as node()? {  
-  $node/ancestor-or-self::div[@type='poem']
+declare function poem:root($node as node()) as node()? {
+  $node/ancestor-or-self::div[@type = 'poem']
 };
 
 declare function poem:head($node as node()) as node()? {
